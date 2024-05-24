@@ -1,2 +1,0 @@
-MYSQL_PASSWORD = '你的MYSQL密碼'
-MYSQL_USER = '你的MYSQL用戶名'
