@@ -1,19 +1,14 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from config import MYSQL_USER, MYSQL_PASSWORD
-from models import models
+from extensions import db
 
 app = Flask(__name__)
-app.register_blueprint(models)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@localhost:3306/school'
-db = SQLAlchemy(app)
-
-
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@localhost:3306/SOAMS'
+db.init_app(app)
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # 確保資料庫被創建
+    app.debug = True
     app.run()
