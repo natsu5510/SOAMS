@@ -10,3 +10,11 @@
         你是學生
     </div>
 {% endif %}
+
+{% for field in form %}
+    {{ field }}
+{% endfor %}
+
+<!-- {{ form.username }}
+{{ form.limit }}
+{{ form.submit }} -->
