@@ -14,7 +14,7 @@ def create_app():
     from app.AIVS.accommodation_management import accommodation_management
     app.register_blueprint(accommodation_management, url_prefix='/AIVS')
     from app.RIMS.rental_advertisement import rental_advertisement
-    app.register_blueprint(rental_advertisement, url_prefix='/RIMS')
+    app.register_blueprint(rental_advertisement, url_prefix='/rental_advertisement')
 
     app.secret_key = SECRET_KEY
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@localhost:3306/SOAMS'

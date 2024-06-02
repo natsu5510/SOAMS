@@ -22,12 +22,6 @@ def role_required(role):
         return decorated_function
     return decorator
 
-@login_management.route('/')
-@login_required
-@role_required('administrator')
-def index():
-    return render_template('/AIMS/login_management.html')
-
 @login_management.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -37,15 +31,7 @@ def login():
         
         if user and bcrypt.check_password_hash(user.passwd, password):
             login_user(user)
-            
-            if user.type == 'administrator':
-                return redirect(url_for('admin.admin_home'))
-            elif user.type == 'student':
-                return redirect(url_for('rental_advertisement.index'))
-            elif user.type == 'advisor':
-                return redirect(url_for('main.teacher_home'))
-            else:
-                return redirect(url_for('main.index'))
+            return redirect(url_for('login_management.home'))
         else:
             flash('帳號或密碼錯誤', 'danger')
     
@@ -57,3 +43,8 @@ def logout():
     logout_user()
     flash('您已登出', 'success')
     return redirect(url_for('login_management.login'))
+
+@login_management.route('/home')
+@login_required
+def home():
+    return render_template('home.html')
