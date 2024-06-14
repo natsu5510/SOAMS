@@ -158,7 +158,18 @@ class Advertisement(db.Model):
     description = db.Column(db.Text, unique=False, nullable=True, comment='屋況簡述')
     timestamp = db.Column(db.DateTime, unique=False, nullable=False, comment='送出刊登請求的時間')
     status = db.Column(db.Integer, unique=False, nullable=False, comment='審核狀態。 0:待審核 1:通過 2:未通過')
-    landlord_id = db.Column(db.String(10), db.ForeignKey('user.id'), unique=False, nullable=False, comment='房東ID')
+    landlord_id = db.Column(db.String(10), db.ForeignKey('landlord.id'), unique=False, nullable=False, comment='房東ID')
+
+    def __init__ (self ,electricity_meter, smoke, wash_machine, water_dispenser, internet, parking, air_con, water_heater):
+        self.electricity_meter = electricity_meter
+        self.smoke = smoke
+        self.wash_machine = wash_machine
+        self.water_dispenser = water_dispenser
+        self.internet = internet
+        self.parking = parking
+        self.air_con = air_con
+        self.water_heater = water_heater
+
 
 class Post(db.Model):
     __tablename__ = 'post'

@@ -1,0 +1,35 @@
+{% extends "base.html" %} <!-- 繼承父樣板 base.html -->
+
+<!-- 瀏覽器頁籤上的字 -->
+{% block title %} 審核廣告 {% endblock title %}
+
+<!-- 該頁面的標題 -->
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">審核廣告</h1>
+    </div>
+{% endblock heading %}
+
+<!-- 主要內容 -->
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">房屋名稱: 高大學院</h5>
+                <p class="card-text">地址: 某某市某某區某某路1號</p>
+                <p class="card-text">價格: NT$ 4000 / 月</p>
+                <p class="card-text">描述: 優質社區</p>
+            </div>
+        </div>
+        <div class="mt-4">
+            <form method="POST" action="/approve_ad">
+                <input type="hidden" name="ad_id" value="{{ ad.id }}">
+                <button type="submit" class="btn btn-success">核准</button>
+            </form>
+            <form method="POST" action="/reject_ad" class="d-inline">
+                <input type="hidden" name="ad_id" value="{{ ad.id }}">
+                <button type="submit" class="btn btn-danger">駁回</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

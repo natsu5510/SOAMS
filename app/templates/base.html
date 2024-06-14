@@ -117,6 +117,13 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ url_for('rental_advertisement.index') }}">租屋廣告</a>
+                        {% if current_user.type == 'landlord' %}
+                        <a class="collapse-item" href="{{ url_for('rental_advertisement.advertise') }}">刊登廣告</a>
+                        <a class="collapse-item" href="{{ url_for('rental_advertisement.advertise') }}">查看廣告審核狀態</a>
+                        {% endif %}
+                        {% if current_user.type == 'administrator' %}
+                        <a class="collapse-item" href="{{ url_for('rental_advertisement.advertise') }}">審核廣告</a>
+                        {% endif %}
                         <a class="collapse-item" href="#">討論版</a>
                     </div>
                 </div>

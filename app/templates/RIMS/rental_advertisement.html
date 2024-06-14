@@ -1,13 +1,56 @@
-{% extends "home.html" %}
+{% extends "base.html" %} <!-- 繼承父樣板 base.html -->
 
-{% block title %} 租屋廣告 {% endblock title%}
+<!-- 瀏覽器頁籤上的字 -->
+{% block title %} 租屋廣告 {% endblock title %}
 
+<!-- 該頁面的標題 -->
 {% block heading %}
-    <div class="d-sm-flex align-items-center justify-content-between">
-        <span class="h3 mb-0 text-gray-800 font-weight-bold">租屋廣告</span>
+    <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">租屋廣告</h1>
     </div>
 {% endblock heading %}
 
-{% block content%}
-    一堆廣告
-{% endblock content%}
+<!-- 主要內容 -->
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mt-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <br>
+        <div class="row">
+            <!-- 廣告卡片範例 -->
+            {% for ad in ads %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{ url_for('static', filename='uploads/' + ad.image_urls) }}" alt="房屋圖片">
+                    <div class="card-body">
+                        <h5 class="card-title">房屋名稱 1</h5>
+                        <p class="card-text">地址：某某市某某區某某路1號</p>
+                        <p class="card-text">價格：NT$10,000 / 月</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        <!-- 分頁 -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一頁</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">下一頁</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endblock content %}

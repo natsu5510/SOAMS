@@ -1,1 +1,14 @@
-<h1>AIVS</h1>
+{% extends "base.html" %} <!-- 繼承父樣板 base.html -->
+
+{% block title%} 首頁 {% endblock title%} <!-- 瀏覽器頁籤上的字 -->
+
+{% block heading %}
+    <!-- 該頁面的標題 -->
+    <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">訪視資料</h1>
+    </div>
+{% endblock heading %}
+
+{% block content%}
+    <!-- 主要內容 -->
+{% endblock content%}

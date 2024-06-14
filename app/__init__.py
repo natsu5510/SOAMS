@@ -18,6 +18,7 @@ def create_app():
 
     app.secret_key = SECRET_KEY
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@localhost:3306/SOAMS'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///SOAMS.db'
     app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(minutes=30)
 
     db.init_app(app)
