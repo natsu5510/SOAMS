@@ -30,6 +30,7 @@ class StudentForm(UserForm):
     dept = StringField('系所', validators=[DataRequired()])
     enroll_year = IntegerField('入學年分', validators=[DataRequired()])
     sex = SelectField('性別', choices=[('1', '男'), ('0', '女')], validators=[DataRequired()])
+    sex = SelectField('性別', choices=[('1', '男'), ('0', '女')], validators=[DataRequired()])
     home_addr = StringField('家中地址')
     home_tel = StringField('家裡電話')
     contact_name = StringField('聯絡人姓名')
