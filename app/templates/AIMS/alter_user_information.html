@@ -1,0 +1,97 @@
+{% extends "home.html" %}
+
+{% block title %} User {% endblock title %}
+
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between">
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">UserCreate</span>
+    </div>
+{% endblock heading %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">修改個人資料</h2>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <form id="user-form">
+                <div class="form-group row">
+                    <label for="userID" class="col-sm-3 col-form-label">使用者ID</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="userID" value="12345" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="userName" class="col-sm-3 col-form-label">名稱</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="userName" value="User Name" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-3 col-form-label">密碼</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" id="password" value="password" disabled>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary btn-block" onclick="showEditField('password')">修改密碼</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-sm-3 col-form-label">電話</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="phone" value="0987654321" disabled>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary btn-block" onclick="showEditField('phone')">修改電話</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-3 col-form-label">電子郵件</label>
+                    <div class="col-sm-6">
+                        <input type="email" class="form-control" id="email" value="user@example.com" disabled>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary btn-block" onclick="showEditField('email')">修改信箱</button>
+                    </div>
+                </div>
+            </form>
+            <div class="form-group row mt-4" id="edit-field" style="display:none;">
+                <label for="newValue" class="col-sm-3 col-form-label">新值</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="newValue">
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-success btn-block" onclick="updateField()">修改完成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showEditField(field) {
+    document.getElementById('edit-field').style.display = 'flex';
+    document.getElementById('newValue').setAttribute('data-field', field);
+}
+
+function updateField() {
+    var field = document.getElementById('newValue').getAttribute('data-field');
+    var newValue = document.getElementById('newValue').value;
+    
+    if (newValue) {
+        if (field === 'password') {
+            document.getElementById('password').value = newValue;
+        } else if (field === 'phone') {
+            document.getElementById('phone').value = newValue;
+        } else if (field === 'email') {
+            document.getElementById('email').value = newValue;
+        }
+
+        alert('修改完成');
+        document.getElementById('edit-field').style.display = 'none';
+        document.getElementById('newValue').value = '';
+    } else {
+        alert('請輸入新值');
+    }
+}
+</script>
+{% endblock content %}
