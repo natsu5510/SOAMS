@@ -1,42 +1,50 @@
 {% extends "home.html" %}
 
-{% block title %} 修改使用者資料 {% endblock title %}
+{% set create_title = "新增" %}
+{% if createForm.type.data == 'advisor' %}
+    {% set create_title = create_title + "導師" %}
+{% elif createForm.type.data == 'student' %}
+    {% set create_title = create_title + "學生" %}
+{% endif %}
+{% set create_title = create_title + "使用者" %}
+
+{% block title %} 新增使用者 {% endblock title %}
 
 {% block heading %}
     <div class="d-sm-flex align-items-center justify-content-between">
-        <span class="h3 mb-0 text-gray-800 font-weight-bold">修改使用者資料</span>
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">新增使用者</span>
     </div>
 {% endblock heading %}
 
 {% block content %}
-    {% if updateForm != None %}
+    {% if createForm != None %}
         <div class="container mt-5">
-            <h2 class="text-center">修改使用者資料</h2>
+            <h2 class="text-center">新增使用者</h2>
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <form id="user-form" action="{{ url_for('update_user_information.update_form', user_id=updateForm.id.data) }}">
-                        {{ updateForm.hidden_tag() }}
+                    <form id="user-form" action="{{ url_for('create_user.create_form') }}">
+                        {{ createForm.hidden_tag() }}
 
                         {# User #}
                         {# User.id #}
                         <div class="form-group row">
-                            {{ updateForm.id.label(class='col-sm-3 col-form-label') }}
+                            {{ createForm.id.label(class='col-sm-3 col-form-label') }}
                             <div class="col-sm-9">
-                                {{ updateForm.id(class='form-control', disabled='disabled') }}
+                                {{ createForm.id(class='form-control', disabled='disabled') }}
                             </div>
                         </div>
                         {# User.name #}
                         <div class="form-group row">
-                            {{ updateForm.name.label(class='col-sm-3 col-form-label') }}
+                            {{ createForm.name.label(class='col-sm-3 col-form-label') }}
                             <div class="col-sm-9">
-                                {{ updateForm.name(class='form-control', disabled='disabled') }}
+                                {{ createForm.name(class='form-control', disabled='disabled') }}
                             </div>
                         </div>
                         {# User.passwd #}
                         <div class="form-group row">
-                            {{ updateForm.passwd.label(class='col-sm-3 col-form-label') }}
+                            {{ createForm.passwd.label(class='col-sm-3 col-form-label') }}
                             <div class="col-sm-6">
-                                {{ updateForm.passwd(class='form-control', disabled='disabled') }}
+                                {{ createForm.passwd(class='form-control', disabled='disabled') }}
                             </div>
                             <div class="col-sm-3">
                                 <button type="button" class="btn btn-primary btn-block"
@@ -47,9 +55,9 @@
                         </div>
                         {# User.tel #}
                         <div class="form-group row">
-                            {{ updateForm.tel.label(class='col-sm-3 col-form-label') }}
+                            {{ createForm.tel.label(class='col-sm-3 col-form-label') }}
                             <div class="col-sm-6">
-                                {{ updateForm.tel(class='form-control', disabled='disabled') }}
+                                {{ createForm.tel(class='form-control', disabled='disabled') }}
                             </div>
                             <div class="col-sm-3">
                                 <button type="button" class="btn btn-primary btn-block"
@@ -60,9 +68,9 @@
                         </div>
                         {# User.email #}
                         <div class="form-group row">
-                            {{ updateForm.email.label(class='col-sm-3 col-form-label') }}
+                            {{ createForm.email.label(class='col-sm-3 col-form-label') }}
                             <div class="col-sm-6">
-                                {{ updateForm.email(class='form-control', disabled='disabled') }}
+                                {{ createForm.email(class='form-control', disabled='disabled') }}
                             </div>
                             <div class="col-sm-3">
                                 <button type="button" class="btn btn-primary btn-block"
@@ -73,12 +81,12 @@
                         </div>
 
                         {# Advisor #}
-                        {% if updateForm.type.data == 'advisor' %}
+                        {% if createForm.type.data == 'advisor' %}
                             {# Advisor.dept #}
                             <div class="form-group row">
-                                {{ updateForm.dept.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.dept.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.dept(class='form-control', disabled='disabled') }}
+                                    {{ createForm.dept(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -89,9 +97,9 @@
                             </div>
                             {# Advisor.rank #}
                             <div class="form-group row">
-                                {{ updateForm.rank.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.rank.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.rank(class='form-control', disabled='disabled') }}
+                                    {{ createForm.rank(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -102,9 +110,9 @@
                             </div>
                             {# Advisor.office_addr #}
                             <div class="form-group row">
-                                {{ updateForm.office_addr.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.office_addr.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.office_addr(class='form-control', disabled='disabled') }}
+                                    {{ createForm.office_addr(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -115,9 +123,9 @@
                             </div>
                             {# Advisor.office_tel #}
                             <div class="form-group row">
-                                {{ updateForm.office_tel.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.office_tel.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.office_tel(class='form-control', disabled='disabled') }}
+                                    {{ createForm.office_tel(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -129,12 +137,12 @@
                         {% endif %}
 
                         {# Student #}
-                        {% if updateForm.type.data == 'student' %}
+                        {% if createForm.type.data == 'student' %}
                             {# Student.dept #}
                             <div class="form-group row">
-                                {{ updateForm.dept.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.dept.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.dept(class='form-control', disabled='disabled') }}
+                                    {{ createForm.dept(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -145,9 +153,9 @@
                             </div>
                             {# Student.enroll_year #}
                             <div class="form-group row">
-                                {{ updateForm.enroll_year.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.enroll_year.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.enroll_year(class='form-control', disabled='disabled') }}
+                                    {{ createForm.enroll_year(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -158,9 +166,14 @@
                             </div>
                             {# Student.sex #}
                             <div class="form-group row">
-                                {{ updateForm.sex.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.sex.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.sex(class='form-control', disabled='disabled') }}
+                                    {% for subfield in createForm.sex %}
+                                        <div class="form-check form-check-inline">
+                                            {{ subfield(disabled='disabled', class='form-check-input') }}
+                                            {{ subfield.label(class='form-check-label') }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -171,9 +184,9 @@
                             </div>
                             {# Student.home_addr #}
                             <div class="form-group row">
-                                {{ updateForm.home_addr.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.home_addr.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.home_addr(class='form-control', disabled='disabled') }}
+                                    {{ createForm.home_addr(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -184,9 +197,9 @@
                             </div>
                             {# Student.home_tel #}
                             <div class="form-group row">
-                                {{ updateForm.home_tel.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.home_tel.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.home_tel(class='form-control', disabled='disabled') }}
+                                    {{ createForm.home_tel(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -197,9 +210,9 @@
                             </div>
                             {# Student.contact_name #}
                             <div class="form-group row">
-                                {{ updateForm.contact_name.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.contact_name.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.contact_name(class='form-control', disabled='disabled') }}
+                                    {{ createForm.contact_name(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"
@@ -210,9 +223,9 @@
                             </div>
                             {# Student.contact_tel #}
                             <div class="form-group row">
-                                {{ updateForm.contact_tel.label(class='col-sm-3 col-form-label') }}
+                                {{ createForm.contact_tel.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.contact_tel(class='form-control', disabled='disabled') }}
+                                    {{ createForm.contact_tel(class='form-control', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary btn-block"

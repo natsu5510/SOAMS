@@ -1,0 +1,28 @@
+{% extends "home.html" %}
+
+{% block title %} 新增使用者 {% endblock title %}
+
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between">
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">新增使用者</span>
+    </div>
+{% endblock heading %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center">選擇欲新增的使用者身分</h2>
+        <div class="row">
+            <div class="col-4 offset-4 text-center">
+                <form method="POST" action="{{ url_for('create_user.user_type_form') }}">
+                    {{ typeForm.hidden_tag() }}
+                    <div class="form-group">
+                        {{ typeForm.user_type(class='form-control') }}
+                    </div>
+                    <div class="text-center">
+                        {{ typeForm.submit(class='btn btn-primary') }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

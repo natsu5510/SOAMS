@@ -41,4 +41,4 @@ def update_form(user_id):
     if form.validate_on_submit():
         pass
 
-    return render_template('AIMS/update_user_information.html', updateForm=form, user=user)
+    return render_template('AIMS/update_user_information.html', updateForm=form)
