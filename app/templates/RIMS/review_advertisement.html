@@ -14,23 +14,26 @@
 {% block content %}
     <div class="container">
         {% for ad in ads %}
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ ad.title }}</h5>
-                <p class="card-text">{{ ad.addr }}</p>
-                <p class="card-text">{{ ad.rent }}</p>
-                <p class="card-text">描述: 優質社區</p>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h4 class="m-0 font-weight-bold text-info">編號：{{ ad.id }}</h4>
+                        <a class="collapse-item" href="{{ url_for('rental_advertisement.review_advertisement_detail', adid=ad.id) }}">審核</a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="">廣告標題：{{ ad.title }}</h5>
+                        <h5 class="">申請日期：{{ ad.timestamp }}</h5>
+                        {% if ad.status == 0 %}
+                        <div class="text-warning">狀態：待審核</div>
+                        {% elif ad.status == 1 %}
+                        <div class="text-warning">狀態：通過</div>
+                        {% elif ad.status == 0 %}
+                        <div class="text-warning">狀態：駁回</div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="mt-4">
-            <form method="POST" action="/approve_ad">
-                <input type="hidden" name="ad_id" value="{{ ad.id }}">
-                <button type="submit" class="btn btn-success">核准</button>
-            </form>
-            <form method="POST" action="/reject_ad" class="d-inline">
-                <input type="hidden" name="ad_id" value="{{ ad.id }}">
-                <button type="submit" class="btn btn-danger">駁回</button>
-            </form>
         </div>
         {% endfor %}
     </div>

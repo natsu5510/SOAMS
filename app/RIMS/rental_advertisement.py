@@ -18,11 +18,18 @@ SRC_PATH =  pathlib.Path(__file__).parent.parent.absolute()
 UPLOAD_FOLDER = os.path.join(SRC_PATH,  'static', 'uploads')
 
 # 瀏覽所有廣告
-@rental_advertisement.route('/')
+@rental_advertisement.route('/<int:page>')
 @login_required
-def index():
-    advertisements = Advertisement.query.all()
+def index(page):
+    advertisements = Advertisement.query.filter_by(status=1).paginate(page=page, per_page=10, error_out=False)
     return render_template('/RIMS/rental_advertisement.html', ads=advertisements)
+
+# 瀏覽所有廣告
+@rental_advertisement.route('/advertisement/<int:adid>')
+@login_required
+def advertisement(adid):
+    advertisement = Advertisement.query.filter_by(id=adid).one()
+    return render_template('/RIMS/rental_advertisement_detail.html', ad=advertisement)
 
 # 房東刊登廣告
 @rental_advertisement.route('/advertise', methods=['GET', 'POST'])
@@ -81,7 +88,7 @@ def advertise():
         db.session.commit()
 
         flash('刊登請求已送出！請等待管理員審核', 'success')
-        return redirect(url_for('rental_advertisement.index'))
+        return redirect(url_for('rental_advertisement.index', page=1))
     # else:
     #     for fieldName, errorMessages in form.errors.items():
     #         for err in errorMessages:
@@ -122,12 +129,40 @@ def edit_advertisement_detail(adid):
         return redirect(url_for('rental_advertisement.edit_advertisement'))
     return render_template('/RIMS/edit_advertisement_detail.html', form=form)
 
-
 # 管理員審核廣告
-@rental_advertisement.route('/review_advertisement', methods=['GET', 'POST'])
+@rental_advertisement.route('/review_advertisement')
 @login_required
 @role_required('administrator')
 def review_advertisement():
     ads = Advertisement.query.filter_by(status=0)
-    count = ads.count()
-    return render_template('/RIMS/review_advertisement.html', ads=ads, count=count)
+    return render_template('/RIMS/review_advertisement.html', ads=ads)
+
+# 管理員審核廣告
+@rental_advertisement.route('/review_advertisement/<int:adid>', methods=['GET', 'POST'])
+@login_required
+@role_required('administrator')
+def review_advertisement_detail(adid):
+    ad = Advertisement.query.get_or_404(adid)
+    # 確保房東不能透過直接在路由輸入參數來編輯其他人的廣告
+    form = AdvertisementForm(obj=ad)
+    if request.method == 'POST':
+        form.populate_obj(ad)
+        ad.electricity_meter=strtobool(form.electricity_meter.data)
+        ad.smoke=strtobool(form.smoke.data)
+        ad.wash_machine=strtobool(form.wash_machine.data)
+        ad.water_dispenser=strtobool(form.water_dispenser.data)
+        ad.internet=strtobool(form.internet.data)
+        ad.parking=strtobool(form.parking.data)
+        ad.air_con=strtobool(form.air_con.data)
+        ad.water_heater=strtobool(form.water_heater.data)
+
+        if request.form.get('action') == '核准':
+            ad.status = 1
+        elif request.form.get('action') == '駁回':
+            ad.status = 2
+
+        db.session.add(ad)
+        db.session.commit()
+        flash('審核成功', 'success')
+        return redirect(url_for('rental_advertisement.review_advertisement'))
+    return render_template('/RIMS/review_advertisement_detail.html', form=form)

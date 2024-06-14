@@ -115,7 +115,7 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ url_for('rental_advertisement.index') }}">瀏覽租屋廣告</a>
+                        <a class="collapse-item" href="{{ url_for('rental_advertisement.index', page=1) }}">瀏覽租屋廣告</a>
                         {% if current_user.type == 'landlord' %}
                         <a class="collapse-item" href="{{ url_for('rental_advertisement.advertise') }}">刊登廣告</a>
                         <a class="collapse-item" href="{{ url_for('rental_advertisement.edit_advertisement') }}">編輯廣告</a>

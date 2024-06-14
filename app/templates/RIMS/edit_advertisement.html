@@ -36,9 +36,9 @@
                         {% if ad.status == 0 %}
                         <div class="text-warning">狀態：待審核</div>
                         {% elif ad.status == 1 %}
-                        <div class="text-warning">狀態：通過</div>
-                        {% elif ad.status == 0 %}
-                        <div class="text-warning">狀態：駁回</div>
+                        <div class="text-success">狀態：通過</div>
+                        {% elif ad.status == 2 %}
+                        <div class="text-danger">狀態：駁回</div>
                         {% endif %}
                     </div>
                 </div>
