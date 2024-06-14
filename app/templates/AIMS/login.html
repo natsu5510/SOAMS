@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='img/NUK_icon.bmp') }}" type="image/x-icon">
 </head>
 <body>
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
-                <h2 class="text-center">Login</h2>
+                <h2 class="text-center">使用者登入</h2>
                 <form method="POST" action="{{ url_for('login_management.login') }}">
                     <div class="form-group">
-                        <label for="usern_id">UserID</label>
+                        <label for="usern_id">帳號</label>
                         <input type="text" class="form-control" id="user_id" name="user_id" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password">密碼</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <button type="submit" class="btn btn-primary btn-block">登入</button>
                 </form>
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
