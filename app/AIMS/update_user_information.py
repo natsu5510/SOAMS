@@ -39,18 +39,13 @@ def update_form(user_id):
         flash('欲修改的使用者身分錯誤', 'warning')
         return render_template('AIMS/update_user_information.html', updateForm=None)
 
-    print(form.validate_on_submit())
-    print(form.is_submitted())
-    print(form.errors)
-    print(form.data)
     if form.validate_on_submit():
         form.populate_obj(user)
-        print(user)
-        # db.session.commit()
-        # flash('使用者資料已更新', 'success')
-        # return redirect(url_for('update_user_information.update_form', user_id=user_id))
+        db.session.commit()
+        flash('使用者資料已更新', 'success')
+        return redirect(url_for('update_user_information.update_form', user_id=user_id))
     elif form.is_submitted():
-        flash('更新失敗，請檢查您的輸入', 'danger')
+        flash('修改失敗，請檢查您的輸入', 'danger')
         return render_template('AIMS/update_user_information.html', updateForm=None)
 
     return render_template('AIMS/update_user_information.html', updateForm=form)
