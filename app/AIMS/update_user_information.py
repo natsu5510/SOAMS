@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import login_required
 from wtforms.fields.simple import SubmitField
 
+from app import db
 from app.AIMS.user_forms import AdvisorForm, StudentForm, LandlordForm
 from app.models import User
 
@@ -9,15 +10,15 @@ update_user_information = Blueprint('update_user_information', __name__)
 
 
 class AdvisorUpdateForm(AdvisorForm):
-    submit = SubmitField('查詢')
+    submit = SubmitField('送出')
 
 
 class StudentUpdateForm(StudentForm):
-    submit = SubmitField('查詢')
+    submit = SubmitField('送出')
 
 
 class LandlordUpdateForm(LandlordForm):
-    submit = SubmitField('查詢')
+    submit = SubmitField('送出')
 
 
 @update_user_information.route('/update_user_information/<user_id>', methods=['GET', 'POST'])
@@ -38,7 +39,18 @@ def update_form(user_id):
         flash('欲修改的使用者身分錯誤', 'warning')
         return render_template('AIMS/update_user_information.html', updateForm=None)
 
+    print(form.validate_on_submit())
+    print(form.is_submitted())
+    print(form.errors)
+    print(form.data)
     if form.validate_on_submit():
-        pass
+        form.populate_obj(user)
+        print(user)
+        # db.session.commit()
+        # flash('使用者資料已更新', 'success')
+        # return redirect(url_for('update_user_information.update_form', user_id=user_id))
+    elif form.is_submitted():
+        flash('更新失敗，請檢查您的輸入', 'danger')
+        return render_template('AIMS/update_user_information.html', updateForm=None)
 
     return render_template('AIMS/update_user_information.html', updateForm=form)

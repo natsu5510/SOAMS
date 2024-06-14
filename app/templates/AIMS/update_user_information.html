@@ -1,46 +1,3 @@
-{% block scripts %}
-<script type="text/javascript">
-    function showEditField(fieldName) {
-        var fieldId = '#' + fieldName;
-        var editButton = $(fieldId + '-edit-btn');
-        var inputField = $(fieldId + '-input');
-
-        if (editButton.text() === '修改') {
-            // Switch to edit mode
-            editButton.text('取消');
-            editButton.removeClass('btn-primary').addClass('btn-danger');
-            inputField.prop('disabled', false);
-
-            // Save current value before editing
-            inputField.data('original-value', inputField.val());
-        } else {
-            // Switch to cancel mode
-            editButton.text('修改');
-            editButton.removeClass('btn-danger').addClass('btn-primary');
-            inputField.prop('disabled', true);
-
-            // Restore original value
-            inputField.val(inputField.data('original-value'));
-        }
-    }
-
-    function resetPassword() {
-        $('#passwd-input').val('passwd');
-    }
-
-    function updateField() {
-        // Logic for updating field values
-        // This function can be customized based on how you handle updates
-    }
-
-    // Example event listener for update button at the bottom
-    $('#submit-btn').click(function() {
-        // Logic for submitting form data
-        // This function can be customized based on your form submission requirements
-    });
-</script>
-{% endblock %}
-
 {% extends "home.html" %}
 
 {% block title %} 修改使用者資料 {% endblock title %}
@@ -57,7 +14,8 @@
             <h2 class="text-center">修改使用者資料</h2>
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <form id="user-form" action="{{ url_for('update_user_information.update_form', user_id=updateForm.id.data) }}">
+                    <form id="user-form" method="POST"
+                          action="{{ url_for('update_user_information.update_form', user_id=updateForm.id.data) }}">
                         {{ updateForm.hidden_tag() }}
 
                         {# User #}
@@ -75,7 +33,9 @@
                                 {{ updateForm.name(class='form-control', id='name-input', disabled='disabled') }}
                             </div>
                             <div class="col-sm-3">
-                                <button type="button" id="name-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('name')">修改</button>
+                                <button type="button" id="name-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('name')">修改
+                                </button>
                             </div>
                         </div>
                         {# User.passwd #}
@@ -85,7 +45,9 @@
                                 {{ updateForm.passwd(class='form-control', id='passwd-input', value='passwd', disabled='disabled') }}
                             </div>
                             <div class="col-sm-3">
-                                <button type="button" id="passwd-reset-btn" class="btn btn-success btn-block" onclick="resetPassword()">重置</button>
+                                <button type="button" id="passwd-reset-btn" class="btn btn-success btn-block"
+                                        onclick="resetPassword()">重置
+                                </button>
                             </div>
                         </div>
                         {# User.tel #}
@@ -95,7 +57,9 @@
                                 {{ updateForm.tel(class='form-control', id='tel-input', disabled='disabled') }}
                             </div>
                             <div class="col-sm-3">
-                                <button type="button" id="tel-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('tel')">修改</button>
+                                <button type="button" id="tel-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('tel')">修改
+                                </button>
                             </div>
                         </div>
                         {# User.email #}
@@ -105,7 +69,9 @@
                                 {{ updateForm.email(class='form-control', id='email-input', disabled='disabled') }}
                             </div>
                             <div class="col-sm-3">
-                                <button type="button" id="email-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('email')">修改</button>
+                                <button type="button" id="email-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('email')">修改
+                                </button>
                             </div>
                         </div>
 
@@ -118,7 +84,9 @@
                                     {{ updateForm.dept(class='form-control', id='dept-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('dept')">修改</button>
+                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('dept')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Advisor.rank #}
@@ -128,7 +96,9 @@
                                     {{ updateForm.rank(class='form-control', id='rank-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="rank-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('rank')">修改</button>
+                                    <button type="button" id="rank-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('rank')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Advisor.office_addr #}
@@ -138,7 +108,9 @@
                                     {{ updateForm.office_addr(class='form-control', id='office_addr-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="office_addr-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('office_addr')">修改</button>
+                                    <button type="button" id="office_addr-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('office_addr')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Advisor.office_tel #}
@@ -148,7 +120,9 @@
                                     {{ updateForm.office_tel(class='form-control', id='office_tel-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="office_tel-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('office_tel')">修改</button>
+                                    <button type="button" id="office_tel-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('office_tel')">修改
+                                    </button>
                                 </div>
                             </div>
                         {% endif %}
@@ -162,7 +136,9 @@
                                     {{ updateForm.dept(class='form-control', id='dept-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('dept')">修改</button>
+                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('dept')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Student.enroll_year #}
@@ -172,17 +148,21 @@
                                     {{ updateForm.enroll_year(class='form-control', id='enroll_year-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="enroll_year-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('enroll_year')">修改</button>
+                                    <button type="button" id="enroll_year-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('enroll_year')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Student.sex #}
                             <div class="form-group row">
                                 {{ updateForm.sex.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.sex(class='form-control', disabled='disabled',id='sex-input') }}    
+                                    {{ updateForm.sex(class='form-control', disabled='disabled',id='sex-input') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="sex-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('sex')">修改</button>
+                                    <button type="button" id="sex-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('sex')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Student.home_addr #}
@@ -192,7 +172,9 @@
                                     {{ updateForm.home_addr(class='form-control', id='home_addr-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="home_addr-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('home_addr')">修改</button>
+                                    <button type="button" id="home_addr-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('home_addr')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Student.home_tel #}
@@ -202,7 +184,9 @@
                                     {{ updateForm.home_tel(class='form-control', id='home_tel-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="home_tel-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('home_tel')">修改</button>
+                                    <button type="button" id="home_tel-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('home_tel')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Student.contact_name #}
@@ -212,7 +196,9 @@
                                     {{ updateForm.contact_name(class='form-control', id='contact_name-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="contact_name-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('contact_name')">修改</button>
+                                    <button type="button" id="contact_name-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('contact_name')">修改
+                                    </button>
                                 </div>
                             </div>
                             {# Student.contact_tel #}
@@ -222,17 +208,18 @@
                                     {{ updateForm.contact_tel(class='form-control', id='contact_tel-input', disabled='disabled') }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <button type="button" id="contact_tel-edit-btn" class="btn btn-primary btn-block" onclick="showEditField('contact_tel')">修改</button>
+                                    <button type="button" id="contact_tel-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('contact_tel')">修改
+                                    </button>
                                 </div>
                             </div>
                         {% endif %}
-                    </form>
-
-                    <div class="form-group row mt-4">
-                        <div class="col-sm-12 text-center">
-                            <button type="button" id="submit-btn" class="btn btn-success btn-block">送出</button>
+                        <div class="form-group row mt-4">
+                            <div class="col-sm-12 text-center">
+                                {{ updateForm.submit(class='btn btn-success btn-block') }}
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -246,11 +233,45 @@
                     <div class="row justify-content-center">
                         <div class="col-6 text-center">
                             <h3 class="alert alert-{{ category }} text-center">{{ message }}</h3>
-                            <a href="{{ url_for('search_user_information.search_form') }}" class="btn btn-primary text-center">返回</a>
+                            <a href="{{ url_for('search_user_information.search_form') }}"
+                               class="btn btn-primary text-center">返回</a>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
     {% endwith %}
+{% endblock %}
+
+{% block script %}
+    <script>
+        function showEditField(fieldName) {
+            let fieldId = '#' + fieldName;
+            let editButton = $(fieldId + '-edit-btn');
+            let inputField = $(fieldId + '-input');
+
+            let editButtonText = editButton.text().trim().toLowerCase();
+            if (editButtonText === '修改') {
+                // Switch to edit mode
+                editButton.text('取消');
+                editButton.removeClass('btn-primary').addClass('btn-danger');
+                inputField.prop('disabled', false);
+
+                // Save current value before editing
+                inputField.data('original-value', inputField.val());
+            } else {
+                // Switch to cancel mode
+                editButton.text('修改');
+                editButton.removeClass('btn-danger').addClass('btn-primary');
+                inputField.prop('disabled', true);
+
+                // Restore original value
+                inputField.val(inputField.data('original-value'));
+            }
+        }
+
+        function resetPassword() {
+            $('#passwd-input').val('passwd');
+        }
+    </script>
 {% endblock %}
