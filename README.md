@@ -2,9 +2,9 @@
 
 ## 複製專案到本地
 
-### 1. 先複製儲藏庫到本地端
+### 1. 複製儲藏庫到本地端
 
-```git
+```bash
 git clone https://github.com/natsu5510/SOAMS.git
 ```
 
@@ -14,35 +14,34 @@ git clone https://github.com/natsu5510/SOAMS.git
 cd SOAMS/
 ```
 
-### 3. 設定使用者名稱與信箱
+### 3. 設定本地使用者名稱與信箱
 
-```git
+```bash
 git config --local user.name 你的學號
 ```
 
-```git
+```bash
 git config --local user.email 你的學號@mail.nuk.edu.tw
 ```
 
 ### 4. 切換到自己的分支
 
-```git
+```bash
 git checkout -t origin/你的學號
 ```
 
-### 5. 完成commit後push上github
-
-- 使用 `-u origin 你的學號` 設定上游(只有第一次git push要打)
-
-```git
-git push -u origin 你的學號
-```
-
-- 往後push只要打
-
-```git
-git push
-```
+> [!NOTE] push 上 github
+> - 使用 `-u origin 你的學號` 設定上游(只有第一次git push要打)
+> 
+> ```bash
+> git push -u origin 你的學號
+> ```
+> 
+> - 往後push只要打
+> 
+> ```bash
+> git push
+> ```
 
 ## 設定資料庫
 
