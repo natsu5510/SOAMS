@@ -17,6 +17,7 @@ rental_advertisement = Blueprint('rental_advertisement', __name__)
 SRC_PATH =  pathlib.Path(__file__).parent.parent.absolute()
 UPLOAD_FOLDER = os.path.join(SRC_PATH,  'static', 'uploads')
 
+# 瀏覽所有廣告
 @rental_advertisement.route('/')
 @login_required
 def index():
@@ -29,7 +30,7 @@ def index():
 @role_required('landlord')
 def advertise():
     form = AdvertisementForm()
-    if request.method == 'POST' and form.validate():
+    if form.validate_on_submit():
         new_ad = Advertisement(
             electricity_meter=strtobool(form.electricity_meter.data),
             smoke=strtobool(form.smoke.data),
@@ -86,3 +87,47 @@ def advertise():
     #         for err in errorMessages:
     #             print(f'Error in {fieldName}: {err}')
     return render_template('/RIMS/advertise.html', form=form)
+
+# 房東編輯廣告
+@rental_advertisement.route('/edit_advertisement')
+@login_required
+@role_required('landlord')
+def edit_advertisement():
+    ads = Advertisement.query.filter_by(landlord_id=current_user.id)
+    return render_template('/RIMS/edit_advertisement.html', ads=ads)
+
+# 房東編輯廣告
+@rental_advertisement.route('/edit_advertisement/<int:adid>', methods=['GET', 'POST'])
+@login_required
+@role_required('landlord')
+def edit_advertisement_detail(adid):
+    ad = Advertisement.query.get_or_404(adid)
+    # 確保房東不能透過直接在路由輸入參數來編輯其他人的廣告
+    if ad.landlord_id != current_user.id:
+        return redirect(url_for('login_management.login'))
+    form = AdvertisementForm(obj=ad)
+    if form.validate_on_submit():
+        form.populate_obj(ad)
+        ad.electricity_meter=strtobool(form.electricity_meter.data)
+        ad.smoke=strtobool(form.smoke.data)
+        ad.wash_machine=strtobool(form.wash_machine.data)
+        ad.water_dispenser=strtobool(form.water_dispenser.data)
+        ad.internet=strtobool(form.internet.data)
+        ad.parking=strtobool(form.parking.data)
+        ad.air_con=strtobool(form.air_con.data)
+        ad.water_heater=strtobool(form.water_heater.data)
+        db.session.add(ad)
+        db.session.commit()
+        flash('編輯成功', 'success')
+        return redirect(url_for('rental_advertisement.edit_advertisement'))
+    return render_template('/RIMS/edit_advertisement_detail.html', form=form)
+
+
+# 管理員審核廣告
+@rental_advertisement.route('/review_advertisement', methods=['GET', 'POST'])
+@login_required
+@role_required('administrator')
+def review_advertisement():
+    ads = Advertisement.query.filter_by(status=0)
+    count = ads.count()
+    return render_template('/RIMS/review_advertisement.html', ads=ads, count=count)

@@ -69,8 +69,7 @@
                     <i class="fas fa-fw fa-user-edit"></i>
                     <span>基本資料</span>
                 </a>
-                <div id="collapseBasicInformation" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseBasicInformation" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="#">修改個人資料</a>
                         {% if current_user.type == 'administrator' %}
@@ -116,13 +115,13 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ url_for('rental_advertisement.index') }}">租屋廣告</a>
+                        <a class="collapse-item" href="{{ url_for('rental_advertisement.index') }}">瀏覽租屋廣告</a>
                         {% if current_user.type == 'landlord' %}
                         <a class="collapse-item" href="{{ url_for('rental_advertisement.advertise') }}">刊登廣告</a>
-                        <a class="collapse-item" href="{{ url_for('rental_advertisement.advertise') }}">查看廣告審核狀態</a>
+                        <a class="collapse-item" href="{{ url_for('rental_advertisement.edit_advertisement') }}">編輯廣告</a>
                         {% endif %}
                         {% if current_user.type == 'administrator' %}
-                        <a class="collapse-item" href="{{ url_for('rental_advertisement.advertise') }}">審核廣告</a>
+                        <a class="collapse-item" href="{{ url_for('rental_advertisement.review_advertisement') }}">審核廣告</a>
                         {% endif %}
                         <a class="collapse-item" href="#">討論版</a>
                     </div>

@@ -13,11 +13,12 @@
 <!-- 主要內容 -->
 {% block content %}
     <div class="container">
+        {% for ad in ads %}
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">房屋名稱: 高大學院</h5>
-                <p class="card-text">地址: 某某市某某區某某路1號</p>
-                <p class="card-text">價格: NT$ 4000 / 月</p>
+                <h5 class="card-title">{{ ad.title }}</h5>
+                <p class="card-text">{{ ad.addr }}</p>
+                <p class="card-text">{{ ad.rent }}</p>
                 <p class="card-text">描述: 優質社區</p>
             </div>
         </div>
@@ -31,5 +32,6 @@
                 <button type="submit" class="btn btn-danger">駁回</button>
             </form>
         </div>
+        {% endfor %}
     </div>
 {% endblock content %}
