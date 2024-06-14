@@ -50,5 +50,6 @@ git checkout -t origin/你的學號
 ```python
 MYSQL_PASSWORD = '你的MYSQL密碼'
 MYSQL_USER = '你的MYSQL用戶名'
+DATABASE_URI = '資料庫URI'
 SECRET_KEY = '隨便一個字串'
 ```

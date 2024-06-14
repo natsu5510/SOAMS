@@ -14,7 +14,7 @@
             <h2 class="text-center">修改使用者資料</h2>
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <form id="user-form" action="{{ url_for('update_user_information.update_form') }}">
+                    <form id="user-form" action="{{ url_for('update_user_information.update_form', user_id=user.id) }}">
                         {{ updateForm.hidden_tag() }}
 
                         {# User #}
