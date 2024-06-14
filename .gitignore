@@ -10,3 +10,4 @@ htmlcov/
 docs/_build/
 config.py
 SOAMS_venv/
+instance/
