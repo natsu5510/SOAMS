@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request, current_app as app
 from flask_login import login_user, logout_user, login_required, current_user
 from app.AIMS.login_management import role_required
-from app.models import Advertisement
+from app.models import Advertisement, Landlord
 from app.forms import AdvertisementForm
 from app.extensions import db
 from sqlalchemy import func
@@ -24,12 +24,13 @@ def index(page):
     advertisements = Advertisement.query.filter_by(status=1).paginate(page=page, per_page=10, error_out=False)
     return render_template('/RIMS/rental_advertisement.html', ads=advertisements)
 
-# 瀏覽所有廣告
+# 瀏覽廣告
 @rental_advertisement.route('/advertisement/<int:adid>')
 @login_required
 def advertisement(adid):
     advertisement = Advertisement.query.filter_by(id=adid).one()
-    return render_template('/RIMS/rental_advertisement_detail.html', ad=advertisement)
+    landlord = Landlord.query.filter_by(id=advertisement.landlord_id).one()
+    return render_template('/RIMS/rental_advertisement_detail.html', ad=advertisement, landlord=landlord)
 
 # 房東刊登廣告
 @rental_advertisement.route('/advertise', methods=['GET', 'POST'])
@@ -53,7 +54,8 @@ def advertise():
         new_ad.building_type=form.building_type.data
         new_ad.addr=form.addr.data
         new_ad.rental_limit=form.rental_limit.data
-        new_ad.rent=form.rent.data
+        new_ad.rent_lower=form.rent_lower.data
+        new_ad.rent_upper=form.rent_upper.data
         new_ad.suite=form.suite.data
         new_ad.room=form.room.data
         new_ad.description=form.description.data
@@ -81,6 +83,9 @@ def advertise():
                     file.save(filepath)
                     image_urls += new_filename + ','
                     count += 1
+            # 移除最後一個逗號
+            if image_urls.endswith(','):
+                image_urls = image_urls[:-1]
             new_ad.image_urls=image_urls
         
         

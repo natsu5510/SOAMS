@@ -19,10 +19,17 @@
             background-color: rgb(255, 242, 215);
             cursor: pointer;
         }
+        .hidden {
+            display: none;
+        }
     </style>
     <script>
         function redirectTo(url) {
             window.location.href = url;
+        }
+        function toggleLayout(layout) {
+            document.getElementById('grid-layout').classList.toggle('hidden', layout !== 'grid');
+            document.getElementById('list-layout').classList.toggle('hidden', layout !== 'list');
         }
     </script>
     <div class="container">
@@ -35,44 +42,51 @@
                 </div>
             {% endif %}
         {% endwith %}
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-primary mr-2" onclick="toggleLayout('grid')">Grid View</button>
+            <button class="btn btn-secondary" onclick="toggleLayout('list')">List View</button>
+        </div>    
         <br>
-        <div class="row">
-            <!-- 廣告卡片範例 -->
-            {% for ad in ads.items %}
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    {% set image_urls = ad.image_urls.split(',') %}
-                    <img class="card-img-top" src="{{ url_for('static', filename='uploads/' + image_urls.0) }}" alt="房屋圖片">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ ad.title }}</h5>
-                        <p class="card-text">{{ ad.addr }}</p>
-                        <p class="card-text">價格：NT${{ ad.rent }} / 月</p>
+        <div id="grid-layout">
+            <div class="row">
+                {% for ad in ads.items %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow" onclick="redirectTo('{{ url_for('rental_advertisement.advertisement', adid=ad.id) }}')">
+                        {% set image_urls = ad.image_urls.split(',') %}
+                        <img class="card-img-top" src="{{ url_for('static', filename='uploads/' + image_urls.0) }}" alt="房屋圖片">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ad.title }}</h5>
+                            <p class="card-text">{{ ad.addr }}</p>
+                            <p class="card-text">價格：NT${{ ad.rent_lower }}~{{ ad.rent_upper }} / 月</p>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-        <div class="row">
-            <!-- 廣告卡片範例 -->
-            {% for ad in ads.items %}
-            <div class="col-md-12 mb-4">
-                <div class="card" onclick="redirectTo('{{ url_for('rental_advertisement.advertisement', adid=ad.id) }}')">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            {% set image_urls = ad.image_urls.split(',') %}
-                            <img class="card-img" src="{{ url_for('static', filename='uploads/' + image_urls[0].strip()) }}" alt="房屋圖片">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ ad.title }}</h5>
-                                <p class="card-text">{{ ad.addr }}</p>
-                                <p class="card-text">價格：NT${{ ad.rent }} / 月</p>
+        <div id="list-layout" class="hidden">
+            <div class="row">
+                <!-- 廣告卡片範例 -->
+                {% for ad in ads.items %}
+                <div class="col-md-12 mb-4">
+                    <div class="card shadow" onclick="redirectTo('{{ url_for('rental_advertisement.advertisement', adid=ad.id) }}')">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                {% set image_urls = ad.image_urls.split(',') %}
+                                <img class="card-img" src="{{ url_for('static', filename='uploads/' + image_urls[0].strip()) }}" alt="房屋圖片">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ ad.title }}</h5>
+                                    <p class="card-text">{{ ad.addr }}</p>
+                                    <p class="card-text">價格：NT${{ ad.rent_lower }}~{{ ad.rent_upper }} / 月</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
         
         <!-- 分頁 -->
