@@ -9,7 +9,7 @@
 {% endblock heading %}
 
 {% block content %}
-    {% if updateForm != None %}
+    {% if updateForm %}
         <div class="container mt-5">
             <h2 class="text-center">修改使用者資料</h2>
             <div class="row">
@@ -157,7 +157,7 @@
                             <div class="form-group row">
                                 {{ updateForm.sex.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
-                                    {{ updateForm.sex(class='form-control', disabled='disabled',id='sex-input') }}
+                                    {{ updateForm.sex(class='form-control', disabled='disabled', id='sex-input') }}
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" id="sex-edit-btn" class="btn btn-primary btn-block"
