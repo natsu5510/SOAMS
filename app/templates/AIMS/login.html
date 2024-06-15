@@ -14,7 +14,7 @@
                 <h2 class="text-center">使用者登入</h2>
                 <form method="POST" action="{{ url_for('login_management.login') }}">
                     <div class="form-group">
-                        <label for="usern_id">帳號</label>
+                        <label for="user_id">帳號</label>
                         <input type="text" class="form-control" id="user_id" name="user_id" required>
                     </div>
                     <div class="form-group">
@@ -22,6 +22,7 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">登入</button>
+                    <a href="{{ url_for('login_management.register') }}" class="btn btn-info btn-block mt-3">房東註冊</a>
                 </form>
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
