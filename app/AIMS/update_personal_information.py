@@ -70,4 +70,5 @@ def update_password():
             db.session.commit()
             flash('密碼已成功更改', 'success')
             return redirect(url_for('update_personal_information.update_form'))
+
     return render_template('AIMS/update_password.html', form=form)
