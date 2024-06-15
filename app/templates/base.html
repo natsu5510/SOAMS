@@ -91,16 +91,16 @@
                 <div id="collapseAccommodationAndVisitation" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         {% if current_user.type == 'administrator' %}
-                        <a class="collapse-item" href="#">查看學生住宿資料</a>
-                        <a class="collapse-item" href="#">查看訪視資料</a>
+                        <a class="collapse-item" href="{{ url_for('accommodation_management.index') }}">查看學生住宿資料</a>
+                        <a class="collapse-item" href="{{ url_for('visitation_management.index') }}">查看訪視資料</a>
                         {% endif %}
                         {% if current_user.type == 'advisor' %}
-                        <a class="collapse-item" href="#">查看學生住宿資料</a>
-                        <a class="collapse-item" href="#">填寫訪視資料</a>
+                        <a class="collapse-item" href="{{ url_for('accommodation_management.index') }}">查看學生住宿資料</a>
+                        <a class="collapse-item" href="{{ url_for('visitation_management.index') }}">填寫訪視資料</a>
                         {% endif %}
                         {% if current_user.type == 'student' %}
-                        <a class="collapse-item" href="#">填寫住宿資料</a>
-                        <a class="collapse-item" href="#">填寫訪視資料</a>
+                        <a class="collapse-item" href="{{ url_for('accommodation_management.edit') }}">填寫住宿資料</a>
+                        <a class="collapse-item" href="{{ url_for('visitation_management.edit') }}">填寫訪視資料</a>
                         {% endif %}
                     </div>
                 </div>
