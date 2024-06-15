@@ -1,0 +1,62 @@
+{% extends "home.html" %}
+
+{% block title %} {{ post.title }} {% endblock title %}
+
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between">
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">租屋資訊討論版</span>
+    </div>
+{% endblock heading %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Article Content -->
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.title }}</h2>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ post.user_id }} - {{ post.timestamp.strftime('%Y-%m-%d') }}</h6>
+                        <p class="card-text">{{ post.text }}</p>
+                        {% if post.image_urls %}
+                            <img src="" alt="Post Image" class="img-fluid">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>留言</h4>
+                {% for comment in comments %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ comment.user_id }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ comment.timestamp.strftime('%Y-%m-%d') }}</h6>
+                        <p class="card-text">{{ comment.text }}</p>
+                        {% if comment.image_urls %}
+                            <img src="" alt="Comment Image" class="img-fluid">
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>發表留言</h4>
+                <form method="POST" action="{{ url_for('rental_information_exchange.post', post_id=post.id) }}">
+                    <div class="form-group">
+                        <label for="commentContent">留言內容</label>
+                        <textarea class="form-control" id="commentContent" name="commentContent" rows="3" placeholder="輸入您的留言"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">送出留言</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

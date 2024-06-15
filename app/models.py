@@ -1,5 +1,6 @@
 from app.extensions import db
 from flask_login import UserMixin
+from datetime import datetime
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
@@ -165,15 +166,27 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True, comment='Po文編號')
     title = db.Column(db.String(50), unique=False, nullable=False, comment='Po文標題')
     text = db.Column(db.Text, unique=False, nullable=False, comment='Po文內容')
-    timestamp = db.Column(db.DateTime, unique=False, nullable=False, comment='Po文時間')
+    timestamp = db.Column(db.DateTime, unique=False, nullable=False, default=datetime.utcnow, comment='Po文時間')
     image_urls = db.Column(db.Text, unique=False, nullable=True, comment='Po文圖檔路徑')
     user_id = db.Column(db.String(10), db.ForeignKey('user.id'), unique=False, nullable=False, comment='Po文者ID')
+
+    def __init__(self, title, text, user_id, image_urls=None):
+        self.title = title
+        self.text = text
+        self.image_urls = image_urls
+        self.user_id = user_id
 
 class Comment(db.Model):
     __tablename__ = 'comment'
     id = db.Column(db.Integer, primary_key=True, comment='留言編號')
     text = db.Column(db.Text, unique=False, nullable=False, comment='留言內容')
-    timestamp = db.Column(db.DateTime, unique=False, nullable=False, comment='留言時間')
+    timestamp = db.Column(db.DateTime, unique=False, nullable=False, default=datetime.utcnow, comment='留言時間')
     image_urls = db.Column(db.Text, unique=False, nullable=True, comment='留言圖檔路徑')
     user_id = db.Column(db.String(256), db.ForeignKey('user.id'), unique=False, nullable=False, comment='留言者ID')
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), unique=False, nullable=False, comment='文章ID')
+
+    def __init__(self, text, user_id, post_id, image_urls=None):
+        self.text = text
+        self.user_id = user_id
+        self.post_id = post_id
+        self.image_urls = image_urls
