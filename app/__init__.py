@@ -13,14 +13,18 @@ def create_app():
     app.register_blueprint(login_management)
     from app.AIMS.create_user import create_user
     app.register_blueprint(create_user)
+    from app.AIMS.land_lord_register import land_lord_register
+    app.register_blueprint(land_lord_register)
     from app.AIMS.search_user_information import search_user_information
     app.register_blueprint(search_user_information)
     from app.AIMS.update_user_information import update_user_information
     app.register_blueprint(update_user_information)
     from app.AIMS.update_personal_information import update_personal_information
     app.register_blueprint(update_personal_information)
+
     from app.AIVS.accommodation_management import accommodation_management
     app.register_blueprint(accommodation_management, url_prefix='/AIVS')
+
     from app.RIMS.rental_advertisement import rental_advertisement
     app.register_blueprint(rental_advertisement, url_prefix='/rental_advertisement')
 

@@ -22,7 +22,7 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">登入</button>
-                    <a href="{{ url_for('login_management.register') }}" class="btn btn-info btn-block mt-3">房東註冊</a>
+                    <a href="{{ url_for('land_lord_register.register') }}" class="btn btn-info btn-block mt-3">房東註冊</a>
                 </form>
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}

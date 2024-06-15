@@ -27,7 +27,7 @@ def update_form(user_id):
     user = User.query.filter_by(id=user_id).first()
     if user is None:
         flash('查無使用者', 'warning')
-        return render_template('AIMS/update_user_information.html', updateForm=None)
+        return render_template('AIMS/update_user_information.html')
 
     if user.type == 'advisor':
         form = AdvisorUpdateForm(obj=user)
@@ -37,7 +37,7 @@ def update_form(user_id):
         form = LandlordUpdateForm(obj=user)
     else:
         flash('欲修改的使用者身分錯誤', 'warning')
-        return render_template('AIMS/update_user_information.html', updateForm=None)
+        return render_template('AIMS/update_user_information.html')
 
     if form.validate_on_submit():
         form.populate_obj(user)
@@ -46,6 +46,6 @@ def update_form(user_id):
         return redirect(url_for('update_user_information.update_form', user_id=user_id))
     elif form.is_submitted():
         flash('修改失敗，請檢查您的輸入', 'danger')
-        return render_template('AIMS/update_user_information.html', updateForm=None)
+        return render_template('AIMS/update_user_information.html', updateForm=form)
 
     return render_template('AIMS/update_user_information.html', updateForm=form)
