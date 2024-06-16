@@ -18,6 +18,9 @@ class AdvisorDeleteForm(AdvisorForm):
 
 
 class StudentDeleteForm(StudentForm):
+    def __init__(self, *args, **kwargs):
+        super(StudentDeleteForm, self).__init__(*args, **kwargs)
+        self.advisor_id.choices = [(advisor.id, advisor.name) for advisor in User.query.filter_by(type='advisor').all()]
     submit = SubmitField('確認刪除')
 
 

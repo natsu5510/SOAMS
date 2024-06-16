@@ -46,16 +46,36 @@
 
                     {# User #}
                     {# User.id #}
+                    {# User.id.error #}
+                    {% if form.id.errors %}
+                        <div class="help-block  text-danger">
+                            {{ form.id.errors[0] }}
+                        </div>
+                    {% endif %}
                     <div class="form-group">
                         {{ form.id.label(class="form-label") }}
                         {{ form.id(class="form-control") }}
                     </div>
+
                     {# User.name #}
+                    {# User.name.error #}
+                    {% if form.name.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.name.errors[0] }}
+                        </div>
+                    {% endif %}
                     <div class="form-group">
                         {{ form.name.label(class="form-label") }}
                         {{ form.name(class="form-control") }}
                     </div>
+
                     {# User.passwd #}
+                    {# User.passwd.error #}
+                    {% if form.passwd.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.passwd.errors[0] }}
+                        </div>
+                    {% endif %}
                     <div class="form-group">
                         {{ form.passwd.label(class="form-label") }}
                         {{ form.passwd(class="form-control") }}
@@ -71,13 +91,19 @@
                     {% endif %}
 
                     {# User.tel #}
+                    {# User.tel.error #}
+                    {% if form.tel.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.tel.errors[0] }}
+                        </div>
+                    {% endif %}
                     <div class="form-group">
                         {{ form.tel.label(class="form-label") }}
                         {{ form.tel(class="form-control") }}
                     </div>
 
                     {# User.email #}
-                    {# email error #}
+                    {# User.email error #}
                     {% if form.email.errors %}
                         <div class="help-block text-danger">
                             {{ form.email.errors[0] }}
@@ -91,24 +117,48 @@
                     {# Advisor #}
                     {% if form.type.data == 'advisor' %}
                         {# Advisor.dept #}
+                        {# Advisor.dept.error #}
+                        {% if form.dept.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.dept.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.dept.label(class="form-label") }}
                             {{ form.dept(class="form-control") }}
                         </div>
 
                         {# Advisor.rank #}
+                        {# Advisor.rank.error #}
+                        {% if form.rank.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.rank.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.rank.label(class="form-label") }}
                             {{ form.rank(class="form-control") }}
                         </div>
 
                         {# Advisor.office_addr #}
+                        {# Advisor.office_addr.error #}
+                        {% if form.office_addr.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.office_addr.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.office_addr.label(class="form-label") }}
                             {{ form.office_addr(class="form-control") }}
                         </div>
 
                         {# Advisor.office_tel #}
+                        {# Advisor.office_tel.error #}
+                        {% if form.office_tel.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.office_tel.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.office_tel.label(class="form-label") }}
                             {{ form.office_tel(class="form-control") }}
@@ -119,48 +169,96 @@
                     {# Student #}
                     {% if form.type.data == 'student' %}
                         {# Student.dept #}
+                        {# Student.dept.error #}
+                        {% if form.dept.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.dept.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.dept.label(class="form-label") }}
                             {{ form.dept(class="form-control") }}
                         </div>
 
                         {# Student.enroll_year #}
+                        {# Student.enroll_year.error #}
+                        {% if form.enroll_year.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.enroll_year.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.enroll_year.label(class="form-label") }}
                             {{ form.enroll_year(class="form-control") }}
                         </div>
 
                         {# Student.sex #}
+                        {# Student.sex.error #}
+                        {% if form.sex.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.sex.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.sex.label(class="form-label") }}
                             {{ form.sex(class="form-control") }}
                         </div>
 
                         {# Student.home_addr #}
+                        {# Student.home_addr.error #}
+                        {% if form.home_addr.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.home_addr.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.home_addr.label(class="form-label") }}
                             {{ form.home_addr(class="form-control") }}
                         </div>
 
                         {# Student.home_tel #}
+                        {# Student.home_tel.error #}
+                        {% if form.home_tel.errors %}
+                            <div class="help-block  text-danger">
+                                {{ form.home_tel.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.home_tel.label(class="form-label") }}
                             {{ form.home_tel(class="form-control") }}
                         </div>
 
                         {# Student.contact_name #}
+                        {# Student.contact_name.error #}
+                        {% if form.contact_name.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.contact_name.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.contact_name.label(class="form-label") }}
                             {{ form.contact_name(class="form-control") }}
                         </div>
 
                         {# Student.contact_tel #}
+                        {# Student.contact_tel.error #}
+                        {% if form.contact_tel.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.contact_tel.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.contact_tel.label(class="form-label") }}
                             {{ form.contact_tel(class="form-control") }}
                         </div>
 
                         {# Student.advisor_id #}
+                        {# Student.advisor_id.error #}
+                        {% if form.advisor_id.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.advisor_id.errors[0] }}
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ form.advisor_id.label(class="form-label") }}
                             {{ form.advisor_id(class="form-control") }}

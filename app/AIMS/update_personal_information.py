@@ -69,6 +69,9 @@ def update_password():
             current_user.passwd = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
             db.session.commit()
             flash('密碼已成功更改', 'success')
-            return redirect(url_for('update_personal_information.update_form'))
+            if current_user.type != 'administrator':
+                return redirect(url_for('update_personal_information.update_form'))
+            else:
+                return render_template('AIMS/update_password.html', form=form)
 
     return render_template('AIMS/update_password.html', form=form)

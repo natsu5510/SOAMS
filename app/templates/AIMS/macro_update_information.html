@@ -24,7 +24,16 @@
         {% elif form_type == 'personal' %}
             {% set form_title = form_title + '個人資料' %}
         {% elif form_type == 'delete' %}
-            {% set form_title = '刪除使用者' %}
+            {% set form_title = '刪除' %}
+            {% if form.type.data == 'administrator' %}
+                {% set form_title = form_title + '管理員' %}
+            {% elif form.type.data == 'advisor' %}
+                {% set form_title = form_title + '導師' %}
+            {% elif form.type.data == 'student' %}
+                {% set form_title = form_title + '學生' %}
+            {% elif form.type.data == 'landlord' %}
+                {% set form_title = form_title + '房東' %}
+            {% endif %}
         {% else %}
             {% set form_title = form_title + '資料' %}
         {% endif %}
@@ -197,6 +206,7 @@
                                 </button>
                             </div>
                         </div>
+
                         {# Advisor.rank error #}
                         {% if form.rank.errors %}
                             <div class="help-block text-danger">
@@ -215,6 +225,7 @@
                                 </button>
                             </div>
                         </div>
+
                         {# Advisor.office_addr error #}
                         {% if form.office_addr.errors %}
                             <div class="help-block text-danger">
@@ -234,6 +245,7 @@
                                 </button>
                             </div>
                         </div>
+
                         {# Advisor.office_tel error #}
                         {% if form.office_tel.errors %}
                             <div class="help-block text-danger">
@@ -314,6 +326,12 @@
                         {% endif %}
 
                         {# Student.sex #}
+                        {# Student.sex error #}
+                        {% if form.sex.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.sex.errors[0] }}
+                            </div>
+                        {% endif %}
                         {% if form_type == 'user' %}
                             <div class="form-group row">
                                 {{ form.sex.label(class='col-sm-3 col-form-label') }}
@@ -334,7 +352,14 @@
                                 </div>
                             </div>
                         {% endif %}
+
                         {# Student.home_addr #}
+                        {# Student.home_addr error #}
+                        {% if form.home_addr.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.home_addr.errors[0] }}
+                            </div>
+                        {% endif %}
                         {% if form_type == 'delete' %}
                             <div class="form-group row">
                                 {{ form.home_addr.label(class='col-sm-3 col-form-label') }}
@@ -355,7 +380,14 @@
                                 </div>
                             </div>
                         {% endif %}
+
                         {# Student.home_tel #}
+                        {# Student.home_tel error #}
+                        {% if form.home_tel.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.home_tel.errors[0] }}
+                            </div>
+                        {% endif %}
                         {% if form_type == 'delete' %}
                             <div class="form-group row">
                                 {{ form.home_tel.label(class='col-sm-3 col-form-label') }}
@@ -376,7 +408,14 @@
                                 </div>
                             </div>
                         {% endif %}
+
                         {# Student.contact_name #}
+                        {# Student.contact_name error #}
+                        {% if form.contact_name.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.contact_name.errors[0] }}
+                            </div>
+                        {% endif %}
                         {% if form_type == 'delete' %}
                             <div class="form-group row">
                                 {{ form.contact_name.label(class='col-sm-3 col-form-label') }}
@@ -398,7 +437,14 @@
                                 </div>
                             </div>
                         {% endif %}
+
                         {# Student.contact_tel #}
+                        {# Student.contact_tel error #}
+                        {% if form.contact_tel.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.contact_tel.errors[0] }}
+                            </div>
+                        {% endif %}
                         {% if form_type == 'delete' %}
                             <div class="form-group row">
                                 {{ form.contact_tel.label(class='col-sm-3 col-form-label') }}
@@ -422,6 +468,12 @@
                         {% endif %}
 
                         {# Student.advisor_id #}
+                        {# Student.advisor_id error #}
+                        {% if form.advisor_id.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.advisor_id.errors[0] }}
+                            </div>
+                        {% endif %}
                         {% if form_type == 'user' %}
                             <div class="form-group row">
                                 {{ form.advisor_id.label(class='col-sm-3 col-form-label') }}
