@@ -6,11 +6,16 @@ from wtforms.validators import DataRequired, EqualTo
 
 from app.AIMS.user_forms import StudentForm, AdvisorForm, LandlordForm
 from app.extensions import db, bcrypt
+from app.models import User
 
 update_personal_information = Blueprint('update_personal_information', __name__)
 
 
 class StudentUpdateForm(StudentForm):
+    def __init__(self, *args, **kwargs):
+        super(StudentUpdateForm, self).__init__(*args, **kwargs)
+        self.advisor_id.choices = [(advisor.id, advisor.name) for advisor in User.query.filter_by(type='advisor').all()]
+
     submit = SubmitField('確認更改')
 
 
