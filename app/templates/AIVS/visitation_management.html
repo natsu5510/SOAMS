@@ -1,9 +1,11 @@
 {% extends "home.html" %}
 
 {% block title %} 校外賃居訪視填報 {% endblock title%}
+{% block title %} 校外賃居訪視填報 {% endblock title%}
 
 {% block heading %}
     <div class="d-sm-flex align-items-center justify-content-between">
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">校外賃居訪視填報</span>
         <span class="h3 mb-0 text-gray-800 font-weight-bold">校外賃居訪視填報</span>
     </div>
 {% endblock heading %}
@@ -18,7 +20,20 @@
             {% if current_user.type == 'administrator' or current_user.type == 'advisor' %}
     {% for item in data %}
         <hr>
+        <hr>
         <h1>{{student_name[data.index(item)]}}</h1>
+        <h2>校外賃居資料</h2>
+        <label>學號: {{item.id}}</label>
+        <label>學年/學期: {{item.semester}}</label>
+        <label>訪視日期: {{item.visit_date_time.strftime('%Y-%m-%d')}}</label>
+        <label>房東姓名: {{item.landlord_name}}</label>
+        <label>房東電話: {{item.landlord_tel}}</label>
+        <label>租賃地址: {{item.addr}}</label>
+        <label>租屋型態:
+            {% if item.building_type == '獨棟透天' %} 獨棟透天
+            {% elif item.building_type == '公寓（五樓以下）' %} 公寓（五樓以下）
+            {% elif item.building_type == '大樓（六樓以下）' %} 大樓（六樓以下）
+            {% elif item.building_type == '大型學舍（為學生建設的宿舍）' %} 大型學舍（為學生建設的宿舍）
         <h2>校外賃居資料</h2>
         <label>學號: {{item.id}}</label>
         <label>學年/學期: {{item.semester}}</label>
@@ -33,6 +48,9 @@
             {% elif item.building_type == '大型學舍（為學生建設的宿舍）' %} 大型學舍（為學生建設的宿舍）
             {% endif %}
         </label>
+        <label>房間類型:
+            {% if item.room_type == '套房' %} 套房
+            {% elif item.room_type == '雅房' %} 雅房
         <label>房間類型:
             {% if item.room_type == '套房' %} 套房
             {% elif item.room_type == '雅房' %} 雅房
@@ -94,6 +112,16 @@
         <span style="color:red">{% if item.safe_manage13 %} 是 {% else %} 否 {% endif %}</span>
         </label>
         <hr>
+        </div>
+    </div>
+</div>
+
+<!-- 老師 -->
+<!-- 教師填報 -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="form-container col-6 justify-content-center">
+            {% if current_user.type == 'advisor' %}
         </div>
     </div>
 </div>
@@ -176,8 +204,86 @@
                 <input type="text" id="others2" name="others2" value="{{item.others2}}">
                 <br><br>
                 <input type="submit" value="送出">
+                <input type="hidden" name="id" value="{{item.id}}">
+                <h3>環境作息及評估</h3>
+                <label for="deposit_demand">押金要求:</label>
+                <input type="radio" id="deposit_demand" name="deposit_demand" value="1" {% if item.deposit_demand %} checked {% endif %} required>合理
+                <input type="radio" id="deposit_demand" name="deposit_demand" value="0" {% if not item.deposit_demand %} checked {% endif %} required>不合理
+                <br>
+                <label for="water_electric_bill_demand">水電費要求:</label>
+                <input type="radio" id="water_electric_bill_demand" name="water_electric_bill_demand" value="1" {% if item.water_electric_bill_demand %} checked {% endif %} required>合理
+                <input type="radio" id="water_electric_bill_demand" name="water_electric_bill_demand" value="0" {% if not item.water_electric_bill_demand %} checked {% endif %} required>不合理
+                <br>
+                <label for="environment">居家環境:</label>
+                <input type="radio" id="environment" name="environment" value="0" {% if item.environment == 0 %} checked {% endif %} required>佳
+                <input type="radio" id="environment" name="environment" value="1" {% if item.environment == 1 %} checked {% endif %} required>適中
+                <input type="radio" id="environment" name="environment" value="2" {% if item.environment == 2 %} checked {% endif %} required>欠佳
+                <br>
+                <label for="environment_description">說明:</label><br>
+                <input type="text" id="environment_description" name="environment_description" value="{{item.environment_description}}">
+                <br><br>
+                <label for="facility">生活設施:</label>
+                <input type="radio" id="facility" name="facility" value="0" {% if item.facility == 0 %} checked {% endif %} required>佳
+                <input type="radio" id="facility" name="facility" value="1" {% if item.facility == 1 %} checked {% endif %} required>適中
+                <input type="radio" id="facility" name="facility" value="2" {% if item.facility == 2 %} checked {% endif %} required>欠佳
+                <br>
+                <label for="faclity_description">說明:</label><br>
+                <input type="text" id="faclity_description" name="faclity_description" value="{{item.faclity_description}}">
+                <br><br>
+                <label for="situation">訪視現況:</label>
+                <input type="radio" id="situation" name="situation" value="0" {% if item.situation == 0 %} checked {% endif %} required>生活規律
+                <input type="radio" id="situation" name="situation" value="1" {% if item.situation == 1 %} checked {% endif %} required>適中
+                <input type="radio" id="situation" name="situation" value="2" {% if item.situation == 2 %} checked {% endif %} required>待加強
+                <br>
+                <label for="situation_description">說明:</label><br>
+                <input type="text" id="situation_description" name="situation_description" value="{{item.situation_description}}">
+                <br><br>
+                <label for="is_get_along_with">主客相處:</label>
+                <input type="radio" id="is_get_along_with" name="is_get_along_with" value="1" {% if item.is_get_along_with %} checked {% endif %} required>和睦
+                <input type="radio" id="is_get_along_with" name="is_get_along_with" value="0" {% if not item.is_get_along_with %} checked {% endif %} required>欠佳
+                <br>
+                <label for="is_get_along_with_description">說明:</label><br>
+                <input type="text" id="is_get_along_with_description" name="is_get_along_with_description" value="{{item.is_get_along_with_description}}">
+                <br><br>
+                <h3>訪視結果</h3>
+                <label for="result">訪視結果:</label>
+                <input type="radio" id="result" name="result" value="0" {% if item.result == 0 %} checked {% endif %} required>整體賃居狀況良好
+                <input type="radio" id="result" name="result" value="1" {% if item.result == 1 %} checked {% endif %} required>聯繫家長關注
+                <input type="radio" id="result" name="result" value="2" {% if item.result == 2 %} checked {% endif %} required>安全堪慮請協助
+                <input type="radio" id="result" name="result" value="3" {% if item.result == 3 %} checked {% endif %} required>其他
+                <br>
+                <label for="result_description">說明:</label><br>
+                <input type="text" id="result_description" name="result_description" value="{{item.result_description}}">
+                <br><br>
+                <label for="others1">其他紀載或建議事項:</label><br>
+                <input type="text" id="others1" name="others1" value="{{item.others1}}">
+                <br><br>
+                <h3>關懷宣導項目</h3>
+                <input type="checkbox" id="traffic_safty" name="traffic_safty" value="1" {% if item.traffic_safty %} checked {% endif %}>
+                <label for="traffic_safty">交通安全</label>
+                <br>
+                <input type="checkbox" id="smoke" name="smoke" value="1" {% if item.smoke %} checked {% endif %}>
+                <label for="smoke">拒絕菸害</label>
+                <br>
+                <input type="checkbox" id="drug" name="drug" value="1" {% if item.drug %} checked {% endif %}>
+                <label for="drug">拒絕毒品</label>
+                <br>
+                <input type="checkbox" id="dengue" name="dengue" value="1" {% if item.dengue %} checked {% endif %}>
+                <label for="dengue">登革熱防治</label>
+                <br><br>
+                <label for="others2">其他說明:</label><br>
+                <input type="text" id="others2" name="others2" value="{{item.others2}}">
+                <br><br>
+                <input type="submit" value="送出">
             </form>
             <hr>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
             {% endif %}
         </div>
     </div>
@@ -190,14 +296,26 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="form-container col-6 justify-content-center">
+        <!-- 管理員 -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="form-container col-6 justify-content-center">
         {% if current_user.type == 'administrator' %}
+            <h3>環境作息及評估</h3>
+            <label>押金要求: 
+                {% if item.deposit_demand %} 合理 {% else %} 不合理 {% endif %} 
             <h3>環境作息及評估</h3>
             <label>押金要求: 
                 {% if item.deposit_demand %} 合理 {% else %} 不合理 {% endif %} 
             </label>
             <br>
             <label>水電費要求: {% if item.water_electric_bill_demand %} 合理 {% else %} 不合理 {% endif %} </label>
+            <label>水電費要求: {% if item.water_electric_bill_demand %} 合理 {% else %} 不合理 {% endif %} </label>
             <br>
+            <label>居家環境:
+                {% if item.environment == 0 %} 佳
+                {% elif item.environment == 1 %} 適中
+                {% elif item.environment == 2 %} 欠佳
             <label>居家環境:
                 {% if item.environment == 0 %} 佳
                 {% elif item.environment == 1 %} 適中
@@ -206,9 +324,14 @@
             </label>
             <br>
             <label>居家環境欠佳說明: 
+            <label>居家環境欠佳說明: 
                 {{item.environment_description}} 
             </label>
             <br>
+            <label>生活設施:
+                {% if item.facility == 0 %} 佳
+                {% elif item.facility == 1 %} 適中
+                {% elif item.facility == 2 %} 欠佳
             <label>生活設施:
                 {% if item.facility == 0 %} 佳
                 {% elif item.facility == 1 %} 適中
@@ -217,9 +340,14 @@
             </label>
             <br>
             <label>生活設施欠佳說明:
+            <label>生活設施欠佳說明:
                 {{item.faclity_description}}
             </label>
             <br>
+            <label>訪視現況:
+                {% if item.situation == 0 %} 生活規律
+                {% elif item.situation == 1 %} 適中
+                {% elif item.situation == 2 %} 待加強
             <label>訪視現況:
                 {% if item.situation == 0 %} 生活規律
                 {% elif item.situation == 1 %} 適中
@@ -228,13 +356,17 @@
             </label>
             <br>
             <label>訪視現況待加強說明:
+            <label>訪視現況待加強說明:
                 {{item.situation_description}}
             </label>
             <br>
             <label>主客相處:
                 {% if item.is_get_along_with %} 和睦 {% else %} 欠佳 {% endif %}
+            <label>主客相處:
+                {% if item.is_get_along_with %} 和睦 {% else %} 欠佳 {% endif %}
             </label>
             <br>
+            <label>主客相處欠佳說明:
             <label>主客相處欠佳說明:
                 {{item.is_get_along_with_description}}
             </label>
@@ -245,22 +377,44 @@
                 {% elif item.result == 1 %} 聯繫家長關注
                 {% elif item.result == 2 %} 安全堪慮請協助
                 {% elif item.result == 3 %} 其他，說明: {{item.result_description}}
+            <h3>訪視結果</h3>
+            <label>訪視結果:
+                {% if item.result == 0 %} 整體賃居狀況良好
+                {% elif item.result == 1 %} 聯繫家長關注
+                {% elif item.result == 2 %} 安全堪慮請協助
+                {% elif item.result == 3 %} 其他，說明: {{item.result_description}}
                 {% endif %}
             </label>
             <br>
             <label>其他紀載或建議事項: {{item.others1}} </label>
+            <label>其他紀載或建議事項: {{item.others1}} </label>
             <br>
+            <h3>關懷宣導項目（懇請導師賃居訪視時多予關懷叮嚀）</h3>
+            <input type="checkbox" {% if item.traffic_safty %} checked {% endif %} disabled> 交通安全
             <h3>關懷宣導項目（懇請導師賃居訪視時多予關懷叮嚀）</h3>
             <input type="checkbox" {% if item.traffic_safty %} checked {% endif %} disabled> 交通安全
             <br>
             <input type="checkbox" {% if item.smoke %} checked {% endif %} disabled>拒絕菸害
+            <input type="checkbox" {% if item.smoke %} checked {% endif %} disabled>拒絕菸害
             <br>
+            <input type="checkbox" {% if item.drug %} checked {% endif %} disabled>拒絕毒品
             <input type="checkbox" {% if item.drug %} checked {% endif %} disabled>拒絕毒品
             <br>
             <input type="checkbox" {% if item.dengue %} checked {% endif %} disabled> 登革熱防治
+            <input type="checkbox" {% if item.dengue %} checked {% endif %} disabled> 登革熱防治
             <br>
             <label>其他說明: {{item.others2}}</label>
+            <label>其他說明: {{item.others2}}</label>
             <br>
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+</div>
+        
+
+<!-- 學生 -->
             {% endif %}
             {% endfor %}
         {% endif %}
@@ -354,6 +508,8 @@
     </div>
 </div>
 {% endif %}
+
+
 
 
 
