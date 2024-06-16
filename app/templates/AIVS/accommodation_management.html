@@ -1,0 +1,142 @@
+{% extends "home.html" %}
+
+{% block title %} 填寫住宿資料 {% endblock title%}
+
+{% block heading %}
+<div class="d-sm-flex align-items-center justify-content-between">
+    <span class="h3 mb-0 text-gray-800 font-weight-bold">填寫住宿資料</span>
+</div>
+{% endblock heading %}
+
+{% block content%}
+
+
+<!-- 管理員 -->
+{% if current_user.type == 'administrator' %}
+    {% for item in data %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="form-container col-6 justify-content-center">
+          <form action="{{url_for('accommodation_management.update')}}" method="post" class="form-group">
+              <div class="form-group">
+                <label for="id" class="form-label">學號:</label>
+                <input type="text" id="id" name="id" class="form-control" value="{{item.id}}" required>
+              </div>
+              <div class="form-group">
+                <label for="semester" class="form-label">學年/學期:</label>
+                <input type="text" id="semester" name="semester" class="form-control" value="{{item.semester}}" placeholder="XXX/X" required>
+              </div>
+              <div class="form-group">
+                <label for="where_to_live" class="form-label">住宿地:</label>
+                <select id="where_to_live" name="where_to_live" class="form-control" required>
+                    <option value="0" {% if item.where_to_live == 0 %} selected {% endif %}>住家裡</option>
+                    <option value="1" {% if item.where_to_live == 1 %} selected {% endif %}>寄居親友家</option>
+                    <option value="2" {% if item.where_to_live == 2 %} selected {% endif %}>住校</option>
+                    <option value="3" {% if item.where_to_live == 3 %} selected {% endif %}>在外租屋</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="addr" class="form-label">住宿地址:</label>
+                <input type="text" id="addr" name="addr" class="form-control" value="{{item.addr}}" required>
+              </div>
+              <div class="form-group">
+                <label for="landlord_name" class="form-label">房東姓名:</label>
+                <input type="text" id="landlord_name" name="landlord_name" class="form-control" value="{{item.landlord_name}}" required>
+              </div>
+              <div class="form-group">
+                <label for="landlord_tel" class="form-label">房東電話:</label>
+                <input type="text" id="landlord_tel" name="landlord_tel" class="form-control" value="{{item.landlord_tel}}" required>
+              </div>
+              <div class="form-group">
+                <label for="rent" class="form-label">租金:</label>
+                <input type="text" id="rent" name="rent" class="form-control" value="{{item.rent}}" required>
+              </div>
+              <div class="form-group">
+                <label for="roommate_id" class="form-label">同住室友學號:</label>
+                <input type="text" id="roommate_id" name="roommate_id" class="form-control" value="{{item.roommate_id}}" required>
+              </div>
+              <div class="form-group text-center">
+                <input type="submit" class="btn btn-primary" value="送出">
+              </div>
+          </form>
+            </div>
+        </div>
+    </div>
+         <hr>
+     {% endfor %}
+{% endif %}
+
+<!-- 老師 -->
+{% if current_user.type == 'advisor' %}
+    {% for item in data %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6 justify-content-center">
+            <p>學號: {{item.id}}</p>
+            <p>學年/學期: {{item.semester}}</p>
+            <p>住宿地: {% if item.where_to_live == 0 %} 住家裡 {% elif item.where_to_live == 1 %} 寄居親友家 {% elif item.where_to_live == 2 %} 住校 {% elif item.where_to_live == 3 %} 在外租屋 {% endif %}</p>
+            <p>住宿地址: {{item.addr}}</p>
+            <p>房東姓名: {{item.landlord_name}}</p>
+            <p>房東電話: {{item.landlord_tel}}</p>
+            <p>租金: {{item.rent}}</p>
+            <p>同住室友學號: {{item.roommate_id}}</p>
+            </div>
+        </div>
+    </div>
+        <hr>
+    {% endfor %}
+{% endif %}
+
+<!-- 學生 -->
+{% if current_user.type == 'student' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="form-container col-6 justify-content-center">
+      <form action="{{url_for('accommodation_management.update')}}" method="post" class="form-group">
+          <div class="form-group">
+            <label for="id" class="form-label">學號:</label>
+            <input type="text" id="id" name="id" class="form-control" value="{{data.id}}" required>
+          </div>
+          <div class="form-group">
+            <label for="semester" class="form-label">學年/學期:</label>
+            <input type="text" id="semester" name="semester" class="form-control" value="{{data.semester}}" placeholder="XXX/X">
+          </div>
+          <div class="form-group">
+            <label for="where_to_live" class="form-label">住宿地:</label>
+            <select id="where_to_live" name="where_to_live" class="form-control" required>
+                <option value="0" {% if data.where_to_live == 0 %} selected {% endif %}>住家裡</option>
+                <option value="1" {% if data.where_to_live == 1 %} selected {% endif %}>寄居親友家</option>
+                <option value="2" {% if data.where_to_live == 2 %} selected {% endif %}>住校</option>
+                <option value="3" {% if data.where_to_live == 3 %} selected {% endif %}>在外租屋</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="addr" class="form-label">住宿地址:</label>
+            <input type="text" id="addr" name="addr" class="form-control" value="{{data.addr}}">
+          </div>
+          <div class="form-group">
+            <label for="landlord_name" class="form-label">房東姓名:</label>
+            <input type="text" id="landlord_name" name="landlord_name" class="form-control" value="{{data.landlord_name}}">
+          </div>
+          <div class="form-group">
+            <label for="landlord_tel" class="form-label">房東電話:</label>
+            <input type="text" id="landlord_tel" name="landlord_tel" class="form-control" value="{{data.landlord_tel}}">
+          </div>
+          <div class="form-group">
+            <label for="rent" class="form-label">租金:</label>
+            <input type="text" id="rent" name="rent" class="form-control" value="{{data.rent}}">
+          </div>
+          <div class="form-group">
+            <label for="roommate_id" class="form-label">同住室友學號:</label>
+            <input type="text" id="roommate_id" name="roommate_id" class="form-control" value="{{data.roommate_id}}">
+          </div>
+          <div class="form-group text-center">
+            <input type="submit" class="btn btn-primary" value="送出">
+          </div>
+      </form>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+{% endblock content %}
