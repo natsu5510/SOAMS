@@ -6,7 +6,9 @@
     <div class="d-sm-flex align-items-center justify-content-between">
         <span class="h3 mb-0 text-gray-800 font-weight-bold">租屋資訊討論版</span>
         <!-- 新增文章按鈕 -->
-        <a href="{{ url_for('rental_information_exchange.newpost') }}" class="btn btn-primary">新增文章</a>
+        <div class="justify-content: end">
+            <a href="{{ url_for('rental_information_exchange.newpost') }}" class="btn btn-primary">新增文章</a>
+        </div>
     </div>
 {% endblock heading %}
 

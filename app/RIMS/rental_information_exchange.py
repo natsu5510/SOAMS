@@ -50,8 +50,40 @@ def newpost():
         return redirect(url_for('rental_information_exchange.index'))  # 假設你有一個 index 視圖
     return render_template('RIMS/newpost.html', form=form)
 
+
+@rental_information_exchange.route('/editpost/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def editpost(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    # 確保當前用戶是文章的作者
+    if current_user.id != post.user_id:
+        flash('You are not authorized to edit this post', 'danger')
+        return redirect(url_for('rental_information_exchange.post', post_id=post_id))
+
+    form = EditPostForm()
+
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.text = form.text.data
+        db.session.commit()
+        flash('Post updated successfully!', 'success')
+        return redirect(url_for('rental_information_exchange.post', post_id=post_id))
+    
+    # 預填充表單字段
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.text.data = post.text
+
+    return render_template('RIMS/editpost.html', form=form, post=post)
+
 class PostForm(FlaskForm):
     title = StringField('文章標題', validators=[DataRequired(), Length(max=50)])
     text = TextAreaField('文章內容', validators=[DataRequired()])
     image_urls = TextAreaField('圖檔路徑', validators=[Length(max=200)])
     submit = SubmitField('新增')
+
+class EditPostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(max=50)])
+    text = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Update')
