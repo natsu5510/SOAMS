@@ -44,7 +44,7 @@ class Student(User):
     id = db.Column(db.String(256), db.ForeignKey('user.id'), primary_key=True, comment='學生學號')
     dept = db.Column(db.String(256), unique=False, nullable=False, comment='學生所屬系所')
     enroll_year = db.Column(db.Integer, unique=False, nullable=False, comment='學生入學年分')
-    sex = db.Column(db.Boolean, unique=False, nullable=True, comment='學生性別')
+    sex = db.Column(db.Integer, unique=False, nullable=True, comment='學生性別')
     home_addr = db.Column(db.String(256), unique=False, nullable=True, comment='學生家中地址')
     home_tel = db.Column(db.String(256), unique=False, nullable=True, comment='學生家裡電話')
     contact_name = db.Column(db.String(256), unique=False, nullable=True, comment='家裡聯絡人姓名')

@@ -1,10 +1,22 @@
 {% extends "home.html" %}
 
-{% block title %} 修改使用者資料 {% endblock title %}
+{% set title = '使用者資料' %}
+{% set form_title = '查詢使用者' %}
+
+{% if operation == 'update' %}
+    {% set title = '修改' + title %}
+    {% set form_title = '查詢欲修改的使用者' %}
+{% elif operation == 'delete' %}
+    {% set title = '刪除' + title %}
+    {% set form_title = '查詢欲刪除的使用者' %}
+{% endif %}
+
+
+{% block title %} {{ title }} {% endblock title %}
 
 {% block heading %}
     <div class="d-sm-flex align-items-center justify-content-between">
-        <span class="h3 mb-0 text-gray-800 font-weight-bold">修改使用者資料</span>
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">{{ title }}</span>
     </div>
 {% endblock heading %}
 
@@ -12,15 +24,21 @@
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
-                <h2 class="text-center">查詢欲修改的使用者</h2>
-                <form method="POST" action="{{ url_for('search_user_information.search_form') }}">
-                    {{ searchForm.hidden_tag() }}
-                    <div class="form-group">
-                        {{ searchForm.id(class='form-control', placeholder='請輸入使用者ID') }}
-                    </div>
-                    <div class="text-center">
-                        {{ searchForm.submit(class='btn btn-primary') }}
-                    </div>
+                <h2 class="text-center">{{ form_title }}</h2>
+
+                {% if operation == 'update' %}
+                    <form method="POST" action="{{ url_for('search_user_information.update_search_form') }}">
+                {% elif operation == 'delete' %}
+                    <form method="POST" action="{{ url_for('search_user_information.delete_search_form') }}">
+                {% endif %}
+
+                {{ searchForm.hidden_tag() }}
+                <div class="form-group">
+                    {{ searchForm.id(class='form-control', placeholder='請輸入使用者ID') }}
+                </div>
+                <div class="text-center">
+                    {{ searchForm.submit(class='btn btn-primary') }}
+                </div>
                 </form>
             </div>
         </div>

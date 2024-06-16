@@ -15,6 +15,8 @@ def create_app():
     app.register_blueprint(create_user)
     from app.AIMS.land_lord_register import land_lord_register
     app.register_blueprint(land_lord_register)
+    from app.AIMS.delete_user import delete_user
+    app.register_blueprint(delete_user)
     from app.AIMS.search_user_information import search_user_information
     app.register_blueprint(search_user_information)
     from app.AIMS.update_user_information import update_user_information

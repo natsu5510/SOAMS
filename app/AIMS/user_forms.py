@@ -29,11 +29,12 @@ class AdvisorForm(UserForm):
 class StudentForm(UserForm):
     dept = StringField('系所', validators=[DataRequired(message='* 此欄位不可為空')])
     enroll_year = IntegerField('入學年分', validators=[DataRequired(message='* 此欄位不可為空')])
-    sex = SelectField('性別', choices=[('1', '男'), ('0', '女')], validators=[Optional()])
+    sex = SelectField('性別', choices=[(1, '男'), (0, '女')], validators=[Optional()])
     home_addr = StringField('家中地址')
     home_tel = StringField('家裡電話')
     contact_name = StringField('聯絡人姓名')
     contact_tel = StringField('聯絡人電話')
+    advisor_id = SelectField('導師ID', validators=[DataRequired(message='* 此欄位不可為空')])
 
 
 class LandlordForm(UserForm):

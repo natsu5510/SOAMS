@@ -12,10 +12,13 @@
         {% endif %}
     {% endwith %}
 
+    {# form_title #}
     {% if form %}
         {% set title = "新增" %}
         {% if form_type == 'create' %}
-            {% if form.type.data == 'advisor' %}
+            {% if form.type.data == 'administrator' %}
+                {% set title = title + "管理員" %}
+            {% elif form.type.data == 'advisor' %}
                 {% set title = title + "導師" %}
             {% elif form.type.data == 'student' %}
                 {% set title = title + "學生" %}
@@ -111,53 +114,60 @@
                             {{ form.office_tel(class="form-control") }}
                         </div>
 
-                        {# Student #}
-                        {% if form.type.data == 'student' %}
-                            {# Student.dept #}
-                            <div class="form-group">
-                                {{ form.dept.label(class="form-label") }}
-                                {{ form.dept(class="form-control") }}
-                            </div>
-
-                            {# Student.enroll_year #}
-                            <div class="form-group">
-                                {{ form.enroll_year.label(class="form-label") }}
-                                {{ form.enroll_year(class="form-control") }}
-                            </div>
-
-                            {# Student.sex #}
-                            <div class="form-group">
-                                {{ form.sex.label(class="form-label") }}
-                                {{ form.sex(class="form-control") }}
-                            </div>
-
-                            {# Student.home_addr #}
-                            <div class="form-group">
-                                {{ form.home_addr.label(class="form-label") }}
-                                {{ form.home_addr(class="form-control") }}
-                            </div>
-
-                            {# Student.home_tel #}
-                            <div class="form-group">
-                                {{ form.home_tel.label(class="form-label") }}
-                                {{ form.home_tel(class="form-control") }}
-                            </div>
-
-                            {# Student.contact_name #}
-                            <div class="form-group">
-                                {{ form.contact_name.label(class="form-label") }}
-                                {{ form.contact_name(class="form-control") }}
-                            </div>
-
-                            {# Student.contact_tel #}
-                            <div class="form-group">
-                                {{ form.contact_tel.label(class="form-label") }}
-                                {{ form.contact_tel(class="form-control") }}
-                            </div>
-                        {% endif %}
                     {% endif %}
 
-                    <button type="button" class="btn btn-danger mb-5"
+                    {# Student #}
+                    {% if form.type.data == 'student' %}
+                        {# Student.dept #}
+                        <div class="form-group">
+                            {{ form.dept.label(class="form-label") }}
+                            {{ form.dept(class="form-control") }}
+                        </div>
+
+                        {# Student.enroll_year #}
+                        <div class="form-group">
+                            {{ form.enroll_year.label(class="form-label") }}
+                            {{ form.enroll_year(class="form-control") }}
+                        </div>
+
+                        {# Student.sex #}
+                        <div class="form-group">
+                            {{ form.sex.label(class="form-label") }}
+                            {{ form.sex(class="form-control") }}
+                        </div>
+
+                        {# Student.home_addr #}
+                        <div class="form-group">
+                            {{ form.home_addr.label(class="form-label") }}
+                            {{ form.home_addr(class="form-control") }}
+                        </div>
+
+                        {# Student.home_tel #}
+                        <div class="form-group">
+                            {{ form.home_tel.label(class="form-label") }}
+                            {{ form.home_tel(class="form-control") }}
+                        </div>
+
+                        {# Student.contact_name #}
+                        <div class="form-group">
+                            {{ form.contact_name.label(class="form-label") }}
+                            {{ form.contact_name(class="form-control") }}
+                        </div>
+
+                        {# Student.contact_tel #}
+                        <div class="form-group">
+                            {{ form.contact_tel.label(class="form-label") }}
+                            {{ form.contact_tel(class="form-control") }}
+                        </div>
+
+                        {# Student.advisor_id #}
+                        <div class="form-group">
+                            {{ form.advisor_id.label(class="form-label") }}
+                            {{ form.advisor_id(class="form-control") }}
+                        </div>
+                    {% endif %}
+
+                    <button type=" button" class="btn btn-danger mb-5"
                             onclick="window.location.href='{{ url_for(kwargs['back']) }}'">返回
                     </button>
 

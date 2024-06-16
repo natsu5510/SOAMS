@@ -78,9 +78,11 @@
                         <a class="collapse-item" href="/update_personal_information">修改個人資料</a>
                     {% endif %}
                     {% if current_user.type == 'administrator' %}
-                        <a class="collapse-item" href="/update_administrator_passwd">更改密碼</a>
+                        <a class="collapse-item"
+                           href={{ url_for('update_personal_information.update_password') }}>更改密碼</a>
                         <a class="collapse-item" href="/create_user_type">新增使用者</a>
-                        <a class="collapse-item" href="/search_user_information">修改使用者資料</a>
+                        <a class="collapse-item" href="/delete/search_user_information">刪除使用者</a>
+                        <a class="collapse-item" href="/update/search_user_information">修改使用者資料</a>
                     {% endif %}
                 </div>
             </div>

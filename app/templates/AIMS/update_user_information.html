@@ -19,7 +19,7 @@
                         <div class="col-6 text-center">
                             <h3 class="alert alert-{{ category }} text-center">{{ message }}</h3>
                             {% if category == 'warning' %}
-                                <a href="{{ url_for('search_user_information.search_form') }}"
+                                <a href="{{ url_for('search_user_information.update_search_form') }}"
                                    class="btn btn-primary text-center mb-3">返回</a>
                             {% endif %}
                         </div>
