@@ -31,13 +31,14 @@ def edit():
 @visitation_management.route('/update', methods=['POST'])
 @login_required
 def update():
+    print(request.form)
     data = VisitRecord.query.filter_by(id=request.form.get('id')).first()
     if current_user.type == 'student':
         tmpdata = VisitRecord(
             id=request.form.get('id'), semester=request.form.get('semester'), visit_date_time=request.form.get('visit_date_time'),
             landlord_name=request.form.get('landlord_name'), landlord_tel=request.form.get('landlord_tel'), addr=request.form.get('addr'),
             building_type=request.form.get('building_type'), room_type=request.form.get('room_type'), rent=request.form.get('rent'),
-            deposit=request.form.get('deposit'), recommand=bool(int(request.form.get('recommand'))), 
+            deposit=request.form.get('deposit'), recommand=int(request.form.get('recommand')), 
             safe_manage1=bool(int(request.form.get('safe_manage1'))), safe_manage2=bool(int(request.form.get('safe_manage2'))),
             safe_manage3=bool(int(request.form.get('safe_manage3'))), safe_manage4=bool(int(request.form.get('safe_manage4'))),
             safe_manage5=bool(int(request.form.get('safe_manage5'))), safe_manage6=bool(int(request.form.get('safe_manage6'))),

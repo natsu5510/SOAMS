@@ -1,329 +1,360 @@
 {% extends "home.html" %}
 
-{% block title %} ®Õ¥~¸î©~³Xµø¶ñ³ø {% endblock title%}
+{% block title %} æ ¡å¤–è³ƒå±…è¨ªè¦–å¡«å ± {% endblock title%}
 
 {% block heading %}
     <div class="d-sm-flex align-items-center justify-content-between">
-        <span class="h3 mb-0 text-gray-800 font-weight-bold">®Õ¥~¸î©~³Xµø¶ñ³ø</span>
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">æ ¡å¤–è³ƒå±…è¨ªè¦–å¡«å ±</span>
     </div>
 {% endblock heading %}
 
 {% block content%}
 
-{% if current_user.type == 'administrator' or current_user.type == 'advisor' %}
+
+        <!-- å­¸ç”Ÿè³‡æ–™ -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="form-container col-6 justify-content-center">
+            {% if current_user.type == 'administrator' or current_user.type == 'advisor' %}
     {% for item in data %}
-        <!-- ¾Ç¥Í¸ê®Æ -->
+        <hr>
         <h1>{{student_name[data.index(item)]}}</h1>
-        <hr>
-        <h2>®Õ¥~¸î©~¸ê®Æ</h2>
-        <label>¾Ç¸¹: {{item.id}}</label>
-        <label>¾Ç¦~/¾Ç´Á: {{item.semester}}</label>
-        <label>³Xµø¤é´Á: {{item.visit_date_time.strftime('%Y-%m-%d')}}</label>
-        <label>©ĞªF©m¦W: {{item.landlord_name}}</label>
-        <label>©ĞªF¹q¸Ü: {{item.landlord_tel}}</label>
-        <label>¯²¸î¦a§}: {{item.addr}}</label>
-        <label>¯²«Î«¬ºA:
-            {% if item.building_type == '¿W´É³z¤Ñ' %} ¿W´É³z¤Ñ
-            {% elif item.building_type == '¤½´J¡]¤­¼Ó¥H¤U¡^' %} ¤½´J¡]¤­¼Ó¥H¤U¡^
-            {% elif item.building_type == '¤j¼Ó¡]¤»¼Ó¥H¤U¡^' %} ¤j¼Ó¡]¤»¼Ó¥H¤U¡^
-            {% elif item.building_type == '¤j«¬¾ÇªÙ¡]¬°¾Ç¥Í«Ø³]ªº±JªÙ¡^' %} ¤j«¬¾ÇªÙ¡]¬°¾Ç¥Í«Ø³]ªº±JªÙ¡^
+        <h2>æ ¡å¤–è³ƒå±…è³‡æ–™</h2>
+        <label>å­¸è™Ÿ: {{item.id}}</label>
+        <label>å­¸å¹´/å­¸æœŸ: {{item.semester}}</label>
+        <label>è¨ªè¦–æ—¥æœŸ: {{item.visit_date_time.strftime('%Y-%m-%d')}}</label>
+        <label>æˆ¿æ±å§“å: {{item.landlord_name}}</label>
+        <label>æˆ¿æ±é›»è©±: {{item.landlord_tel}}</label>
+        <label>ç§Ÿè³ƒåœ°å€: {{item.addr}}</label>
+        <label>ç§Ÿå±‹å‹æ…‹:
+            {% if item.building_type == 'ç¨æ£Ÿé€å¤©' %} ç¨æ£Ÿé€å¤©
+            {% elif item.building_type == 'å…¬å¯“ï¼ˆäº”æ¨“ä»¥ä¸‹ï¼‰' %} å…¬å¯“ï¼ˆäº”æ¨“ä»¥ä¸‹ï¼‰
+            {% elif item.building_type == 'å¤§æ¨“ï¼ˆå…­æ¨“ä»¥ä¸‹ï¼‰' %} å¤§æ¨“ï¼ˆå…­æ¨“ä»¥ä¸‹ï¼‰
+            {% elif item.building_type == 'å¤§å‹å­¸èˆï¼ˆç‚ºå­¸ç”Ÿå»ºè¨­çš„å®¿èˆï¼‰' %} å¤§å‹å­¸èˆï¼ˆç‚ºå­¸ç”Ÿå»ºè¨­çš„å®¿èˆï¼‰
             {% endif %}
         </label>
-        <label>©Ğ¶¡Ãş«¬:
-            {% if item.room_type == '®M©Ğ' %} ®M©Ğ
-            {% elif item.room_type == '¶®©Ğ' %} ¶®©Ğ
+        <label>æˆ¿é–“é¡å‹:
+            {% if item.room_type == 'å¥—æˆ¿' %} å¥—æˆ¿
+            {% elif item.room_type == 'é›…æˆ¿' %} é›…æˆ¿
             {% endif %}
         </label>
-        <label for="rent">¨C¤ë¯²ª÷: {{item.rent}}</label>
-        <label for="deposit">©ãª÷: {{item.deposit}}</label>
-        <label for="recommand">¬O§_­È±o±ÀÂË¨ä¥L¦P¾Ç¯²¸î:
-            {% if item.recommand %} ¬O {% else %} §_ {% endif %}
-        </label>
-        <h2>¸î©~¦w¥ş¦Û¥DºŞ²zÀËµø¸ê®Æ</h2>
-        <label for="safe_manage1">¤ì³y¹j¶¡©ÎÅK¥Ö¥[»\:
-            {% if item.safe_manage1 %} ¬O {% else %} §_ {% endif %}
+        <label for="rent">æ¯æœˆç§Ÿé‡‘: {{item.rent}}</label>
+        <label for="deposit">æŠ¼é‡‘: {{item.deposit}}</label>
+        <label for="recommand">æ˜¯å¦å€¼å¾—æ¨è–¦å…¶ä»–åŒå­¸ç§Ÿè³ƒ:</label>
+        <span style="color:red">{% if item.recommand %} æ˜¯ {% else %} å¦ {% endif %}</span>
+        <h2>è³ƒå±…å®‰å…¨è‡ªä¸»ç®¡ç†æª¢è¦–è³‡æ–™</h2>
+        <label for="safe_manage1">æœ¨é€ éš”é–“æˆ–éµçš®åŠ è“‹:</label>
+        <span style="color:red">{% if item.safe_manage1 %} æ˜¯ {% else %} å¦ {% endif %}</span>
+        <br>
+        <label for="safe_manage2">æœ‰ç«è­¦è­¦å ±å™¨æˆ–åµç…™å™¨:
+        <span style="color:red">{% if item.safe_manage2 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage2">¦³¤õÄµÄµ³ø¾¹©Î°»·Ï¾¹:
-            {% if item.safe_manage2 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage3">é€ƒç”Ÿé€šé“æš¢é€šä¸”æ¨™ç¤ºæ¸…æ¥š:
+        <span style="color:red">{% if item.safe_manage3 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage3">°k¥Í³q¹DºZ³q¥B¼Ğ¥Ü²M·¡:
-            {% if item.safe_manage3 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage4">é–€ç¦åŠé–å…·è‰¯å¥½ç®¡ç†:
+        <span style="color:red">{% if item.safe_manage4 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage4">ªù¸T¤ÎÂê¨ã¨}¦nºŞ²z:
-            {% if item.safe_manage4 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage5">æœ‰å®‰è£ç…§æ˜è¨­å‚™(åœè»Šå ´åŠå‘¨é‚Š):
+        <span style="color:red">{% if item.safe_manage5 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage5">¦³¦w¸Ë·Ó©ú³]³Æ(°±¨®³õ¤Î©PÃä):
-            {% if item.safe_manage5 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage6">ç­è§£ç†Ÿæ‚‰é›»è·¯å®‰å…¨åŠé€ƒç”Ÿè¦é ˜:
+        <span style="color:red">{% if item.safe_manage6 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage6">ÁA¸Ñ¼ô±x¹q¸ô¦w¥ş¤Î°k¥Í­n»â:
-            {% if item.safe_manage6 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage7">ç†Ÿæ‚‰æ´¾å‡ºæ‰€ã€é†«ç™‚ã€æ¶ˆé˜²éšŠã€å­¸æ ¡æ ¡å®‰å°ˆç·šé›»è©±:
+        <span style="color:red">{% if item.safe_manage7 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage7">¼ô±x¬£¥X©Ò¡BÂåÀø¡B®ø¨¾¶¤¡B¾Ç®Õ®Õ¦w±M½u¹q¸Ü:
-            {% if item.safe_manage7 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage8">ä½¿ç”¨å¤šç¨®é›»å™¨(é«˜è€—èƒ½)ï¼Œæ˜¯å¦åŒæ™‚æ’åœ¨åŒä¸€æ¢å»¶é•·ç·š:
+        <span style="color:red">{% if item.safe_manage8 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage8">¨Ï¥Î¦hºØ¹q¾¹(°ª¯Ó¯à)¡A¬O§_¦P®É´¡¦b¦P¤@±ø©µªø½u:
-            {% if item.safe_manage8 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage9">æœ‰æ»…ç«å™¨ä¸”åŠŸèƒ½æ­£å¸¸:
+        <span style="color:red">{% if item.safe_manage9 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage9">¦³·À¤õ¾¹¥B¥\¯à¥¿±`:
-            {% if item.safe_manage9 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage10">ç†±æ°´å™¨(é›»ç†±å¼åŠç“¦æ–¯å¼)å®‰å…¨è‰¯å¥½ï¼Œç„¡ä¸€æ°§åŒ–ç¢³ä¸­æ¯’ç–‘æ…®:
+        <span style="color:red">{% if item.safe_manage10 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage10">¼ö¤ô¾¹(¹q¼ö¦¡¤Î¥Ë´µ¦¡)¦w¥ş¨}¦n¡AµL¤@®ñ¤ÆºÒ¤¤¬rºÃ¼{:
-            {% if item.safe_manage10 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage11">åˆ†é–“6å€‹ä»¥ä¸Šæˆ¿é–“æˆ–10å€‹ä»¥ä¸ŠåºŠä½:
+        <span style="color:red">{% if item.safe_manage11 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage11">¤À¶¡6­Ó¥H¤W©Ğ¶¡©Î10­Ó¥H¤W§É¦ì:
-            {% if item.safe_manage11 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage12">æœ‰å®‰è£ç›£è¦–å™¨è¨­å‚™:
+        <span style="color:red">{% if item.safe_manage12 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <br>
-        <label for="safe_manage12">¦³¦w¸ËºÊµø¾¹³]³Æ:
-            {% if item.safe_manage12 %} ¬O {% else %} §_ {% endif %}
-        </label>
-        <br>
-        <label for="safe_manage13">¨Ï¥Î¤º¬F³¡©w«¬¤Æ¯²¸î«´¬ù:
-            {% if item.safe_manage13 %} ¬O {% else %} §_ {% endif %}
+        <label for="safe_manage13">ä½¿ç”¨å…§æ”¿éƒ¨å®šå‹åŒ–ç§Ÿè³ƒå¥‘ç´„:
+        <span style="color:red">{% if item.safe_manage13 %} æ˜¯ {% else %} å¦ {% endif %}</span>
         </label>
         <hr>
-        <!-- ¦Ñ®v -->
-        {% if current_user.type == 'advisor' %}
-            <!-- ±Ğ®v¶ñ³ø -->
+        </div>
+    </div>
+</div>
+
+<!-- è€å¸« -->
+<!-- æ•™å¸«å¡«å ± -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="form-container col-6 justify-content-center">
+            {% if current_user.type == 'advisor' %}
             <form action="{{url_for('visitation_management.update')}}" method="post">
-            <input type="hidden" name="id" value="{{item.id}}">
-            <h3>Àô¹Ò§@®§¤Îµû¦ô</h3>
-            <label for="deposit_demand">©ãª÷­n¨D:</label>
-            <input type="radio" id="deposit_demand" name="deposit_demand" value="1" {% if item.deposit_demand %} checked {% endif %} required>¦X²z
-            <input type="radio" id="deposit_demand" name="deposit_demand" value="0" {% if not item.deposit_demand %} checked {% endif %} required>¤£¦X²z
-            <br>
-            <label for="water_electric_bill_demand">¤ô¹q¶O­n¨D:</label>
-            <input type="radio" id="water_electric_bill_demand" name="water_electric_bill_demand" value="1" {% if item.water_electric_bill_demand %} checked {% endif %} required>¦X²z
-            <input type="radio" id="water_electric_bill_demand" name="water_electric_bill_demand" value="0" {% if not item.water_electric_bill_demand %} checked {% endif %} required>¤£¦X²z
-            <br>
-            <label for="environment">©~®aÀô¹Ò:</label>
-            <input type="radio" id="environment" name="environment" value="0" {% if item.environment == 0 %} checked {% endif %} required>¨Î
-            <input type="radio" id="environment" name="environment" value="1" {% if item.environment == 1 %} checked {% endif %} required>¾A¤¤
-            <input type="radio" id="environment" name="environment" value="2" {% if item.environment == 2 %} checked {% endif %} required>¤í¨Î¡A»¡©ú:
-            <input type="text" id="environment_description" name="environment_description" value="{{item.environment_description}}">
-            <br>
-            <label for="facility">¥Í¬¡³]¬I:</label>
-            <input type="radio" id="facility" name="facility" value="0" {% if item.facility == 0 %} checked {% endif %} required>¨Î
-            <input type="radio" id="facility" name="facility" value="1" {% if item.facility == 1 %} checked {% endif %} required>¾A¤¤
-            <input type="radio" id="facility" name="facility" value="2" {% if item.facility == 2 %} checked {% endif %} required>¤í¨Î¡A»¡©ú:
-            <input type="text" id="faclity_description" name="faclity_description" value="{{item.faclity_description}}">
-            <br>
-            <label for="situation">³Xµø²{ªp:</label>
-            <input type="radio" id="situation" name="situation" value="0" {% if item.situation == 0 %} checked {% endif %} required>¥Í¬¡³W«ß
-            <input type="radio" id="situation" name="situation" value="1" {% if item.situation == 1 %} checked {% endif %} required>¾A¤¤
-            <input type="radio" id="situation" name="situation" value="2" {% if item.situation == 2 %} checked {% endif %} required>«İ¥[±j¡A»¡©ú:
-            <input type="text" id="situation_description" name="situation_description" value="{{item.situation_description}}">
-            <br>
-            <label for="is_get_along_with">¥D«È¬Û³B:</label>
-            <input type="radio" id="is_get_along_with" name="is_get_along_with" value="1" {% if item.is_get_along_with %} checked {% endif %} required>©M·ü
-            <input type="radio" id="is_get_along_with" name="is_get_along_with" value="0" {% if not item.is_get_along_with %} checked {% endif %} required>¤í¨Î¡A»¡©ú:
-            <input type="text" id="is_get_along_with_description" name="is_get_along_with_description" value="{{item.is_get_along_with_description}}">
-            <br>
-            <h3>³Xµøµ²ªG</h3>
-            <label for="result">³Xµøµ²ªG:</label>
-            <input type="radio" id="result" name="result" value="0" {% if item.result == 0 %} checked {% endif %} required>¾ãÅé¸î©~ª¬ªp¨}¦n
-            <input type="radio" id="result" name="result" value="1" {% if item.result == 1 %} checked {% endif %} required>ÁpÃ´®aªøÃöª`
-            <input type="radio" id="result" name="result" value="2" {% if item.result == 2 %} checked {% endif %} required>¦w¥ş³ô¼{½Ğ¨ó§U
-            <input type="radio" id="result" name="result" value="3" {% if item.result == 3 %} checked {% endif %} required>¨ä¥L¡A»¡©ú:
-            <input type="text" id="result_description" name="result_description" value="{{item.result_description}}">
-            <br>
-            <label for="others1">¨ä¥L¬ö¸ü©Î«ØÄ³¨Æ¶µ:</label>
-            <input type="text" id="others1" name="others1" value="{{item.others1}}">
-            <br>
-            <h3>ÃöÃh«Å¾É¶µ¥Ø¡]Àµ½Ğ¾É®v¸î©~³Xµø®É¦h¤©ÃöÃh¥mÀ{¡^</h3>
-            <input type="checkbox" id="traffic_safty" name="traffic_safty" value="1" {% if item.traffic_safty %} checked {% endif %}>
-            <label for="traffic_safty">¥æ³q¦w¥ş</label>
-            <br>
-            <input type="checkbox" id="smoke" name="smoke" value="1" {% if item.smoke %} checked {% endif %}>
-            <label for="smoke">©Úµ´µÒ®`</label>
-            <br>
-            <input type="checkbox" id="drug" name="drug" value="1" {% if item.drug %} checked {% endif %}>
-            <label for="drug">©Úµ´¬r«~</label>
-            <br>
-            <input type="checkbox" id="dengue" name="dengue" value="1" {% if item.dengue %} checked {% endif %}>
-            <label for="dengue">µn­²¼ö¨¾ªv</label>
-            <br>
-            <label for="others2">¨ä¥L»¡©ú:</label>
-            <input type="text" id="others2" name="others2" value="{{item.others2}}">
-            <br>
-            <input type="submit" value="°e¥X">
+                <input type="hidden" name="id" value="{{item.id}}">
+                <h3>ç’°å¢ƒä½œæ¯åŠè©•ä¼°</h3>
+                <label for="deposit_demand">æŠ¼é‡‘è¦æ±‚:</label>
+                <input type="radio" id="deposit_demand" name="deposit_demand" value="1" {% if item.deposit_demand %} checked {% endif %} required>åˆç†
+                <input type="radio" id="deposit_demand" name="deposit_demand" value="0" {% if not item.deposit_demand %} checked {% endif %} required>ä¸åˆç†
+                <br>
+                <label for="water_electric_bill_demand">æ°´é›»è²»è¦æ±‚:</label>
+                <input type="radio" id="water_electric_bill_demand" name="water_electric_bill_demand" value="1" {% if item.water_electric_bill_demand %} checked {% endif %} required>åˆç†
+                <input type="radio" id="water_electric_bill_demand" name="water_electric_bill_demand" value="0" {% if not item.water_electric_bill_demand %} checked {% endif %} required>ä¸åˆç†
+                <br>
+                <label for="environment">å±…å®¶ç’°å¢ƒ:</label>
+                <input type="radio" id="environment" name="environment" value="0" {% if item.environment == 0 %} checked {% endif %} required>ä½³
+                <input type="radio" id="environment" name="environment" value="1" {% if item.environment == 1 %} checked {% endif %} required>é©ä¸­
+                <input type="radio" id="environment" name="environment" value="2" {% if item.environment == 2 %} checked {% endif %} required>æ¬ ä½³
+                <br>
+                <label for="environment_description">èªªæ˜:</label><br>
+                <input type="text" id="environment_description" name="environment_description" value="{{item.environment_description}}">
+                <br><br>
+                <label for="facility">ç”Ÿæ´»è¨­æ–½:</label>
+                <input type="radio" id="facility" name="facility" value="0" {% if item.facility == 0 %} checked {% endif %} required>ä½³
+                <input type="radio" id="facility" name="facility" value="1" {% if item.facility == 1 %} checked {% endif %} required>é©ä¸­
+                <input type="radio" id="facility" name="facility" value="2" {% if item.facility == 2 %} checked {% endif %} required>æ¬ ä½³
+                <br>
+                <label for="faclity_description">èªªæ˜:</label><br>
+                <input type="text" id="faclity_description" name="faclity_description" value="{{item.faclity_description}}">
+                <br><br>
+                <label for="situation">è¨ªè¦–ç¾æ³:</label>
+                <input type="radio" id="situation" name="situation" value="0" {% if item.situation == 0 %} checked {% endif %} required>ç”Ÿæ´»è¦å¾‹
+                <input type="radio" id="situation" name="situation" value="1" {% if item.situation == 1 %} checked {% endif %} required>é©ä¸­
+                <input type="radio" id="situation" name="situation" value="2" {% if item.situation == 2 %} checked {% endif %} required>å¾…åŠ å¼·
+                <br>
+                <label for="situation_description">èªªæ˜:</label><br>
+                <input type="text" id="situation_description" name="situation_description" value="{{item.situation_description}}">
+                <br><br>
+                <label for="is_get_along_with">ä¸»å®¢ç›¸è™•:</label>
+                <input type="radio" id="is_get_along_with" name="is_get_along_with" value="1" {% if item.is_get_along_with %} checked {% endif %} required>å’Œç¦
+                <input type="radio" id="is_get_along_with" name="is_get_along_with" value="0" {% if not item.is_get_along_with %} checked {% endif %} required>æ¬ ä½³
+                <br>
+                <label for="is_get_along_with_description">èªªæ˜:</label><br>
+                <input type="text" id="is_get_along_with_description" name="is_get_along_with_description" value="{{item.is_get_along_with_description}}">
+                <br><br>
+                <h3>è¨ªè¦–çµæœ</h3>
+                <label for="result">è¨ªè¦–çµæœ:</label>
+                <input type="radio" id="result" name="result" value="0" {% if item.result == 0 %} checked {% endif %} required>æ•´é«”è³ƒå±…ç‹€æ³è‰¯å¥½
+                <input type="radio" id="result" name="result" value="1" {% if item.result == 1 %} checked {% endif %} required>è¯ç¹«å®¶é•·é—œæ³¨
+                <input type="radio" id="result" name="result" value="2" {% if item.result == 2 %} checked {% endif %} required>å®‰å…¨å ªæ…®è«‹å”åŠ©
+                <input type="radio" id="result" name="result" value="3" {% if item.result == 3 %} checked {% endif %} required>å…¶ä»–
+                <br>
+                <label for="result_description">èªªæ˜:</label><br>
+                <input type="text" id="result_description" name="result_description" value="{{item.result_description}}">
+                <br><br>
+                <label for="others1">å…¶ä»–ç´€è¼‰æˆ–å»ºè­°äº‹é …:</label><br>
+                <input type="text" id="others1" name="others1" value="{{item.others1}}">
+                <br><br>
+                <h3>é—œæ‡·å®£å°é …ç›®</h3>
+                <input type="checkbox" id="traffic_safty" name="traffic_safty" value="1" {% if item.traffic_safty %} checked {% endif %}>
+                <label for="traffic_safty">äº¤é€šå®‰å…¨</label>
+                <br>
+                <input type="checkbox" id="smoke" name="smoke" value="1" {% if item.smoke %} checked {% endif %}>
+                <label for="smoke">æ‹’çµ•è¸å®³</label>
+                <br>
+                <input type="checkbox" id="drug" name="drug" value="1" {% if item.drug %} checked {% endif %}>
+                <label for="drug">æ‹’çµ•æ¯’å“</label>
+                <br>
+                <input type="checkbox" id="dengue" name="dengue" value="1" {% if item.dengue %} checked {% endif %}>
+                <label for="dengue">ç™»é©ç†±é˜²æ²»</label>
+                <br><br>
+                <label for="others2">å…¶ä»–èªªæ˜:</label><br>
+                <input type="text" id="others2" name="others2" value="{{item.others2}}">
+                <br><br>
+                <input type="submit" value="é€å‡º">
             </form>
             <hr>
-        {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
 
-        <!-- ºŞ²z­û -->
+
+
+
+        <!-- ç®¡ç†å“¡ -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="form-container col-6 justify-content-center">
         {% if current_user.type == 'administrator' %}
-            <h3>Àô¹Ò§@®§¤Îµû¦ô</h3>
-            <label>©ãª÷­n¨D: 
-                {% if item.deposit_demand %} ¦X²z {% else %} ¤£¦X²z {% endif %} 
+            <h3>ç’°å¢ƒä½œæ¯åŠè©•ä¼°</h3>
+            <label>æŠ¼é‡‘è¦æ±‚: 
+                {% if item.deposit_demand %} åˆç† {% else %} ä¸åˆç† {% endif %} 
             </label>
             <br>
-            <label>¤ô¹q¶O­n¨D: {% if item.water_electric_bill_demand %} ¦X²z {% else %} ¤£¦X²z {% endif %} </label>
+            <label>æ°´é›»è²»è¦æ±‚: {% if item.water_electric_bill_demand %} åˆç† {% else %} ä¸åˆç† {% endif %} </label>
             <br>
-            <label>©~®aÀô¹Ò:
-                {% if item.environment == 0 %} ¨Î
-                {% elif item.environment == 1 %} ¾A¤¤
-                {% elif item.environment == 2 %} ¤í¨Î
+            <label>å±…å®¶ç’°å¢ƒ:
+                {% if item.environment == 0 %} ä½³
+                {% elif item.environment == 1 %} é©ä¸­
+                {% elif item.environment == 2 %} æ¬ ä½³
                 {% endif %}
             </label>
             <br>
-            <label>©~®aÀô¹Ò¤í¨Î»¡©ú: 
+            <label>å±…å®¶ç’°å¢ƒæ¬ ä½³èªªæ˜: 
                 {{item.environment_description}} 
             </label>
             <br>
-            <label>¥Í¬¡³]¬I:
-                {% if item.facility == 0 %} ¨Î
-                {% elif item.facility == 1 %} ¾A¤¤
-                {% elif item.facility == 2 %} ¤í¨Î
+            <label>ç”Ÿæ´»è¨­æ–½:
+                {% if item.facility == 0 %} ä½³
+                {% elif item.facility == 1 %} é©ä¸­
+                {% elif item.facility == 2 %} æ¬ ä½³
                 {% endif %}
             </label>
             <br>
-            <label>¥Í¬¡³]¬I¤í¨Î»¡©ú:
+            <label>ç”Ÿæ´»è¨­æ–½æ¬ ä½³èªªæ˜:
                 {{item.faclity_description}}
             </label>
             <br>
-            <label>³Xµø²{ªp:
-                {% if item.situation == 0 %} ¥Í¬¡³W«ß
-                {% elif item.situation == 1 %} ¾A¤¤
-                {% elif item.situation == 2 %} «İ¥[±j
+            <label>è¨ªè¦–ç¾æ³:
+                {% if item.situation == 0 %} ç”Ÿæ´»è¦å¾‹
+                {% elif item.situation == 1 %} é©ä¸­
+                {% elif item.situation == 2 %} å¾…åŠ å¼·
                 {% endif %}
             </label>
             <br>
-            <label>³Xµø²{ªp«İ¥[±j»¡©ú:
+            <label>è¨ªè¦–ç¾æ³å¾…åŠ å¼·èªªæ˜:
                 {{item.situation_description}}
             </label>
             <br>
-            <label>¥D«È¬Û³B:
-                {% if item.is_get_along_with %} ©M·ü {% else %} ¤í¨Î {% endif %}
+            <label>ä¸»å®¢ç›¸è™•:
+                {% if item.is_get_along_with %} å’Œç¦ {% else %} æ¬ ä½³ {% endif %}
             </label>
             <br>
-            <label>¥D«È¬Û³B¤í¨Î»¡©ú:
+            <label>ä¸»å®¢ç›¸è™•æ¬ ä½³èªªæ˜:
                 {{item.is_get_along_with_description}}
             </label>
             <br>
-            <h3>³Xµøµ²ªG</h3>
-            <label>³Xµøµ²ªG:
-                {% if item.result == 0 %} ¾ãÅé¸î©~ª¬ªp¨}¦n
-                {% elif item.result == 1 %} ÁpÃ´®aªøÃöª`
-                {% elif item.result == 2 %} ¦w¥ş³ô¼{½Ğ¨ó§U
-                {% elif item.result == 3 %} ¨ä¥L¡A»¡©ú: {{item.result_description}}
+            <h3>è¨ªè¦–çµæœ</h3>
+            <label>è¨ªè¦–çµæœ:
+                {% if item.result == 0 %} æ•´é«”è³ƒå±…ç‹€æ³è‰¯å¥½
+                {% elif item.result == 1 %} è¯ç¹«å®¶é•·é—œæ³¨
+                {% elif item.result == 2 %} å®‰å…¨å ªæ…®è«‹å”åŠ©
+                {% elif item.result == 3 %} å…¶ä»–ï¼Œèªªæ˜: {{item.result_description}}
                 {% endif %}
             </label>
             <br>
-            <label>¨ä¥L¬ö¸ü©Î«ØÄ³¨Æ¶µ: {{item.others1}} </label>
+            <label>å…¶ä»–ç´€è¼‰æˆ–å»ºè­°äº‹é …: {{item.others1}} </label>
             <br>
-            <h3>ÃöÃh«Å¾É¶µ¥Ø¡]Àµ½Ğ¾É®v¸î©~³Xµø®É¦h¤©ÃöÃh¥mÀ{¡^</h3>
-            <input type="checkbox" {% if item.traffic_safty %} checked {% endif %} disabled> ¥æ³q¦w¥ş
+            <h3>é—œæ‡·å®£å°é …ç›®ï¼ˆæ‡‡è«‹å°å¸«è³ƒå±…è¨ªè¦–æ™‚å¤šäºˆé—œæ‡·å®åš€ï¼‰</h3>
+            <input type="checkbox" {% if item.traffic_safty %} checked {% endif %} disabled> äº¤é€šå®‰å…¨
             <br>
-            <input type="checkbox" {% if item.smoke %} checked {% endif %} disabled>©Úµ´µÒ®`
+            <input type="checkbox" {% if item.smoke %} checked {% endif %} disabled>æ‹’çµ•è¸å®³
             <br>
-            <input type="checkbox" {% if item.drug %} checked {% endif %} disabled>©Úµ´¬r«~
+            <input type="checkbox" {% if item.drug %} checked {% endif %} disabled>æ‹’çµ•æ¯’å“
             <br>
-            <input type="checkbox" {% if item.dengue %} checked {% endif %} disabled> µn­²¼ö¨¾ªv
+            <input type="checkbox" {% if item.dengue %} checked {% endif %} disabled> ç™»é©ç†±é˜²æ²»
             <br>
-            <label>¨ä¥L»¡©ú: {{item.others2}}</label>
+            <label>å…¶ä»–èªªæ˜: {{item.others2}}</label>
             <br>
+            {% endif %}
+            {% endfor %}
         {% endif %}
-    {% endfor %}
+        </div>
+    </div>
+</div>
+        
+
+<!-- å­¸ç”Ÿ -->
+{% if current_user.type == 'student' %}
+<!-- æ ¡å¤–è³ƒå±…è³‡æ–™è¡¨å–® -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="form-container col-6 justify-content-center">
+            <form action="{{ url_for('visitation_management.update') }}" method="post">
+                <h1>æ ¡å¤–è³ƒå±…è³‡æ–™</h1>
+                <label for="id">å­¸è™Ÿ:</label><br>
+                <input type="text" id="id" name="id" value="{{ current_user.id }}" required><br><br>
+                <label for="semester">å­¸å¹´/å­¸æœŸ:</label><br>
+                <input type="text" id="semester" name="semester" placeholder="XXX/X" value="{{ data.semester }}" required><br><br>
+                <label for="visit_date_time">è¨ªè¦–æ—¥æœŸ:</label><br>
+                <input type="date" id="visit_date_time" name="visit_date_time" value="{% if data %}{{ data.visit_date_time.strftime('%Y-%m-%d') }}{% endif %}" required><br><br>
+                <label for="landlord_name">æˆ¿æ±å§“å:</label><br>
+                <input type="text" id="landlord_name" name="landlord_name" value="{{ data.landlord_name }}" required><br><br>
+                <label for="landlord_tel">æˆ¿æ±é›»è©±:</label><br>
+                <input type="text" id="landlord_tel" name="landlord_tel" value="{{ data.landlord_tel }}" required><br><br>
+                <label for="addr">ç§Ÿè³ƒåœ°å€:</label><br>
+                <input type="text" id="addr" name="addr" value="{{ data.addr }}" required><br><br>
+                <label for="building_type">ç§Ÿå±‹å‹æ…‹:</label><br>
+                <input type="radio" id="building_type1" name="building_type" value="ç¨æ£Ÿé€å¤©" {% if data.building_type == 'ç¨æ£Ÿé€å¤©' %} checked {% endif %} required>ç¨æ£Ÿé€å¤©
+                <input type="radio" id="building_type2" name="building_type" value="å…¬å¯“ï¼ˆäº”æ¨“ä»¥ä¸‹ï¼‰" {% if data.building_type == 'å…¬å¯“ï¼ˆäº”æ¨“ä»¥ä¸‹ï¼‰' %} checked {% endif %} required>å…¬å¯“ï¼ˆäº”æ¨“ä»¥ä¸‹ï¼‰
+                <input type="radio" id="building_type3" name="building_type" value="å¤§æ¨“ï¼ˆå…­æ¨“ä»¥ä¸‹ï¼‰" {% if data.building_type == 'å¤§æ¨“ï¼ˆå…­æ¨“ä»¥ä¸‹ï¼‰' %} checked {% endif %} required>å¤§æ¨“ï¼ˆå…­æ¨“ä»¥ä¸‹ï¼‰
+                <input type="radio" id="building_type4" name="building_type" value="å¤§å‹å­¸èˆï¼ˆç‚ºå­¸ç”Ÿå»ºè¨­çš„å®¿èˆï¼‰" {% if data.building_type == 'å¤§å‹å­¸èˆï¼ˆç‚ºå­¸ç”Ÿå»ºè¨­çš„å®¿èˆï¼‰' %} checked {% endif %} required>å¤§å‹å­¸èˆï¼ˆç‚ºå­¸ç”Ÿå»ºè¨­çš„å®¿èˆï¼‰<br><br>
+                <label for="room_type">æˆ¿é–“é¡å‹:</label><br>
+                <input type="radio" id="room_type1" name="room_type" value="å¥—æˆ¿" {% if data.room_type == 'å¥—æˆ¿' %} checked {% endif %} required>å¥—æˆ¿
+                <input type="radio" id="room_type2" name="room_type" value="é›…æˆ¿" {% if data.room_type == 'é›…æˆ¿' %} checked {% endif %} required>é›…æˆ¿<br><br>
+                <label for="rent">æ¯æœˆç§Ÿé‡‘:</label><br>
+                <input type="text" id="rent" name="rent" value="{{ data.rent }}" required><br><br>
+                <label for="deposit">æŠ¼é‡‘:</label><br>
+                <input type="text" id="deposit" name="deposit" value="{{ data.deposit }}" required><br><br>
+                <label for="recommand">æ˜¯å¦å€¼å¾—æ¨è–¦å…¶ä»–åŒå­¸ç§Ÿè³ƒ:</label><br>
+                <input type="radio" id="recommand1" name="recommand" value="1" {% if data.recommand %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="recommand2" name="recommand" value="0" {% if not data.recommand %} checked {% endif %} required>å¦<br><br>
+
+                <hr>
+                <h1>è³ƒå±…å®‰å…¨è‡ªä¸»ç®¡ç†æª¢è¦–è³‡æ–™</h1>
+                <div class="mb-3"></div>
+                <label for="safe_manage1">æœ¨é€ éš”é–“æˆ–éµçš®åŠ è“‹:</label><br>
+                <input type="radio" id="safe_manage1" name="safe_manage1" value="1" {% if data.safe_manage1 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage1" name="safe_manage1" value="0" {% if not data.safe_manage1 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage2">æœ‰ç«è­¦è­¦å ±å™¨æˆ–åµç…™å™¨:</label><br>
+                <input type="radio" id="safe_manage2" name="safe_manage2" value="1" {% if data.safe_manage2 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage2" name="safe_manage2" value="0" {% if not data.safe_manage2 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage3">é€ƒç”Ÿé€šé“æš¢é€šä¸”æ¨™ç¤ºæ¸…æ¥š:</label><br>
+                <input type="radio" id="safe_manage3" name="safe_manage3" value="1" {% if data.safe_manage3 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage3" name="safe_manage3" value="0" {% if not data.safe_manage3 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage4">é–€ç¦åŠé–å…·è‰¯å¥½ç®¡ç†:</label><br>
+                <input type="radio" id="safe_manage4" name="safe_manage4" value="1" {% if data.safe_manage4 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage4" name="safe_manage4" value="0" {% if not data.safe_manage4 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage5">æœ‰å®‰è£ç…§æ˜è¨­å‚™(åœè»Šå ´åŠå‘¨é‚Š):</label><br>
+                <input type="radio" id="safe_manage5" name="safe_manage5" value="1" {% if data.safe_manage5 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id                ="safe_manage5" name="safe_manage5" value="0" {% if not data.safe_manage5 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage6">ç­è§£ç†Ÿæ‚‰é›»è·¯å®‰å…¨åŠé€ƒç”Ÿè¦é ˜:</label><br>
+                <input type="radio" id="safe_manage6" name="safe_manage6" value="1" {% if data.safe_manage6 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage6" name="safe_manage6" value="0" {% if not data.safe_manage6 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage7">ç†Ÿæ‚‰æ´¾å‡ºæ‰€ã€é†«ç™‚ã€æ¶ˆé˜²éšŠã€å­¸æ ¡æ ¡å®‰å°ˆç·šé›»è©±:</label><br>
+                <input type="radio" id="safe_manage7" name="safe_manage7" value="1" {% if data.safe_manage7 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage7" name="safe_manage7" value="0" {% if not data.safe_manage7 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage8">ä½¿ç”¨å¤šç¨®é›»å™¨(é«˜è€—èƒ½)ï¼Œæ˜¯å¦åŒæ™‚æ’åœ¨åŒä¸€æ¢å»¶é•·ç·š:</label><br>
+                <input type="radio" id="safe_manage8" name="safe_manage8" value="1" {% if data.safe_manage8 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage8" name="safe_manage8" value="0" {% if not data.safe_manage8 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage9">æœ‰æ»…ç«å™¨ä¸”åŠŸèƒ½æ­£å¸¸:</label><br>
+                <input type="radio" id="safe_manage9" name="safe_manage9" value="1" {% if data.safe_manage9 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage9" name="safe_manage9" value="0" {% if not data.safe_manage9 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage10">ç†±æ°´å™¨(é›»ç†±å¼åŠç“¦æ–¯å¼)å®‰å…¨è‰¯å¥½ï¼Œç„¡ä¸€æ°§åŒ–ç¢³ä¸­æ¯’ç–‘æ…®:</label><br>
+                <input type="radio" id="safe_manage10" name="safe_manage10" value="1" {% if data.safe_manage10 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage10" name="safe_manage10" value="0" {% if not data.safe_manage10 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage11">åˆ†é–“6å€‹ä»¥ä¸Šæˆ¿é–“æˆ–10å€‹ä»¥ä¸ŠåºŠä½:</label><br>
+                <input type="radio" id="safe_manage11" name="safe_manage11" value="1" {% if data.safe_manage11 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage11" name="safe_manage11" value="0" {% if not data.safe_manage11 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage12">æœ‰å®‰è£ç›£è¦–å™¨è¨­å‚™:</label><br>
+                <input type="radio" id="safe_manage12" name="safe_manage12" value="1" {% if data.safe_manage12 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage12" name="safe_manage12" value="0" {% if not data.safe_manage12 %} checked {% endif %} required>å¦<br>
+                <label for="safe_manage13">ä½¿ç”¨å…§æ”¿éƒ¨å®šå‹åŒ–ç§Ÿè³ƒå¥‘ç´„:</label><br>
+                <input type="radio" id="safe_manage13" name="safe_manage13" value="1" {% if data.safe_manage13 %} checked {% endif %} required>æ˜¯
+                <input type="radio" id="safe_manage13" name="safe_manage13" value="0" {% if not data.safe_manage13 %} checked {% endif %} required>å¦<br>
+                <div class="mb-3"></div>
+                <input type="submit" value="é€å‡º">
+            </form>
+        </div>
+    </div>
+</div>
 {% endif %}
 
-<!-- ¾Ç¥Í -->
-{% if current_user.type == 'student' %}
-    <form action="{{url_for('visitation_management.update')}}" method="post">
-        <h1>®Õ¥~¸î©~¸ê®Æ</h1>
-        <label for="id">¾Ç¸¹:</label>
-        <input type="text" id="id" name="id" value="{{current_user.id}}" required>
-        <label for="semester">¾Ç¦~/¾Ç´Á:</label>
-        <input type="text" id="semester" name="semester" placeholder="XXX/X" value="{{data.semester}}" required>
-        <label for="visit_date_time">³Xµø¤é´Á:</label>
-        <input type="date" id="visit_date_time" name="visit_date_time" value={% if not(data == None) %}"{{data.visit_date_time.strftime('%Y-%m-%d')}}" {% endif %} required>
-        <label for="landlord_name">©ĞªF©m¦W:</label>
-        <input type="text" id="landlord_name" name="landlord_name" value="{{data.landlord_name}}" required>
-        <label for="landlord_tel">©ĞªF¹q¸Ü:</label>
-        <input type="text" id="landlord_tel" name="landlord_tel" value="{{data.landlord_tel}}" required>
-        <label for="addr">¯²¸î¦a§}:</label>
-        <input type="text" id="addr" name="addr" value="{{data.addr}}" required>
-        <label for="building_type">¯²«Î«¬ºA:</label>
-        <input type="radio" id="building_type" name="building_type" value="¿W´É³z¤Ñ" {% if data.building_type == '¿W´É³z¤Ñ' %} checked {% endif %} required>¿W´É³z¤Ñ
-        <input type="radio" id="building_type" name="building_type" value="¤½´J¡]¤­¼Ó¥H¤U¡^" {% if data.building_type == '¤½´J¡]¤­¼Ó¥H¤U¡^' %} checked {% endif %} required>¤½´J¡]¤­¼Ó¥H¤U¡^
-        <input type="radio" id="building_type" name="building_type" value="¤j¼Ó¡]¤»¼Ó¥H¤U¡^" {% if data.building_type == '¤j¼Ó¡]¤»¼Ó¥H¤U¡^' %} checked {% endif %} required>¤j¼Ó¡]¤»¼Ó¥H¤U¡^
-        <input type="radio" id="building_type" name="building_type" value="¤j«¬¾ÇªÙ¡]¬°¾Ç¥Í«Ø³]ªº±JªÙ¡^" {% if data.building_type == '¤j«¬¾ÇªÙ¡]¬°¾Ç¥Í«Ø³]ªº±JªÙ¡^' %} checked {% endif %} required>¤j«¬¾ÇªÙ¡]¬°¾Ç¥Í«Ø³]ªº±JªÙ¡^
-        <label for="room_type">©Ğ¶¡Ãş«¬:</label>
-        <input type="radio" id="room_type" name="room_type" value="®M©Ğ" {% if data.room_type == '®M©Ğ' %} checked {% endif %} required>®M©Ğ
-        <input type="radio" id="room_type" name="room_type" value="¶®©Ğ" {% if data.room_type == '¶®©Ğ' %} checked {% endif %} required>¶®©Ğ
-        <label for="rent">¨C¤ë¯²ª÷:</label>
-        <input type="text" id="rent" name="rent" value="{{data.rent}}" required>
-        <label for="deposit">©ãª÷:</label>
-        <input type="text" id="deposit" name="deposit" value="{{data.deposit}}" required>
-        <label for="recommand">¬O§_­È±o±ÀÂË¨ä¥L¦P¾Ç¯²¸î:</label>
-        <input type="radio" id="recommand" name="recommand" value="1" {% if data.recommand %} checked {% endif %} required>¬O
-        <input type="radio" id="recommand" name="recommand" value="0" {% if not data.recommand %} checked {% endif %} required>§_
-        <hr>
-        <h1>¸î©~¦w¥ş¦Û¥DºŞ²zÀËµø¸ê®Æ</h1>
-        <label for="safe_manage1">¤ì³y¹j¶¡©ÎÅK¥Ö¥[»\:</label>
-        <input type="radio" id="safe_manage1" name="safe_manage1" value="1" {% if data.safe_manage1 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage1" name="safe_manage1" value="0" {% if not data.safe_manage1 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage2">¦³¤õÄµÄµ³ø¾¹©Î°»·Ï¾¹:</label>
-        <input type="radio" id="safe_manage2" name="safe_manage2" value="1" {% if data.safe_manage2 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage2" name="safe_manage2" value="0" {% if not data.safe_manage2 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage3">°k¥Í³q¹DºZ³q¥B¼Ğ¥Ü²M·¡:</label>
-        <input type="radio" id="safe_manage3" name="safe_manage3" value="1" {% if data.safe_manage3 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage3" name="safe_manage3" value="0" {% if not data.safe_manage3 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage4">ªù¸T¤ÎÂê¨ã¨}¦nºŞ²z:</label>
-        <input type="radio" id="safe_manage4" name="safe_manage4" value="1" {% if data.safe_manage4 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage4" name="safe_manage4" value="0" {% if not data.safe_manage4 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage5">¦³¦w¸Ë·Ó©ú³]³Æ(°±¨®³õ¤Î©PÃä):</label>
-        <input type="radio" id="safe_manage5" name="safe_manage5" value="1" {% if data.safe_manage5 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage5" name="safe_manage5" value="0" {% if not data.safe_manage5 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage6">ÁA¸Ñ¼ô±x¹q¸ô¦w¥ş¤Î°k¥Í­n»â:</label>
-        <input type="radio" id="safe_manage6" name="safe_manage6" value="1" {% if data.safe_manage6 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage6" name="safe_manage6" value="0" {% if not data.safe_manage6 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage7">¼ô±x¬£¥X©Ò¡BÂåÀø¡B®ø¨¾¶¤¡B¾Ç®Õ®Õ¦w±M½u¹q¸Ü:</label>
-        <input type="radio" id="safe_manage7" name="safe_manage7" value="1" {% if data.safe_manage7 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage7" name="safe_manage7" value="0" {% if not data.safe_manage7 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage8">¨Ï¥Î¦hºØ¹q¾¹(°ª¯Ó¯à)¡A¬O§_¦P®É´¡¦b¦P¤@±ø©µªø½u:</label>
-        <input type="radio" id="safe_manage8" name="safe_manage8" value="1" {% if data.safe_manage8 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage8" name="safe_manage8" value="0" {% if not data.safe_manage8 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage9">¦³·À¤õ¾¹¥B¥\¯à¥¿±`:</label>
-        <input type="radio" id="safe_manage9" name="safe_manage9" value="1" {% if data.safe_manage9 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage9" name="safe_manage9" value="0" {% if not data.safe_manage9 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage10">¼ö¤ô¾¹(¹q¼ö¦¡¤Î¥Ë´µ¦¡)¦w¥ş¨}¦n¡AµL¤@®ñ¤ÆºÒ¤¤¬rºÃ¼{:</label>
-        <input type="radio" id="safe_manage10" name="safe_manage10" value="1" {% if data.safe_manage10 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage10" name="safe_manage10" value="0" {% if not data.safe_manage10 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage11">¤À¶¡6­Ó¥H¤W©Ğ¶¡©Î10­Ó¥H¤W§É¦ì:</label>
-        <input type="radio" id="safe_manage11" name="safe_manage11" value="1" {% if data.safe_manage11 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage11" name="safe_manage11" value="0" {% if not data.safe_manage11 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage12">¦³¦w¸ËºÊµø¾¹³]³Æ:</label>
-        <input type="radio" id="safe_manage12" name="safe_manage12" value="1" {% if data.safe_manage12 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage12" name="safe_manage12" value="0" {% if not data.safe_manage12 %} checked {% endif %} required>§_
-        <br>
-        <label for="safe_manage13">¨Ï¥Î¤º¬F³¡©w«¬¤Æ¯²¸î«´¬ù:</label>
-        <input type="radio" id="safe_manage13" name="safe_manage13" value="1" {% if data.safe_manage13 %} checked {% endif %} required>¬O
-        <input type="radio" id="safe_manage13" name="safe_manage13" value="0" {% if not data.safe_manage13 %} checked {% endif %} required>§_
-        <br>
-        <input type="submit" value="°e¥X">
-    </form>
-{% endif %}
+
 
 {% endblock content%}
