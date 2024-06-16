@@ -22,6 +22,11 @@
         .hidden {
             display: none;
         }
+        /* @media (max-width: 768px) {
+            #layout-btn {
+                display: none;
+            }
+        } */
     </style>
     <script>
         function redirectTo(url) {
@@ -59,12 +64,12 @@
         {% endwith %}
         
         <!-- 更換版面配置按鈕 -->
-        <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex justify-content-between">
             <!-- 篩選表單 -->
-            <form class="d-inline-flex mb-3" method="GET" action="{{ url_for('rental_advertisement.index', page=1) }}" class="mb-4">
+            <form class="d-inline-flex mb-2" method="GET" action="{{ url_for('rental_advertisement.index', page=1) }}" class="mb-4">
                 <div class="form-row">
-                    <div class="col-md-4">
-                        <label for="rentFilter">租金</label>
+                    <div class="col-md-3 mb-2">
+                        <label class="mb-0" for="rentFilter">租金</label>
                         <select class="form-control" id="rentFilter" name="rent_filter">
                             <option value="不限">不限</option>
                             <option value="3000以下">3000以下</option>
@@ -75,9 +80,9 @@
                             <option value="20000以上">20000以上</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
-                        <label for="rentFilter">建築類型</label>
-                        <select class="form-control" id="rentFilter" name="rent_filter">
+                    <div class="col-md-3 mb-2">
+                        <label class="mb-0" for="buildingTypeFilter">建築類型</label>
+                        <select class="form-control" id="buildingTypeFilter" name="building_type_filter">
                             <option value="不限">不限</option>
                             <option value="公寓">公寓</option>
                             <option value="大樓">大樓</option>
@@ -85,17 +90,17 @@
                             <option value="透天">透天</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
-                        <label for="rentFilter">出租類型</label>
-                        <select class="form-control" id="rentFilter" name="rent_filter">
+                    <div class="col-md-3 mb-2">
+                        <label class="mb-0" for="rentalTypeFilter">出租類型</label>
+                        <select class="form-control" id="rentalTypeFilter" name="rental_type_filter">
                             <option value="不限">不限</option>
-                            <option value="公寓">公寓</option>
-                            <option value="大樓">大樓</option>
+                            <option value="整棟出租">整棟出租</option>
+                            <option value="獨立套房">獨立套房</option>
                             <option value="學舍">學舍</option>
-                            <option value="透天">透天</option>
+                            <option value="房間分租">房間分租</option>
                         </select>
                     </div>
-                    <div class="col-md-2 align-self-end">
+                    <div class="col-md-3 align-self-center">
                         <button type="submit" class="btn btn-primary">篩選</button>
                     </div>
                 </div>

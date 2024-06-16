@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, url_for, redirect, flash, request,
 from flask_login import login_user, logout_user, login_required, current_user
 from app.AIMS.login_management import role_required
 from app.models import Advertisement, Landlord, Test
-from app.forms import AdvertisementForm
 from app.extensions import db
 from sqlalchemy import func
 from datetime import datetime
@@ -217,29 +216,27 @@ def review_advertisement():
 @login_required
 @role_required('administrator')
 def review_advertisement_detail(adid):
-    ad = Advertisement.query.get_or_404(adid)
-    form = AdvertisementForm(obj=ad)
+    advertisement = Advertisement.query.get_or_404(adid)
+    equips = advertisement.get_equip_list()
+    public_equips = advertisement.get_public_equip_list()
+    heaters = advertisement.get_heater_list()
+    safety_equips = advertisement.get_safety_equip_list()
+    docs = advertisement.get_document_list()
+    combined_list = {'equips':equips, 'public_equips':public_equips, 'heaters':heaters, 'safety_equips':safety_equips, 'docs':docs}
+    landlord = Landlord.query.filter_by(id=advertisement.landlord_id).one()
+    # form = AdvertisementForm(obj=ad)
     if request.method == 'POST':
-        form.populate_obj(ad)
-        ad.electricity_meter=strtobool(form.electricity_meter.data)
-        ad.smoke=strtobool(form.smoke.data)
-        ad.wash_machine=strtobool(form.wash_machine.data)
-        ad.water_dispenser=strtobool(form.water_dispenser.data)
-        ad.internet=strtobool(form.internet.data)
-        ad.parking=strtobool(form.parking.data)
-        ad.air_con=strtobool(form.air_con.data)
-        ad.water_heater=strtobool(form.water_heater.data)
-
         if request.form.get('action') == '核准':
-            ad.status = 1
+            advertisement.status = 1
         elif request.form.get('action') == '駁回':
-            ad.status = 2
-
-        db.session.add(ad)
+            advertisement.status = 2
+        
+        advertisement.pulish_date = datetime.now()
+        db.session.add(advertisement)
         db.session.commit()
         flash('審核成功', 'success')
         return redirect(url_for('rental_advertisement.review_advertisement'))
-    return render_template('/RIMS/review_advertisement_detail.html', form=form)
+    return render_template('/RIMS/review_advertisement_detail.html',  ad=advertisement, combined_list=combined_list, landlord=landlord)
 
 @rental_advertisement.route('/import_db', methods=['GET', 'POST'])
 def import_db():
