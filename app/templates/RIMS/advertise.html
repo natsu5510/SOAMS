@@ -13,7 +13,7 @@
 <!-- 主要內容 -->
 {% block content %}
     <div class="container">
-        <div class="col-8 offset-2 mb-4">
+        <div class="col-10 offset-1 mb-4">
             <form method="POST" enctype="multipart/form-data" action="">
 
                 <div class="form-group row">
@@ -22,6 +22,8 @@
                         <input type="text" class="form-control" id="title" name="title" required>
                     </div>
                 </div>
+
+                <hr>
 
                 <div class="form-group row">
                     <div class="col-2">
@@ -41,6 +43,8 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group row">
                     <div class="col-2">
                         <label for="addr" class="col-form-label">房屋地址：</label>
@@ -50,49 +54,51 @@
                     </div>
                 </div>
 
-                套房
+                <hr>
+
                 <div class="form-group row">
                     <div class="col-2">
-                        <label class="col-form-label" for="suite_num">總數：</label>
+                        <label class="col-form-label" for="suite_num">套房總數：</label>
                     </div>
                     <div class="col-2">
                         <input class="form-control" type="number" id="suite_num" name="suite_num" required>
                     </div>
                     <div class="col-2">
-                        <label class="col-form-label" for="suite_empty">空房：</label>
+                        <label class="col-form-label" for="suite_empty">空套房數量：</label>
                     </div>
                     <div class="col-2">
                         <input class="form-control" type="number" id="suite_empty" name="suite_empty" required>
                     </div>
                     <div class="col-2">
-                        <label class="col-form-label" for="suite_size">坪數：</label>
+                        <label class="col-form-label" for="suite_size">套房坪數：</label>
                     </div>
                     <div class="col-2">
                         <input class="form-control" type="number" id="suite_size" name="suite_size" required>
                     </div>
                 </div>
 
-                雅房
                 <div class="form-group row">
                     <div class="col-2">
-                        <label class="col-form-label" for="room_num">總數：</label>
+                        <label class="col-form-label" for="room_num">雅房總數：</label>
                     </div>
                     <div class="col-2">
                         <input class="form-control" type="number" id="room_num" name="room_num" required>
                     </div>
                     <div class="col-2">
-                        <label class="col-form-label" for="room_empty">空房：</label>
+                        <label class="col-form-label" for="room_empty">空雅房數量：</label>
                     </div>
                     <div class="col-2">
                         <input class="form-control" type="number" id="room_empty" name="room_empty" required>
                     </div>
                     <div class="col-2">
-                        <label class="col-form-label" for="room_size">坪數：</label>
+                        <label class="col-form-label" for="room_size">雅房坪數：</label>
                     </div>
                     <div class="col-2">
                         <input class="form-control" type="number" id="room_size" name="room_size" required>
                     </div>
                 </div>
+
+                <hr>
                 
                 <div class="form-group row">
                     <div class="col-3">
@@ -114,7 +120,8 @@
                         <input class="form-control" type="number" id="building_age" name="building_age" required>
                     </div>
                 </div>
-                
+
+                <hr>
 
                 <label for="">建物樓層</label><br>
                 <div class="form-group row">
@@ -137,6 +144,8 @@
                         <input class="form-control" type="number" id="size" name="size" required>
                     </div>
                 </div>
+
+                <hr>
 
                 <div class="form-group row">
                     <div class="col-3">
@@ -188,6 +197,8 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group row">
                     <div class="col-6">
                         <label for="electricity_meter">有無獨立電表：</label>
@@ -214,6 +225,7 @@
                     </div>
                 </div>
 
+                <hr>
 
                 <div class="form-group">
                     <label>屋內設備：</label><br>
@@ -295,6 +307,8 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group">
                     <label>公共設施：</label><br>
                     <div class="form-check form-check-inline">
@@ -343,6 +357,8 @@
                     </div>
                 </div>            
 
+                <hr>
+
                 <div class="form-group">
                     <label>熱水器：</label><br>
                     <div class="form-check form-check-inline">
@@ -366,6 +382,8 @@
                         <label class="form-check-label" for="bottled_gas">桶裝瓦斯</label>
                     </div>
                 </div>
+
+                <hr>
 
                 <div class="form-group">
                     <label>安全設施：</label><br>
@@ -423,6 +441,8 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group">
                     <label>證明文件：</label><br>
                     <div class="form-check form-check-inline">
@@ -443,6 +463,8 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group">
                     <label>安全訪評：</label>
                     <div class="form-check form-check-inline">
@@ -451,15 +473,21 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group">
                     <label for="building_type" class="form-label">屋況說明：</label>
                     <textarea id="description" class="form-control" name="description" rows="5" required></textarea>
                 </div>
 
+                <hr>
+
                 <div class="form-group">
                     <label for="title" class="form-label">上傳房屋圖片</label>
                     <input type="file" class="form-control" name="filename" multiple accept=".png, .jpg, .gif">
                 </div>
+
+                <hr>
 
                 <button class="btn btn-info col-8 offset-2" type="submit">提交</button>
             </form>

@@ -42,7 +42,6 @@ def post(post_id):
         new_comment = Comment(text=content, user_id=current_user.id, post_id=post_id)
         db.session.add(new_comment)
         db.session.commit()
-        flash('Comment added successfully!', 'success')
         return redirect(url_for('rental_information_exchange.post', post_id=post_id))
     return render_template('RIMS/post.html', post=post, comments=comments)
 
@@ -59,7 +58,7 @@ def newpost():
         )
         db.session.add(post)
         db.session.commit()
-        flash('Post created successfully!', 'success')
+        flash('成功新增文章！', 'success')
         return redirect(url_for('rental_information_exchange.index'))  # 假設你有一個 index 視圖
     return render_template('RIMS/newpost.html', form=form)
 

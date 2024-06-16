@@ -123,7 +123,7 @@
                         {% if current_user.type == 'administrator' %}
                         <a class="collapse-item" href="{{ url_for('rental_advertisement.review_advertisement') }}">審核廣告</a>
                         {% endif %}
-                        <a class="collapse-item" href="#">討論版</a>
+                        <a class="collapse-item" href="{{ url_for('rental_information_exchange.index') }}">討論版</a>
                     </div>
                 </div>
             </li>

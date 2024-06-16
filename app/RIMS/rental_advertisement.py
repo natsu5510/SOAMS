@@ -49,7 +49,6 @@ def advertise():
         new_ad = Advertisement(
             electricity_meter = strtobool(request.form.get('electricity_meter')),
             smoke = strtobool(request.form.get('smoke')),
-
             sofa = 0 if request.form.get('sofa') == None else 1,
             telephone = 0 if request.form.get('telephone') == None else 1,
             bookcase = 0 if request.form.get('bookcase') == None else 1,
@@ -68,7 +67,6 @@ def advertise():
             television = 0 if request.form.get('television') == None else 1,
             air_conditioner = 0 if request.form.get('air_conditioner') == None else 1,
             table_lamp = 0 if request.form.get('table_lamp') == None else 1,
-
             broadband_network = 0 if request.form.get('broadband_network') == None else 1,
             fire_extinguishers_smoke_detectors_and_monitors_per_floor = 0 if request.form.get('fire_extinguishers_smoke_detectors_and_monitors_per_floor') == None else 1,
             parking_lot = 0 if request.form.get('parking_lot') == None else 1,
@@ -79,7 +77,6 @@ def advertise():
             courtyard = 0 if request.form.get('courtyard') == None else 1,
             elevator = 0 if request.form.get('elevator') == None else 1,
             fiber_optic_network2 = 0 if request.form.get('fiber_optic_network_2') == None else 1,
-
             courtyard_parking_lot = 0 if request.form.get('courtyard_parking_lot') == None else 1,
             lounge = 0 if request.form.get('lounge') == None else 1,
             electric_water_heater = 0 if request.form.get('electric_water_heater') == None else 1,
@@ -90,7 +87,6 @@ def advertise():
             escape_ladder = 0 if request.form.get('escape_ladder') == None else 1,
             security_personnel = 0 if request.form.get('security_personnel') == None else 1,
             slow_descend_device = 0 if request.form.get('slow_descend_device') == None else 1,
-
             carbon_monoxide_detector = 0 if request.form.get('carbon_monoxide_detector') == None else 1,
             electric_water_heater_power_cut_off_device = 0 if request.form.get('electric_water_heater_power_cut_off_device') == None else 1,
             gas_water_heater_forced_exhaust_device = 0 if request.form.get('gas_water_heater_forced_exhaust_device') == None else 1,
@@ -103,10 +99,9 @@ def advertise():
             firefighting_system = 0 if request.form.get('firefighting_system') == None else 1,
             landlord_identification_documents = 0 if request.form.get('landlord_identification_documents') == None else 1,
             power_of_attorney = 0 if request.form.get('power_of_attorney') == None else 1,
-
             property_ownership_certificate = 0 if request.form.get('property_ownership_certificate') == None else 1,
             property_tax_bill = 0 if request.form.get('property_tax_bill') == None else 1,
-            meets_ministry_of_education_safety_standards = strtobool(request.form.get('meets_ministry_of_education_safety_standards'))
+            meets_ministry_of_education_safety_standards =  0 if request.form.get('meets_ministry_of_education_safety_standards') == None else 1
         )
         new_ad.title=request.form.get('title')
         new_ad.rent_lower=request.form.get('rent_lower')
@@ -150,7 +145,7 @@ def advertise():
             for file in files:
                 if file and file.filename:
                     name, extension = os.path.splitext(file.filename)
-                    new_filename = f'{max_id}_{count}{extension}'
+                    new_filename = f'{max_id}x{count}{extension}'
                     filepath = os.path.join(UPLOAD_FOLDER, new_filename)
                     file.save(filepath)
                     image_urls += new_filename + ','
@@ -192,6 +187,122 @@ def edit_advertisement_detail(adid):
     if ad.landlord_id != current_user.id:
         return redirect(url_for('login_management.login'))
     if request.method == 'POST':
+        ad.electricity_meter = strtobool(request.form.get('electricity_meter')),
+        ad.smoke = strtobool(request.form.get('smoke')),
+        ad.sofa = 0 if request.form.get('sofa') == None else 1,
+        ad.telephone = 0 if request.form.get('telephone') == None else 1,
+        ad.bookcase = 0 if request.form.get('bookcase') == None else 1,
+        ad.wardrobe = 0 if request.form.get('wardrobe') == None else 1,
+        ad.central_air_conditioning = 0 if request.form.get('central_air_conditioning') == None else 1,
+        ad.fiber_optic_network1 = 0 if request.form.get('fiber_optic_network') == None else 1,
+        ad.washing_machine = 0 if request.form.get('washing_machine') == None else 1,
+        ad.single_bed = 0 if request.form.get('single_bed') == None else 1,
+        ad.dehydrator = 0 if request.form.get('dehydrator') == None else 1,
+        ad.cable_television = 0 if request.form.get('cable_television') == None else 1,
+        ad.dryer = 0 if request.form.get('dryer') == None else 1,
+        ad.desk_and_chair = 0 if request.form.get('desk_and_chair') == None else 1,
+        ad.refrigerator = 0 if request.form.get('refrigerator') == None else 1,
+        ad.double_bed = 0 if request.form.get('double_bed') == None else 1,
+        ad.water_dispenser = 0 if request.form.get('water_dispenser') == None else 1,
+        ad.television = 0 if request.form.get('television') == None else 1,
+        ad.air_conditioner = 0 if request.form.get('air_conditioner') == None else 1,
+        ad.table_lamp = 0 if request.form.get('table_lamp') == None else 1,
+        ad.broadband_network = 0 if request.form.get('broadband_network') == None else 1,
+        ad.fire_extinguishers_smoke_detectors_and_monitors_per_floor = 0 if request.form.get('fire_extinguishers_smoke_detectors_and_monitors_per_floor') == None else 1,
+        ad.parking_lot = 0 if request.form.get('parking_lot') == None else 1,
+        ad.kitchen = 0 if request.form.get('kitchen') == None else 1,
+        ad.laundry_area = 0 if request.form.get('laundry_area') == None else 1,
+        ad.parking_lot_elevator = 0 if request.form.get('parking_lot_elevator') == None else 1,
+        ad.public_balcony = 0 if request.form.get('public_balcony') == None else 1,
+        ad.courtyard = 0 if request.form.get('courtyard') == None else 1,
+        ad.elevator = 0 if request.form.get('elevator') == None else 1,
+        ad.fiber_optic_network2 = 0 if request.form.get('fiber_optic_network_2') == None else 1,
+        ad.courtyard_parking_lot = 0 if request.form.get('courtyard_parking_lot') == None else 1,
+        ad.lounge = 0 if request.form.get('lounge') == None else 1,
+        ad.electric_water_heater = 0 if request.form.get('electric_water_heater') == None else 1,
+        ad.gas_water_heater = 0 if request.form.get('gas_water_heater') == None else 1,
+        ad.solar_water_heater = 0 if request.form.get('solar_water_heater') == None else 1,
+        ad.natural_gas = 0 if request.form.get('natural_gas') == None else 1,
+        ad.bottled_gas = 0 if request.form.get('bottled_gas') == None else 1,
+        ad.escape_ladder = 0 if request.form.get('escape_ladder') == None else 1,
+        ad.security_personnel = 0 if request.form.get('security_personnel') == None else 1,
+        ad.slow_descend_device = 0 if request.form.get('slow_descend_device') == None else 1,
+        ad.carbon_monoxide_detector = 0 if request.form.get('carbon_monoxide_detector') == None else 1,
+        ad.electric_water_heater_power_cut_off_device = 0 if request.form.get('electric_water_heater_power_cut_off_device') == None else 1,
+        ad.gas_water_heater_forced_exhaust_device = 0 if request.form.get('gas_water_heater_forced_exhaust_device') == None else 1,
+        ad.fire_extinguisher = 0 if request.form.get('fire_extinguisher') == None else 1,
+        ad.smoke_detector = 0 if request.form.get('smoke_detector') == None else 1,
+        ad.escape_route_clear_and_marked = 0 if request.form.get('escape_route_clear_and_marked') == None else 1,
+        ad.lighting_equipment = 0 if request.form.get('lighting_equipment') == None else 1,
+        ad.surveillance_system = 0 if request.form.get('surveillance_system') == None else 1,
+        ad.access_control_system = 0 if request.form.get('access_control_system') == None else 1,
+        ad.firefighting_system = 0 if request.form.get('firefighting_system') == None else 1,
+        ad.landlord_identification_documents = 0 if request.form.get('landlord_identification_documents') == None else 1,
+        ad.power_of_attorney = 0 if request.form.get('power_of_attorney') == None else 1,
+        ad.property_ownership_certificate = 0 if request.form.get('property_ownership_certificate') == None else 1,
+        ad.property_tax_bill = 0 if request.form.get('property_tax_bill') == None else 1,
+        ad.meets_ministry_of_education_safety_standards = 0 if request.form.get('meets_ministry_of_education_safety_standards') == None else 1
+        ad.title=request.form.get('title')
+        ad.rent_lower=request.form.get('rent_lower')
+        ad.rent_upper=request.form.get('rent_upper')
+        ad.addr=request.form.get('addr')
+        ad.suite_num=request.form.get('suite_num')
+        ad.room_num=request.form.get('room_num')
+        ad.suite_empty=request.form.get('suite_empty')
+        ad.room_empty=request.form.get('room_empty')
+        ad.suite_size=request.form.get('suite_size')
+        ad.room_size=request.form.get('room_size')
+        ad.building_type=request.form.get('building_type')
+        ad.building_age=request.form.get('building_age')
+        ad.floor1 = request.form.get('floor1')
+        ad.floor2 = request.form.get('floor2')
+        ad.size = request.form.get('size')
+        ad.rental_type = request.form.get('rental_type')
+        ad.electricity_meter = request.form.get('electricity_meter')
+        ad.partition_material = request.form.get('partition_material')
+        ad.deposit = request.form.get('deposit')
+        ad.sex_limit=request.form.get('sex_limit')
+        ad.identity_limit = request.form.get('identity_limit')
+        ad.others_fee = request.form.get('others_fee')
+        ad.description=request.form.get('description')
+
+        image_urls = ad.image_urls.split(',')
+        new_image_urls = []
+        for img in image_urls:
+            if request.form.get(img) != None:
+                # 刪除圖片
+                filepath = os.path.join(UPLOAD_FOLDER, img)
+                os.remove(filepath)
+            else:
+                new_image_urls.append(img)
+        
+        match = re.search(r'x(\d+)', new_image_urls[-1])
+        if match:
+            number_after_x = match.group(1)
+        else:
+            number_after_x = 0
+
+        image_urls = ','.join(new_image_urls)
+        # 處理圖檔
+        if 'filename' in request.files:
+            count = int(number_after_x) + 1
+            files = request.files.getlist('filename')
+            for file in files:
+                if file and file.filename:
+                    name, extension = os.path.splitext(file.filename)
+                    new_filename = f'{ad.id}x{count}{extension}'
+                    filepath = os.path.join(UPLOAD_FOLDER, new_filename)
+                    file.save(filepath)
+                    image_urls += ',' + new_filename
+                    count += 1
+            # 移除最後一個逗號
+            if image_urls.endswith(','):
+                image_urls = image_urls[:-1]
+        
+        ad.image_urls=image_urls
+
+        ad.update_time=datetime.now()
+
 
         db.session.add(ad)
         db.session.commit()
