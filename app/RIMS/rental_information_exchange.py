@@ -5,6 +5,7 @@ from app.models import Post, Comment
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, DateTimeField, SubmitField
 from wtforms.validators import DataRequired, Length
+from datetime import datetime
 from app import db
 
 rental_information_exchange = Blueprint('rental_information_exchange', __name__)
@@ -12,10 +13,16 @@ rental_information_exchange = Blueprint('rental_information_exchange', __name__)
 @rental_information_exchange.route('/')
 @login_required
 def index():
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get('page', 1, type=int)  # 默認為第 1 頁
     per_page = 6  # 每頁顯示的最大文章數量
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=per_page, error_out=False)
     posts = pagination.items
+
+    # 計算發文時間與當前時間的差異
+    current_time = datetime.utcnow()
+    for post in posts:
+        post.time_diff = current_time - post.timestamp
+
     return render_template('RIMS/forum.html', posts=posts, pagination=pagination)
 
 @rental_information_exchange.route('/post/<int:post_id>', methods=['GET', 'POST'])
@@ -23,6 +30,12 @@ def index():
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.timestamp.asc()).all()
+
+    # 計算發文時間與當前時間的差異
+    current_time = datetime.utcnow()
+    post.time_diff = current_time - post.timestamp
+    for comment in comments:
+        comment.time_diff = current_time - comment.timestamp
 
     if request.method == 'POST':
         content = request.form['commentContent']
@@ -84,6 +97,6 @@ class PostForm(FlaskForm):
     submit = SubmitField('新增')
 
 class EditPostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired(), Length(max=50)])
-    text = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Update')
+    title = StringField('更改標題', validators=[DataRequired(), Length(max=50)])
+    text = TextAreaField('更改內容', validators=[DataRequired()])
+    submit = SubmitField('確認更改')

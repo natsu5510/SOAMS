@@ -6,29 +6,53 @@
     <div class="d-sm-flex align-items-center justify-content-between">
         <span class="h3 mb-0 text-gray-800 font-weight-bold">租屋資訊討論版</span>
         <!-- 新增文章按鈕 -->
-        <div class="justify-content: end">
+        <div class="d-flex justify-content-between">
             <a href="{{ url_for('rental_information_exchange.newpost') }}" class="btn btn-primary">新增文章</a>
         </div>
     </div>
 {% endblock heading %}
 
 {% block content %}
+    <style>
+        .card.hoverable {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .card.hoverable:hover {
+            background-color: rgba(0, 149, 255, 0.1); /* 淡藍色背景 */
+            transform: scale(1.05); /* 略微放大 1.05 倍 */
+        }
+    </style>
+
     <div class="container mt-4">
         <div class="row">
             <!-- 動態顯示文章 -->
             {% for post in posts %}
             <div class="col-md-6 mb-4">
-                <div class="card">
+                <a href="{{ url_for('rental_information_exchange.post', post_id=post.id) }}" class="card border-left-primary hoverable" style="text-decoration: none; color: inherit;">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ post.user_id }} - {{ post.timestamp.strftime('%Y-%m-%d') }}</h6>
-                        <p class="card-text">{{ post.text[:100] }}...</p>
-                        <a href="{{ url_for('rental_information_exchange.post', post_id=post.id) }}" class="card-link">閱讀更多</a>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {% if post.time_diff.total_seconds() < 60 %}
+                                {{ post.time_diff.total_seconds() | int }} 秒前
+                            {% elif post.time_diff.total_seconds() < 3600 %}
+                                {{ (post.time_diff.total_seconds() // 60) | int }} 分鐘前
+                            {% elif post.time_diff.total_seconds() < 86400 %}
+                                {{ (post.time_diff.total_seconds() // 3600) | int }} 小時前
+                            {% elif post.time_diff.total_seconds() < 2592000 %}
+                                {{ (post.time_diff.total_seconds() // 86400) | int }} 天前
+                            {% elif post.time_diff.total_seconds() < 31536000 %}
+                                {{ (post.time_diff.total_seconds() // 2592000) | int }} 個月前
+                            {% else %}
+                                {{ (post.time_diff.total_seconds() // 31536000) | int }} 年前
+                            {% endif %}
+                        </h6>
+                        <p class="card-text">{{ post.text[:10] }}{% if post.text|length > 10 %}...{% endif %}</p>
                     </div>
-                </div>
+                </a>
             </div>
             {% endfor %}
         </div>
+
 
         <!-- Pagination -->
         <nav aria-label="Page navigation">
@@ -36,12 +60,12 @@
                 {% if pagination.has_prev %}
                 <li class="page-item">
                     <a class="page-link" href="{{ url_for('rental_information_exchange.index', page=pagination.prev_num) }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo; 上一頁</span>
+                        <span aria-hidden="true">上一頁</span>
                     </a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo; 上一頁</a>
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一頁</a>
                 </li>
                 {% endif %}
 
@@ -60,12 +84,12 @@
                 {% if pagination.has_next %}
                 <li class="page-item">
                     <a class="page-link" href="{{ url_for('rental_information_exchange.index', page=pagination.next_num) }}" aria-label="Next">
-                        <span aria-hidden="true">下一頁 &raquo;</span>
+                        <span aria-hidden="true">下一頁</span>
                     </a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">下一頁 &raquo;</a>
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">下一頁</a>
                 </li>
                 {% endif %}
             </ul>

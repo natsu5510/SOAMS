@@ -5,9 +5,6 @@
 {% block heading %}
     <div class="d-sm-flex align-items-center justify-content-between">
         <span class="h3 mb-0 text-gray-800 font-weight-bold">租屋資訊討論版</span>
-        {% if current_user.id == post.user_id %}
-        <a href="{{ url_for('rental_information_exchange.editpost', post_id=post.id) }}" class="btn btn-secondary">Edit Post</a>
-        {% endif %}
     </div>
 {% endblock heading %}
 
@@ -18,11 +15,34 @@
             <div class="col-md-12 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title">{{ post.title }}</h2>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ post.user_id }} - {{ post.timestamp.strftime('%Y-%m-%d') }}</h6>
-                        <p class="card-text">{{ post.text }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2 class="card-title">{{ post.title }}</h2>
+                            </div>
+                            <div>
+                                <h6 class="card-subtitle mb-2 text-muted d-inline-block">
+                                    {% if post.time_diff.total_seconds() < 60 %}
+                                        {{ post.time_diff.total_seconds() | int }} 秒前
+                                    {% elif post.time_diff.total_seconds() < 3600 %}
+                                        {{ (post.time_diff.total_seconds() // 60) | int }} 分鐘前
+                                    {% elif post.time_diff.total_seconds() < 86400 %}
+                                        {{ (post.time_diff.total_seconds() // 3600) | int }} 小時前
+                                    {% elif post.time_diff.total_seconds() < 2592000 %}
+                                        {{ (post.time_diff.total_seconds() // 86400) | int }} 天前
+                                    {% elif post.time_diff.total_seconds() < 31536000 %}
+                                        {{ (post.time_diff.total_seconds() // 2592000) | int }} 個月前
+                                    {% else %}
+                                        {{ (post.time_diff.total_seconds() // 31536000) | int }} 年前
+                                    {% endif %}
+                                </h6>
+                                {% if current_user.id == post.user_id %}
+                                <a href="{{ url_for('rental_information_exchange.editpost', post_id=post.id) }}" class="btn btn-secondary ml-3">編輯文章</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="card-text mt-3">{{ post.text }}</p>
                         {% if post.image_urls %}
-                            <img src="" alt="Post Image" class="img-fluid">
+                            <img src="{{ post.image_urls }}" alt="Post Image" class="img-fluid">
                         {% endif %}
                     </div>
                 </div>
@@ -36,11 +56,28 @@
                 {% for comment in comments %}
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">{{ comment.user_id }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ comment.timestamp.strftime('%Y-%m-%d') }}</h6>
-                        <p class="card-text">{{ comment.text }}</p>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title mb-0">{{ comment.user_id }}</h5>
+                            <h6 class="card-subtitle mb-0 text-muted">
+                                {% if comment.time_diff.total_seconds() < 60 %}
+                                    {{ comment.time_diff.total_seconds() | int }} 秒前
+                                {% elif comment.time_diff.total_seconds() < 3600 %}
+                                    {{ (comment.time_diff.total_seconds() // 60) | int }} 分鐘前
+                                {% elif comment.time_diff.total_seconds() < 86400 %}
+                                    {{ (comment.time_diff.total_seconds() // 3600) | int }} 小時前
+                                {% elif comment.time_diff.total_seconds() < 2592000 %}
+                                    {{ (comment.time_diff.total_seconds() // 86400) | int }} 天前
+                                {% elif comment.time_diff.total_seconds() < 31536000 %}
+                                    {{ (comment.time_diff.total_seconds() // 2592000) | int }} 個月前
+                                {% else %}
+                                    {{ (comment.time_diff.total_seconds() // 31536000) | int }} 年前
+                                {% endif %}
+                                - {{ loop.index }}F
+                            </h6>
+                        </div>
+                        <p class="card-text mt-2">{{ comment.text }}</p>
                         {% if comment.image_urls %}
-                            <img src="" alt="Comment Image" class="img-fluid">
+                            <img src="{{ comment.image_urls }}" alt="Comment Image" class="img-fluid">
                         {% endif %}
                     </div>
                 </div>
