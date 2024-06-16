@@ -11,3 +11,10 @@ docs/_build/
 config.py
 SOAMS_venv/
 uploads/
+tmp.py
+test.py
+house_data.json
+ad.json
+crawl.py
+crawl_img.py
+downloaded_images/

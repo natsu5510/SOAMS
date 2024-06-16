@@ -134,43 +134,306 @@ class Advertisement(db.Model):
     __tablename__ = 'advertisement'
     id = db.Column(db.Integer, primary_key=True, comment='租屋廣告編號')
     title = db.Column(db.String(256), unique=False, nullable=False, comment='租屋廣告標題')
-    building_age = db.Column(db.Integer, unique=False, nullable=False ,comment='屋齡')
-    building_type = db.Column(db.String(256), unique=False, nullable=False, comment='建物類型')
-    addr = db.Column(db.String(256), unique=False, nullable=False, comment='地址')
-    rental_limit = db.Column(db.String(256), unique=False, nullable=False, comment='限租條件')
     rent_lower = db.Column(db.Integer, unique=False, nullable=False ,comment='月租金下限')
     rent_upper = db.Column(db.Integer, unique=False, nullable=False ,comment='月租金上限')
+    addr = db.Column(db.String(256), unique=False, nullable=False, comment='地址')
+
+    suite_num = db.Column(db.Integer, unique=False, nullable=False, comment='套房總數')
+    room_num = db.Column(db.Integer, unique=False, nullable=False, comment='雅房總數')
+    suite_empty = db.Column(db.Integer, unique=False, nullable=False, comment='空套房數量')
+    room_empty = db.Column(db.Integer, unique=False, nullable=False, comment='空雅房數量')
+    suite_size = db.Column(db.Integer, unique=False, nullable=False, comment='套房坪數')
+    room_size = db.Column(db.Integer, unique=False, nullable=False, comment='雅房坪數')
+
+    building_type = db.Column(db.String(256), unique=False, nullable=False, comment='房屋類型')
+    building_age = db.Column(db.Integer, unique=False, nullable=False ,comment='屋齡')
+    floor1 = db.Column(db.Integer, unique=False, nullable=False ,comment='樓')
+    floor2 = db.Column(db.Integer, unique=False, nullable=False ,comment='層')
+    size = db.Column(db.Integer, unique=False, nullable=False ,comment='坪數')
+
+    rental_type = db.Column(db.String(256), unique=False, nullable=False, comment='出租類型')
+    electricity_meter = db.Column(db.Integer, unique=False, nullable=True, comment='有無獨立電表')
+    partition_material = db.Column(db.String(256), unique=False, nullable=False, comment='隔間材質')
+    deposit = db.Column(db.String(256), unique=False, nullable=False ,comment='押金')
+    sex_limit = db.Column(db.String(256), unique=False, nullable=False, comment='性別要求')
+    identity_limit = db.Column(db.String(256), unique=False, nullable=False, comment='身分要求')
+    others_fee = db.Column(db.String(256), unique=False, nullable=False, comment='其他費用')
+    smoke = db.Column(db.Integer, unique=False, nullable=True, comment='無菸租屋')
+
+    # 屋內設備
+    sofa = db.Column(db.Integer, unique=False, nullable=True, comment='沙發')
+    telephone = db.Column(db.Integer, unique=False, nullable=True, comment='電話')
+    bookcase = db.Column(db.Integer, unique=False, nullable=True, comment='書櫃')
+    wardrobe = db.Column(db.Integer, unique=False, nullable=True, comment='衣櫃')
+    central_air_conditioning = db.Column(db.Integer, unique=False, nullable=True, comment='中央空調')
+    fiber_optic_network1 = db.Column(db.Integer, unique=False, nullable=True, comment='光纖網路')
+    washing_machine = db.Column(db.Integer, unique=False, nullable=True, comment='洗衣機')
+    single_bed = db.Column(db.Integer, unique=False, nullable=True, comment='單人床')
+    dehydrator = db.Column(db.Integer, unique=False, nullable=True, comment='脫水機')
+    cable_television = db.Column(db.Integer, unique=False, nullable=True, comment='第四台')
+    dryer = db.Column(db.Integer, unique=False, nullable=True, comment='烘乾機')
+    desk_and_chair = db.Column(db.Integer, unique=False, nullable=True, comment='書桌(椅)')
+    refrigerator = db.Column(db.Integer, unique=False, nullable=True, comment='電冰箱')
+    double_bed = db.Column(db.Integer, unique=False, nullable=True, comment='雙人床')
+    water_dispenser = db.Column(db.Integer, unique=False, nullable=True, comment='飲水機')
+    television = db.Column(db.Integer, unique=False, nullable=True, comment='電視機')
+    air_conditioner = db.Column(db.Integer, unique=False, nullable=True, comment='冷氣機')
+    table_lamp = db.Column(db.Integer, unique=False, nullable=True, comment='檯燈')
+    broadband_network = db.Column(db.Integer, unique=False, nullable=True, comment='寬頻網路')
+
+    # 公共設施
+    fire_extinguishers_smoke_detectors_and_monitors_per_floor = db.Column(db.Integer, unique=False, nullable=True, comment='每層樓滅火器及煙霧偵測器及監視器')
+    parking_lot = db.Column(db.Integer, unique=False, nullable=True, comment='停車場')
+    kitchen = db.Column(db.Integer, unique=False, nullable=True, comment='廚房')
+    laundry_area = db.Column(db.Integer, unique=False, nullable=True, comment='晒衣場')
+    parking_lot_elevator = db.Column(db.Integer, unique=False, nullable=True, comment='停車場電梯')
+    public_balcony = db.Column(db.Integer, unique=False, nullable=True, comment='公共陽台')
+    courtyard = db.Column(db.Integer, unique=False, nullable=True, comment='中庭')
+    elevator = db.Column(db.Integer, unique=False, nullable=True, comment='電梯')
+    fiber_optic_network2 = db.Column(db.Integer, unique=False, nullable=True, comment='光纖網路')
+    courtyard_parking_lot = db.Column(db.Integer, unique=False, nullable=True, comment='中庭停車場')
+    lounge = db.Column(db.Integer, unique=False, nullable=True, comment='交誼廳')
+
+    description = db.Column(db.Text, unique=False, nullable=True, comment='屋況說明')
+
+    # 熱水器
+    electric_water_heater = db.Column(db.Integer, unique=False, nullable=False, comment='電熱水器')
+    gas_water_heater = db.Column(db.Integer, unique=False, nullable=False, comment='瓦斯熱水器')
+    solar_water_heater = db.Column(db.Integer, unique=False, nullable=False, comment='太陽能熱水器')
+    natural_gas = db.Column(db.Integer, unique=False, nullable=False, comment='天然瓦斯')
+    bottled_gas = db.Column(db.Integer, unique=False, nullable=False, comment='桶裝瓦斯')
+
+    # 安全設施
+    escape_ladder = db.Column(db.Integer, unique=False, nullable=False, comment='逃生梯')
+    security_personnel = db.Column(db.Integer, unique=False, nullable=False, comment='保全人員')
+    slow_descend_device = db.Column(db.Integer, unique=False, nullable=False, comment='緩降梯')
+    carbon_monoxide_detector = db.Column(db.Integer, unique=False, nullable=False, comment='一氧化碳警報器')
+    electric_water_heater_power_cut_off_device = db.Column(db.Integer, unique=False, nullable=False, comment='電用熱水器斷電設備')
+    gas_water_heater_forced_exhaust_device = db.Column(db.Integer, unique=False, nullable=False, comment='瓦斯熱水器強制排氣設備')
+    fire_extinguisher = db.Column(db.Integer, unique=False, nullable=False, comment='滅火器')
+    smoke_detector = db.Column(db.Integer, unique=False, nullable=False, comment='偵煙設備')
+    escape_route_clear_and_marked = db.Column(db.Integer, unique=False, nullable=False, comment='逃生路線暢通及標示')
+    lighting_equipment = db.Column(db.Integer, unique=False, nullable=False, comment='照明設備')
+    surveillance_system = db.Column(db.Integer, unique=False, nullable=False, comment='監視錄影設備(系統)')
+    access_control_system = db.Column(db.Integer, unique=False, nullable=False, comment='門禁系統')
+    firefighting_system = db.Column(db.Integer, unique=False, nullable=False, comment='消防系統')
+
+    # 證明文件
+    landlord_identification_documents = db.Column(db.Integer, unique=False, nullable=False, comment='房東身分證明文件')
+    power_of_attorney = db.Column(db.Integer, unique=False, nullable=False, comment='委託書')
+    property_ownership_certificate = db.Column(db.Integer, unique=False, nullable=False, comment='房屋所有權狀')
+    property_tax_bill = db.Column(db.Integer, unique=False, nullable=False, comment='房屋稅單')
+
+    # 安全訪評
+    meets_ministry_of_education_safety_standards = db.Column(db.Integer, unique=False, nullable=False, comment='符合教育部安全訪評規範')
+    
     image_urls = db.Column(db.Text, unique=False, nullable=True, comment='廣告圖檔路徑')
     pulish_date = db.Column(db.DateTime, unique=False, nullable=True, comment='刊登日期')
+    update_date = db.Column(db.DateTime, unique=False, nullable=True, comment='更新日期')
     due_date = db.Column(db.DateTime, unique=False, nullable=True, comment='截止日期')
-    
-    suite = db.Column(db.Integer, unique=False, nullable=False, comment='套房數量')
-    room = db.Column(db.Integer, unique=False, nullable=False, comment='雅房數量')
-
-    electricity_meter = db.Column(db.Boolean, unique=False, nullable=False, comment='有無獨立電表')
-    smoke = db.Column(db.Boolean, unique=False, nullable=False, comment='無菸租屋')
-    wash_machine = db.Column(db.Boolean, unique=False, nullable=False, comment='有無洗衣機')
-    water_dispenser = db.Column(db.Boolean, unique=False, nullable=False, comment='有無飲水機')
-    internet = db.Column(db.Boolean, unique=False, nullable=False, comment='有無網路')
-    parking = db.Column(db.Boolean, unique=False, nullable=False, comment='有無停車位')
-    air_con = db.Column(db.Boolean, unique=False, nullable=False, comment='有無冷氣')
-    water_heater = db.Column(db.Boolean, unique=False, nullable=False, comment='有無熱水器')
-    
-    description = db.Column(db.Text, unique=False, nullable=True, comment='屋況簡述')
     timestamp = db.Column(db.DateTime, unique=False, nullable=False, comment='送出刊登請求的時間')
     status = db.Column(db.Integer, unique=False, nullable=False, comment='審核狀態。 0:待審核 1:通過 2:未通過')
     landlord_id = db.Column(db.String(10), db.ForeignKey('landlord.id'), unique=False, nullable=False, comment='房東ID')
 
-    def __init__ (self ,electricity_meter, smoke, wash_machine, water_dispenser, internet, parking, air_con, water_heater):
+    def __init__(self,
+                electricity_meter,
+                smoke,
+                sofa,
+                telephone,
+                bookcase,
+                wardrobe,
+                central_air_conditioning,
+                fiber_optic_network1,
+                washing_machine,
+                single_bed,
+                dehydrator,
+                cable_television,
+                dryer,
+                desk_and_chair,
+                refrigerator,
+                double_bed,
+                water_dispenser,
+                television,
+                air_conditioner,
+                table_lamp,
+                broadband_network,
+                fire_extinguishers_smoke_detectors_and_monitors_per_floor,
+                parking_lot,
+                kitchen,
+                laundry_area,
+                parking_lot_elevator,
+                public_balcony,
+                courtyard,
+                elevator,
+                fiber_optic_network2,
+                courtyard_parking_lot,
+                lounge,
+                electric_water_heater,
+                gas_water_heater,
+                solar_water_heater,
+                natural_gas,
+                bottled_gas,
+                escape_ladder,
+                security_personnel,
+                slow_descend_device,
+                carbon_monoxide_detector,
+                electric_water_heater_power_cut_off_device,
+                gas_water_heater_forced_exhaust_device,
+                fire_extinguisher,
+                smoke_detector,
+                escape_route_clear_and_marked,
+                lighting_equipment,
+                surveillance_system,
+                access_control_system,
+                firefighting_system,
+                landlord_identification_documents,
+                power_of_attorney,
+                property_ownership_certificate,
+                property_tax_bill,
+                meets_ministry_of_education_safety_standards,
+                ):
         self.electricity_meter = electricity_meter
         self.smoke = smoke
-        self.wash_machine = wash_machine
+        # 屋內設備
+        self.sofa = sofa
+        self.telephone = telephone
+        self.bookcase = bookcase
+        self.wardrobe = wardrobe
+        self.central_air_conditioning = central_air_conditioning
+        self.fiber_optic_network1 = fiber_optic_network1
+        self.washing_machine = washing_machine
+        self.single_bed = single_bed
+        self.dehydrator = dehydrator
+        self.cable_television = cable_television
+        self.dryer = dryer
+        self.desk_and_chair = desk_and_chair
+        self.refrigerator = refrigerator
+        self.double_bed = double_bed
         self.water_dispenser = water_dispenser
-        self.internet = internet
-        self.parking = parking
-        self.air_con = air_con
-        self.water_heater = water_heater
+        self.television = television
+        self.air_conditioner = air_conditioner
+        self.table_lamp = table_lamp
+        self.broadband_network = broadband_network
+        # 公共設施
+        self.fire_extinguishers_smoke_detectors_and_monitors_per_floor = fire_extinguishers_smoke_detectors_and_monitors_per_floor
+        self.parking_lot = parking_lot
+        self.kitchen = kitchen
+        self.laundry_area = laundry_area
+        self.parking_lot_elevator = parking_lot_elevator
+        self.public_balcony = public_balcony
+        self.courtyard = courtyard
+        self.elevator = elevator
+        self.fiber_optic_network2 = fiber_optic_network2
+        self.courtyard_parking_lot = courtyard_parking_lot
+        self.lounge = lounge
+        # 熱水器
+        self.electric_water_heater = electric_water_heater
+        self.gas_water_heater = gas_water_heater
+        self.solar_water_heater = solar_water_heater
+        self.natural_gas = natural_gas
+        self.bottled_gas = bottled_gas
+        # 安全設施
+        self.escape_ladder = escape_ladder
+        self.security_personnel = security_personnel
+        self.slow_descend_device = slow_descend_device
+        self.carbon_monoxide_detector = carbon_monoxide_detector
+        self.electric_water_heater_power_cut_off_device = electric_water_heater_power_cut_off_device
+        self.gas_water_heater_forced_exhaust_device = gas_water_heater_forced_exhaust_device
+        self.fire_extinguisher = fire_extinguisher
+        self.smoke_detector = smoke_detector
+        self.escape_route_clear_and_marked = escape_route_clear_and_marked
+        self.lighting_equipment = lighting_equipment
+        self.surveillance_system = surveillance_system
+        self.access_control_system = access_control_system
+        self.firefighting_system = firefighting_system
+        # 證明文件
+        self.landlord_identification_documents = landlord_identification_documents
+        self.power_of_attorney = power_of_attorney
+        self.property_ownership_certificate = property_ownership_certificate
+        self.property_tax_bill = property_tax_bill
+        # 安全訪評
+        self.meets_ministry_of_education_safety_standards = meets_ministry_of_education_safety_standards
+    
+    
+    def get_equip_list(self):
+        equip_list = []
+        equip_list.append('沙發') if self.sofa == 1 else None
+        equip_list.append('電話') if self.telephone == 1 else None
+        equip_list.append('書櫃') if self.bookcase == 1 else None
+        equip_list.append('衣櫃') if self.wardrobe == 1 else None
+        equip_list.append('中央空調') if self.central_air_conditioning == 1 else None
+        equip_list.append('光纖網路') if self.fiber_optic_network1 == 1 else None
+        equip_list.append('洗衣機') if self.washing_machine == 1 else None
+        equip_list.append('單人床') if self.single_bed == 1 else None
+        equip_list.append('脫水機') if self.dehydrator == 1 else None
+        equip_list.append('第四台') if self.cable_television == 1 else None
+        equip_list.append('烘乾機') if self.dryer == 1 else None
+        equip_list.append('書桌(椅)') if self.desk_and_chair == 1 else None
+        equip_list.append('電冰箱') if self.refrigerator == 1 else None
+        equip_list.append('雙人床') if self.double_bed == 1 else None
+        equip_list.append('飲水機') if self.water_dispenser == 1 else None
+        equip_list.append('電視機') if self.television == 1 else None
+        equip_list.append('冷氣機') if self.air_conditioner == 1 else None
+        equip_list.append('檯燈') if self.table_lamp == 1 else None
+        equip_list.append('寬頻網路') if self.broadband_network == 1 else None
+        return equip_list
+    
+    def get_public_equip_list(self):
+        public_equip_list = []
+        public_equip_list.append('每層樓滅火器及煙霧偵測器及監視器') if self.fire_extinguishers_smoke_detectors_and_monitors_per_floor == 1 else None
+        public_equip_list.append('停車場') if self.parking_lot == 1 else None
+        public_equip_list.append('廚房') if self.kitchen == 1 else None
+        public_equip_list.append('晒衣場') if self.laundry_area == 1 else None
+        public_equip_list.append('停車場電梯') if self.parking_lot_elevator == 1 else None
+        public_equip_list.append('公共陽台') if self.public_balcony == 1 else None
+        public_equip_list.append('中庭') if self.courtyard == 1 else None
+        public_equip_list.append('電梯') if self.elevator == 1 else None
+        public_equip_list.append('光纖網路') if self.fiber_optic_network2 == 1 else None
+        public_equip_list.append('中庭停車場') if self.courtyard_parking_lot == 1 else None
+        public_equip_list.append('交誼廳') if self.lounge == 1 else None
+        return public_equip_list
+    
+    def get_heater_list(self):
+        heater_list = []
+        heater_list.append('電熱水器') if self.electric_water_heater == 1 else None
+        heater_list.append('瓦斯熱水器') if self.gas_water_heater == 1 else None
+        heater_list.append('太陽能熱水器') if self.solar_water_heater == 1 else None
+        heater_list.append('天然瓦斯') if self.natural_gas == 1 else None
+        heater_list.append('桶裝瓦斯') if self.bottled_gas == 1 else None
+        return heater_list
+    
+    def get_safety_equip_list(self):
+        safety_equip_list = []
+        safety_equip_list.append('逃生梯') if self.escape_ladder == 1 else None
+        safety_equip_list.append('保全人員') if self.security_personnel == 1 else None
+        safety_equip_list.append('緩降梯') if self.slow_descend_device == 1 else None
+        safety_equip_list.append('一氧化碳警報器') if self.carbon_monoxide_detector == 1 else None
+        safety_equip_list.append('電用熱水器斷電設備') if self.electric_water_heater_power_cut_off_device == 1 else None
+        safety_equip_list.append('瓦斯熱水器強制排氣設備') if self.gas_water_heater_forced_exhaust_device == 1 else None
+        safety_equip_list.append('滅火器') if self.fire_extinguisher == 1 else None
+        safety_equip_list.append('偵煙設備') if self.smoke_detector == 1 else None
+        safety_equip_list.append('逃生路線暢通及標示') if self.escape_route_clear_and_marked == 1 else None
+        safety_equip_list.append('照明設備') if self.lighting_equipment == 1 else None
+        safety_equip_list.append('監視錄影設備(系統)') if self.surveillance_system == 1 else None
+        safety_equip_list.append('門禁系統') if self.access_control_system == 1 else None
+        safety_equip_list.append('消防系統') if self.firefighting_system == 1 else None
+        return safety_equip_list
+    
+    def get_document_list(self):
+        doc_list = []
+        doc_list.append('房東身分證明文件') if self.landlord_identification_documents == 1 else None
+        doc_list.append('委託書') if self.power_of_attorney == 1 else None
+        doc_list.append('房屋所有權狀') if self.property_ownership_certificate == 1 else None
+        doc_list.append('房屋稅單') if self.property_tax_bill == 1 else None
+        return doc_list
 
+class Test(db.Model):
+    __tablename__ = 'test'
+    id = db.Column(db.Integer, primary_key=True, comment='Po文編號')
+    fuck = db.Column(db.Boolean, unique=False, nullable=False, comment='房東身分證明文件')
+
+    def __init__(self, fuck):
+        self.fuck = fuck
 
 class Post(db.Model):
     __tablename__ = 'post'
