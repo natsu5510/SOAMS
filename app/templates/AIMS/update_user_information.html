@@ -9,6 +9,26 @@
 {% endblock heading %}
 
 {% block content %}
+
+    {# flash message #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="mt-5 mb-0">
+                    <div class="row justify-content-center">
+                        <div class="col-6 text-center">
+                            <h3 class="alert alert-{{ category }} text-center">{{ message }}</h3>
+                            {% if category == 'warning' %}
+                                <a href="{{ url_for('search_user_information.search_form') }}"
+                                   class="btn btn-primary text-center mb-3">返回</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     {% if updateForm %}
         <div class="container mt-5">
             <h2 class="text-center">修改使用者資料</h2>
@@ -19,6 +39,12 @@
                         {{ updateForm.hidden_tag() }}
 
                         {# User #}
+                        {# User.id error #}
+                        {% if updateForm.id.errors %}
+                            <div class="help-block text-danger">
+                                {{ updateForm.id.errors[0] }}
+                            </div>
+                        {% endif %}
                         {# User.id #}
                         <div class="form-group row">
                             {{ updateForm.id.label(class='col-sm-3 col-form-label') }}
@@ -26,6 +52,13 @@
                                 {{ updateForm.id(class='form-control', disabled='disabled') }}
                             </div>
                         </div>
+
+                        {# User.name error #}
+                        {% if updateForm.name.errors %}
+                            <div class="help-block text-danger">
+                                {{ updateForm.name.errors[0] }}
+                            </div>
+                        {% endif %}
                         {# User.name #}
                         <div class="form-group row">
                             {{ updateForm.name.label(class='col-sm-3 col-form-label') }}
@@ -38,6 +71,13 @@
                                 </button>
                             </div>
                         </div>
+
+                        {# User.passwd error #}
+                        {% if updateForm.passwd.errors %}
+                            <div class="help-block text-danger">
+                                {{ updateForm.passwd.errors[0] }}
+                            </div>
+                        {% endif %}
                         {# User.passwd #}
                         <div class="form-group row">
                             {{ updateForm.passwd.label(class='col-sm-3 col-form-label') }}
@@ -50,6 +90,13 @@
                                 </button>
                             </div>
                         </div>
+
+                        {# User.tel error #}
+                        {% if updateForm.tel.errors %}
+                            <div class="help-block text-danger">
+                                {{ updateForm.tel.errors[0] }}
+                            </div>
+                        {% endif %}
                         {# User.tel #}
                         <div class="form-group row">
                             {{ updateForm.tel.label(class='col-sm-3 col-form-label') }}
@@ -62,6 +109,13 @@
                                 </button>
                             </div>
                         </div>
+
+                        {# User.email error #}
+                        {% if updateForm.email.errors %}
+                            <div class="help-block text-danger">
+                                {{ updateForm.email.errors[0] }}
+                            </div>
+                        {% endif %}
                         {# User.email #}
                         <div class="form-group row">
                             {{ updateForm.email.label(class='col-sm-3 col-form-label') }}
@@ -77,6 +131,13 @@
 
                         {# Advisor #}
                         {% if updateForm.type.data == 'advisor' %}
+
+                            {# Advisor.dept error #}
+                            {% if updateForm.dept.errors %}
+                                <div class="help-block text-danger">
+                                    {{ updateForm.dept.errors[0] }}
+                                </div>
+                            {% endif %}
                             {# Advisor.dept #}
                             <div class="form-group row">
                                 {{ updateForm.dept.label(class='col-sm-3 col-form-label') }}
@@ -89,6 +150,12 @@
                                     </button>
                                 </div>
                             </div>
+                            {# Advisor.rank error #}
+                            {% if updateForm.rank.errors %}
+                                <div class="help-block text-danger">
+                                    {{ updateForm.rank.errors[0] }}
+                                </div>
+                            {% endif %}
                             {# Advisor.rank #}
                             <div class="form-group row">
                                 {{ updateForm.rank.label(class='col-sm-3 col-form-label') }}
@@ -101,6 +168,12 @@
                                     </button>
                                 </div>
                             </div>
+                            {# Advisor.office_addr error #}
+                            {% if updateForm.office_addr.errors %}
+                                <div class="help-block text-danger">
+                                    {{ updateForm.office_addr.errors[0] }}
+                                </div>
+                            {% endif %}
                             {# Advisor.office_addr #}
                             <div class="form-group row">
                                 {{ updateForm.office_addr.label(class='col-sm-3 col-form-label') }}
@@ -113,6 +186,12 @@
                                     </button>
                                 </div>
                             </div>
+                            {# Advisor.office_tel error #}
+                            {% if updateForm.office_tel.errors %}
+                                <div class="help-block text-danger">
+                                    {{ updateForm.office_tel.errors[0] }}
+                                </div>
+                            {% endif %}
                             {# Advisor.office_tel #}
                             <div class="form-group row">
                                 {{ updateForm.office_tel.label(class='col-sm-3 col-form-label') }}
@@ -129,6 +208,12 @@
 
                         {# Student #}
                         {% if updateForm.type.data == 'student' %}
+                            {# Student.dept error #}
+                            {% if updateForm.dept.errors %}
+                                <div class="help-block text-danger">
+                                    {{ updateForm.dept.errors[0] }}
+                                </div>
+                            {% endif %}
                             {# Student.dept #}
                             <div class="form-group row">
                                 {{ updateForm.dept.label(class='col-sm-3 col-form-label') }}
@@ -141,6 +226,12 @@
                                     </button>
                                 </div>
                             </div>
+                            {# Student.enroll_year error #}
+                            {% if updateForm.enroll_year.errors %}
+                                <div class="help-block text-danger">
+                                    {{ updateForm.enroll_year.errors[0] }}
+                                </div>
+                            {% endif %}
                             {# Student.enroll_year #}
                             <div class="form-group row">
                                 {{ updateForm.enroll_year.label(class='col-sm-3 col-form-label') }}
@@ -153,7 +244,6 @@
                                     </button>
                                 </div>
                             </div>
-                            {# Student.sex #}
                             <div class="form-group row">
                                 {{ updateForm.sex.label(class='col-sm-3 col-form-label') }}
                                 <div class="col-sm-6">
@@ -225,22 +315,6 @@
         </div>
     {% endif %}
 
-    {# flash message #}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="mt-3">
-                {% for category, message in messages %}
-                    <div class="row justify-content-center">
-                        <div class="col-6 text-center">
-                            <h3 class="alert alert-{{ category }} text-center">{{ message }}</h3>
-                            <a href="{{ url_for('search_user_information.search_form') }}"
-                               class="btn btn-primary text-center mb-3">返回</a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
 {% endblock %}
 
 {% block script %}

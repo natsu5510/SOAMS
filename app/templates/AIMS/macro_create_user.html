@@ -1,0 +1,171 @@
+{% macro create_user(form, form_type, submit_function) %}
+    {# flash message #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="row justify-content-center">
+                    <div class="mt-3 col-6 text-center">
+                        <h3 class="alert alert-{{ category }} text-center">{{ message }}</h3>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if form %}
+        {% set title = "新增" %}
+        {% if form_type == 'create' %}
+            {% if form.type.data == 'advisor' %}
+                {% set title = title + "導師" %}
+            {% elif form.type.data == 'student' %}
+                {% set title = title + "學生" %}
+            {% elif form.type.data == 'landlord' %}
+                {% set title = title + "房東" %}
+            {% else %}
+                {% set title = title + "使用者" %}
+            {% endif %}
+        {% elif form_type == 'register' %}
+            {% set title = "房東註冊基本資料" %}
+        {% else %}
+            {% set title = "表單格式錯誤" %}
+        {% endif %}
+
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <h2 class="text-center">{{ title }}</h2>
+                    {% if form_type == 'create' %}
+                        <form method="POST" action="{{ url_for(submit_function, user_type=form.type.data) }}">
+                    {% elif form_type == 'register' %}
+                        <form method="POST" action="{{ url_for(submit_function) }}">
+                    {% endif %}
+                    {{ form.hidden_tag() }}
+
+                    {# User #}
+                    {# User.id #}
+                    <div class="form-group">
+                        {{ form.id.label(class="form-label") }}
+                        {{ form.id(class="form-control") }}
+                    </div>
+                    {# User.name #}
+                    <div class="form-group">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control") }}
+                    </div>
+                    {# User.passwd #}
+                    <div class="form-group">
+                        {{ form.passwd.label(class="form-label") }}
+                        {{ form.passwd(class="form-control") }}
+                    </div>
+
+                    {# register #}
+                    {% if form_type == 'register' %}
+                        {# User.confirm_passwd #}
+                        <div class="form-group">
+                            {{ form.confirm_passwd.label(class="form-label") }}
+                            {{ form.confirm_passwd(class="form-control") }}
+                        </div>
+                    {% endif %}
+
+                    {# User.tel #}
+                    <div class="form-group">
+                        {{ form.tel.label(class="form-label") }}
+                        {{ form.tel(class="form-control") }}
+                    </div>
+
+                    {# User.email #}
+                    {# email error #}
+                    {% if form.email.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.email.errors[0] }}
+                        </div>
+                    {% endif %}
+                    <div class="form-group">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="form-control") }}
+                    </div>
+
+                    {# Advisor #}
+                    {% if form.type.data == 'advisor' %}
+                        {# Advisor.dept #}
+                        <div class="form-group">
+                            {{ form.dept.label(class="form-label") }}
+                            {{ form.dept(class="form-control") }}
+                        </div>
+
+                        {# Advisor.rank #}
+                        <div class="form-group">
+                            {{ form.rank.label(class="form-label") }}
+                            {{ form.rank(class="form-control") }}
+                        </div>
+
+                        {# Advisor.office_addr #}
+                        <div class="form-group">
+                            {{ form.office_addr.label(class="form-label") }}
+                            {{ form.office_addr(class="form-control") }}
+                        </div>
+
+                        {# Advisor.office_tel #}
+                        <div class="form-group">
+                            {{ form.office_tel.label(class="form-label") }}
+                            {{ form.office_tel(class="form-control") }}
+                        </div>
+
+                        {# Student #}
+                        {% if form.type.data == 'student' %}
+                            {# Student.dept #}
+                            <div class="form-group">
+                                {{ form.dept.label(class="form-label") }}
+                                {{ form.dept(class="form-control") }}
+                            </div>
+
+                            {# Student.enroll_year #}
+                            <div class="form-group">
+                                {{ form.enroll_year.label(class="form-label") }}
+                                {{ form.enroll_year(class="form-control") }}
+                            </div>
+
+                            {# Student.sex #}
+                            <div class="form-group">
+                                {{ form.sex.label(class="form-label") }}
+                                {{ form.sex(class="form-control") }}
+                            </div>
+
+                            {# Student.home_addr #}
+                            <div class="form-group">
+                                {{ form.home_addr.label(class="form-label") }}
+                                {{ form.home_addr(class="form-control") }}
+                            </div>
+
+                            {# Student.home_tel #}
+                            <div class="form-group">
+                                {{ form.home_tel.label(class="form-label") }}
+                                {{ form.home_tel(class="form-control") }}
+                            </div>
+
+                            {# Student.contact_name #}
+                            <div class="form-group">
+                                {{ form.contact_name.label(class="form-label") }}
+                                {{ form.contact_name(class="form-control") }}
+                            </div>
+
+                            {# Student.contact_tel #}
+                            <div class="form-group">
+                                {{ form.contact_tel.label(class="form-label") }}
+                                {{ form.contact_tel(class="form-control") }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    <button type="button" class="btn btn-danger mb-5"
+                            onclick="window.location.href='{{ url_for(kwargs['back']) }}'">返回
+                    </button>
+
+                    {{ form.submit(class="btn btn-primary mb-5" ) }}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}

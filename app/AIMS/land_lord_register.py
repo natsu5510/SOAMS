@@ -21,10 +21,6 @@ class LandlordRegisterForm(LandlordForm):
 def register():
     form = LandlordRegisterForm()
 
-    print(form.validate_on_submit())
-    print(form.errors)
-    print(form.errors.items())
-
     if form.validate_on_submit():
         user_id = form.id.data
         password = form.passwd.data
@@ -33,7 +29,6 @@ def register():
         email = form.email.data
         tel = form.tel.data
 
-        print(password, confirm_password, user_id, name, email, tel)
         if password != confirm_password:
             flash('您輸入的密碼不一致，請重新輸入', 'danger')
         elif not user_id or not name or not password or not confirm_password or not tel or not email:
