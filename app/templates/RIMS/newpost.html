@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %} 新增文章 {% endblock title%}
+
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between">
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">新增文章</span>
+    </div>
+{% endblock heading %}
+
+{% block content%}
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=32) }}<br>
+            {% for error in form.title.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.text.label }}<br>
+            {{ form.text(cols=32, rows=4) }}<br>
+            {% for error in form.text.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.image_urls.label }}<br>
+            {{ form.image_urls(size=32) }}<br>
+            {% for error in form.image_urls.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock content%}
