@@ -1,0 +1,102 @@
+{% extends "home.html" %}
+
+{% block title %} {{ post.title }} {% endblock title %}
+
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between">
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">租屋資訊討論版</span>
+    </div>
+{% endblock heading %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Article Content -->
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2 class="card-title">{{ post.title }}</h2>
+                            </div>
+                            <div>
+                                <h6 class="card-subtitle mb-2 text-muted d-inline-block">
+                                    {% if post.time_diff.total_seconds() < 60 %}
+                                        {{ post.time_diff.total_seconds() | int }} 秒前
+                                    {% elif post.time_diff.total_seconds() < 3600 %}
+                                        {{ (post.time_diff.total_seconds() // 60) | int }} 分鐘前
+                                    {% elif post.time_diff.total_seconds() < 86400 %}
+                                        {{ (post.time_diff.total_seconds() // 3600) | int }} 小時前
+                                    {% elif post.time_diff.total_seconds() < 2592000 %}
+                                        {{ (post.time_diff.total_seconds() // 86400) | int }} 天前
+                                    {% elif post.time_diff.total_seconds() < 31536000 %}
+                                        {{ (post.time_diff.total_seconds() // 2592000) | int }} 個月前
+                                    {% else %}
+                                        {{ (post.time_diff.total_seconds() // 31536000) | int }} 年前
+                                    {% endif %}
+                                </h6>
+                                {% if current_user.id == post.user_id %}
+                                <a href="{{ url_for('rental_information_exchange.editpost', post_id=post.id) }}" class="btn btn-secondary ml-3">編輯文章</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="card-text mt-3">{{ post.text }}</p>
+                        {% if post.image_urls %}
+                            <img src="{{ post.image_urls }}" alt="Post Image" class="img-fluid">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>留言</h4>
+                {% for comment in comments %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title mb-0">{{ comment.user_id }}</h5>
+                            <h6 class="card-subtitle mb-0 text-muted">
+                                {% if comment.time_diff.total_seconds() < 60 %}
+                                    {{ comment.time_diff.total_seconds() | int }} 秒前
+                                {% elif comment.time_diff.total_seconds() < 3600 %}
+                                    {{ (comment.time_diff.total_seconds() // 60) | int }} 分鐘前
+                                {% elif comment.time_diff.total_seconds() < 86400 %}
+                                    {{ (comment.time_diff.total_seconds() // 3600) | int }} 小時前
+                                {% elif comment.time_diff.total_seconds() < 2592000 %}
+                                    {{ (comment.time_diff.total_seconds() // 86400) | int }} 天前
+                                {% elif comment.time_diff.total_seconds() < 31536000 %}
+                                    {{ (comment.time_diff.total_seconds() // 2592000) | int }} 個月前
+                                {% else %}
+                                    {{ (comment.time_diff.total_seconds() // 31536000) | int }} 年前
+                                {% endif %}
+                                - {{ loop.index }}F
+                            </h6>
+                        </div>
+                        <p class="card-text mt-2">{{ comment.text }}</p>
+                        {% if comment.image_urls %}
+                            <img src="{{ comment.image_urls }}" alt="Comment Image" class="img-fluid">
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>發表留言</h4>
+                <form method="POST" action="{{ url_for('rental_information_exchange.post', post_id=post.id) }}">
+                    <div class="form-group">
+                        <label for="commentContent">留言內容</label>
+                        <textarea class="form-control" id="commentContent" name="commentContent" rows="3" placeholder="輸入您的留言"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">送出留言</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

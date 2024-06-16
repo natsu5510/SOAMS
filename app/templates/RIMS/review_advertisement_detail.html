@@ -1,0 +1,19 @@
+{% extends "RIMS/rental_advertisement_detail.html" %}
+
+<!-- 瀏覽器頁籤上的字 -->
+{% block title %} 審核廣告 {% endblock title %}
+
+<!-- 該頁面的標題 -->
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">審核廣告</h1>
+    </div>
+{% endblock heading %}
+
+{% block content %}
+    {{ super() }}
+    <form class="mb-4" method="POST" action="">
+        <input class="btn btn-success col-2 offset-4" type="submit" name="action" value="核准" />
+        <input class="btn btn-danger col-2 " type="submit" name="action" value="駁回" />
+    </form>
+{% endblock content %}

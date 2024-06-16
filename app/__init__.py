@@ -1,3 +1,7 @@
+from flask import Flask, flash, redirect, url_for
+from config import MYSQL_USER, MYSQL_PASSWORD, SECRET_KEY
+from app.extensions import db, login_manager, bcrypt
+from functools import wraps
 import datetime
 
 from flask import Flask
@@ -30,6 +34,8 @@ def create_app():
     app.register_blueprint(visitation_management, url_prefix='/visitation_management')
     from app.RIMS.rental_advertisement import rental_advertisement
     app.register_blueprint(rental_advertisement, url_prefix='/rental_advertisement')
+    from app.RIMS.rental_information_exchange import rental_information_exchange
+    app.register_blueprint(rental_information_exchange, url_prefix='/forum')
 
     app.secret_key = SECRET_KEY
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI

@@ -1,13 +1,252 @@
-{% extends "home.html" %}
+{% extends "base.html" %} <!-- 繼承父樣板 base.html -->
 
-{% block title %} 租屋廣告 {% endblock title%}
+<!-- 瀏覽器頁籤上的字 -->
+{% block title %} 租屋廣告 {% endblock title %}
 
+<!-- 該頁面的標題 -->
 {% block heading %}
-    <div class="d-sm-flex align-items-center justify-content-between">
-        <span class="h3 mb-0 text-gray-800 font-weight-bold">租屋廣告</span>
+    <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">租屋廣告</h1>
     </div>
 {% endblock heading %}
 
-{% block content%}
-    一堆廣告
-{% endblock content%}
+<!-- 主要內容 -->
+{% block content %}
+    <style>
+        .card:hover {
+            transform: scale(1.005);
+            transition: transform 0.2s;
+            background-color: rgb(255, 242, 215);
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        /* @media (max-width: 768px) {
+            #layout-btn {
+                display: none;
+            }
+        } */
+    </style>
+    <script>
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+        function toggleLayout(layout) {
+            const gridButton = document.getElementById('grid-button');
+            const listButton = document.getElementById('list-button');
+
+            document.getElementById('grid-layout').classList.toggle('hidden', layout !== 'grid');
+            document.getElementById('list-layout').classList.toggle('hidden', layout !== 'list');
+
+            if (layout === 'grid') {
+                gridButton.classList.add('btn-warning');
+                gridButton.classList.remove('btn-secondary');
+                listButton.classList.add('btn-secondary');
+                listButton.classList.remove('btn-warning');
+            } else {
+                gridButton.classList.add('btn-secondary');
+                gridButton.classList.remove('btn-warning');
+                listButton.classList.add('btn-warning');
+                listButton.classList.remove('btn-secondary');
+            }
+        }
+    </script>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mt-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="d-flex justify-content-between">
+            <!-- 篩選表單 -->
+            <form class="d-inline-flex mb-2" method="GET" action="{{ url_for('rental_advertisement.index', page=1) }}">
+                <div class="form-row">
+                    <div class="col-md-3 mb-2">
+                        <label class="mb-0" for="rentFilter">租金</label>
+                        <select class="form-control" id="rentFilter" name="rent_filter">
+                            <option value="不限">不限</option>
+                            <option value="3000以下">3000以下</option>
+                            <option value="5000以下">5000以下</option>
+                            <option value="5000-10000">5000-10000</option>
+                            <option value="10000-15000">10000-15000</option>
+                            <option value="15000-20000">15000-20000</option>
+                            <option value="20000以上">20000以上</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="mb-0" for="buildingTypeFilter">建築類型</label>
+                        <select class="form-control" id="buildingTypeFilter" name="building_type_filter">
+                            <option value="不限">不限</option>
+                            <option value="公寓">公寓</option>
+                            <option value="大樓">大樓</option>
+                            <option value="學舍">學舍</option>
+                            <option value="透天">透天</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="mb-0" for="rentalTypeFilter">出租類型</label>
+                        <select class="form-control" id="rentalTypeFilter" name="rental_type_filter">
+                            <option value="不限">不限</option>
+                            <option value="整棟出租">整棟出租</option>
+                            <option value="獨立套房">獨立套房</option>
+                            <option value="房間分租">房間分租</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 align-self-center">
+                        <button type="submit" class="btn btn-primary">篩選</button>
+                    </div>
+                </div>
+            </form>
+            <!-- 更換版面配置按鈕 -->
+            <div id="layout-btn">
+                <button id="grid-button" class="btn btn-warning mr-2" onclick="toggleLayout('grid')"><i class="fa fa-table"></i></button>
+                <button id="list-button" class="btn btn-secondary" onclick="toggleLayout('list')"><i class="fa fa-list"></i></button>
+            </div>
+        </div>
+        <div id="grid-layout">
+            <div class="row">
+                {% for ad in ads.items %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow" onclick="redirectTo('{{ url_for('rental_advertisement.advertisement', adid=ad.id) }}')">
+                        {% set image_urls = ad.image_urls.split(',') %}
+                        <img height="300" class="card-img-top" src="{{ url_for('static', filename='uploads/' + image_urls.0) }}" alt="房屋圖片">
+                        <div class="card-body">
+                            <div class="h5 font-weight-bold text-info">{{ ad.title }}</div>
+                            <div>
+                                【{{ ad.building_type }}】
+                                {% if ad.suite_num != 0 %}
+                                <span style="margin-right: 10px;">{{ad.suite_size}} 坪套房</span>
+                                {% endif %}
+                                {% if ad.suite_num != 0 and ad.room_num != 0%}
+                                <span></span>
+                                {% endif %}
+                                {% if ad.room_num != 0 %}
+                                <span>{{ad.room_size}} 坪雅房</span>
+                                {% endif %}
+                            </div>
+                            <div class="">地址：{{ ad.addr }}</div>
+                            <div class="">
+                                租金：
+                                <span class="text-danger font-weight-bold">
+                                    {% if ad.rent_lower == ad.rent_upper %}
+                                    {{ ad.rent_lower }}
+                                    {% else %}
+                                    {{ ad.rent_lower }}~{{ ad.rent_upper }}
+                                    {% endif %}
+                                </span> 元 / 月
+                            </div>
+                            <div>更新時間：{{ ad.update_time }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="list-layout" class="hidden">
+            <div class="row">
+                <!-- 廣告卡片範例 -->
+                {% for ad in ads.items %}
+                <div class="col-md-12 mb-4">
+                    <div class="card shadow" onclick="redirectTo('{{ url_for('rental_advertisement.advertisement', adid=ad.id) }}')">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                {% set image_urls = ad.image_urls.split(',') %}
+                                <img height="200" width="200" class="card-img" src="{{ url_for('static', filename='uploads/' + image_urls[0].strip()) }}" alt="房屋圖片">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <div class="h5 font-weight-bold text-info">{{ ad.title }}</div>
+                                    <div>
+                                        【{{ ad.building_type }}】
+                                        {% if ad.suite_num != 0 %}
+                                        <span style="margin-right: 10px;">{{ad.suite_size}} 坪套房</span>
+                                        {% endif %}
+                                        {% if ad.suite_num != 0 and ad.room_num != 0%}
+                                        <span></span>
+                                        {% endif %}
+                                        {% if ad.room_num != 0 %}
+                                        <span>{{ad.room_size}} 坪雅房</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="">地址：{{ ad.addr }}</div>
+                                    <div class="">
+                                        租金：
+                                        <span class="text-danger font-weight-bold">
+                                            {% if ad.rent_lower == ad.rent_upper %}
+                                            {{ ad.rent_lower }}
+                                            {% else %}
+                                            {{ ad.rent_lower }}~{{ ad.rent_upper }}
+                                            {% endif %}
+                                        </span> 元 / 月
+                                    </div>
+                                    <div>更新時間：{{ ad.update_time }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- 分頁 -->
+        <div class="ads-paginate">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if ads.has_prev %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('rental_advertisement.index', page=ads.prev_num) }}" aria-label="Previous">
+                                <span aria-hidden="true">上一頁</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                <span aria-hidden="true">上一頁</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    
+                    {% for page_num in ads.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                        {% if page_num %}
+                            {% if page_num == ads.page %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">{{ page_num }} <span class="sr-only">(current)</span></a>
+                                </li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('rental_advertisement.index', page=page_num) }}">{{ page_num }}</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if ads.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('rental_advertisement.index', page=ads.next_num) }}" aria-label="Next">
+                                <span aria-hidden="true">下一頁</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                <span aria-hidden="true">下一頁</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        
+    </div>
+{% endblock content %}

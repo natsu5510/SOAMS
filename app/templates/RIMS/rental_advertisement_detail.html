@@ -1,0 +1,262 @@
+{% extends "base.html" %} <!-- 繼承父樣板 base.html -->
+
+<!-- 瀏覽器頁籤上的字 -->
+{% block title %} 租屋廣告 {% endblock title %}
+
+<!-- 該頁面的標題 -->
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">租屋廣告</h1>
+    </div>
+{% endblock heading %}
+
+<!-- 主要內容 -->
+{% block content %}
+    <style>
+        .container {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    </style>
+    <div class="container">
+        <div class="row mb-4">
+            <!-- Left Side -->
+            <div class="col-md-6">
+                <div class="content mb-2" id="content-1">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 font-weight-bold text-info mb-2">
+                                        {{ ad.title }}
+                                    </div>
+                                    <table class="table table-bordered font-weight-bold text-gray-800">
+                                        {% set bool_dict = {True:'有', False:'無'}%}
+                                        <tr>
+                                            <th scope="row"class="table-info">租金(月)</th>
+                                            <th scope="row" colspan="3">
+                                                {% if ad.rent_lower == ad.rent_upper %}
+                                                {{ ad.rent_lower }} 元
+                                                {% else %}
+                                                {{ ad.rent_lower }}~{{ ad.rent_upper }} 元
+                                                {% endif %}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">地址</th>
+                                            <th scope="row" colspan="3">{{ ad.addr }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">出租房數</th>
+                                            <th scope="row" colspan="3">
+                                                {% if ad.suite_num != 0 %}
+                                                【套房(約{{ad.suite_size}}坪)】 共{{ad.suite_num}}間;空房{{ad.suite_empty}}間
+                                                {% endif %}
+                                                {% if ad.suite_num != 0 and ad.room_num != 0%}
+                                                <br>
+                                                {% endif %}
+                                                {% if ad.room_num != 0 %}
+                                                【雅房(約{{ad.room_size}}坪)】 共{{ad.room_num}}間;空房{{ad.room_empty}}間
+                                                {% endif %}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info"width="21%">房屋類型</th>
+                                            <th scope="row"width="29%">{{ ad.building_type }}</th>
+                                            <th scope="row"class="table-info"width="21%">屋齡(年)</th>
+                                            <th scope="row"width="29%">{{ ad.building_age }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">建物樓層</th>
+                                            <th scope="row">{{ ad.floor1 }}樓;{{ ad.floor2 }}層;{{ ad.size }}坪</th>
+                                            <th scope="row"class="table-info">隔間材質</th>
+                                            <th scope="row">{{ ad.partition_material }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">出租類型</th>
+                                            <th scope="row">{{ ad.rental_type }}</th>
+                                            <th scope="row"class="table-info">獨立電表</th>
+                                            <th scope="row">
+                                                {% if ad.electricity_meter == 1 %}
+                                                有
+                                                {% else %}
+                                                無
+                                                {% endif %}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">押金</th>
+                                            <th scope="row">{{ ad.deposit }}</th>
+                                            <th scope="row"class="table-info">其他費用</th>
+                                            <th scope="row">{{ ad.others_fee }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">性別要求</th>
+                                            <th scope="row">{{ ad.sex_limit }}</th>
+                                            <th scope="row"class="table-info">無菸租屋</th>
+                                            <th scope="row">
+                                                {% if ad.smoke == 1 %}
+                                                是
+                                                {% else %}
+                                                否
+                                                {% endif %}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">身分要求</th>
+                                            <th scope="row" colspan="3">{{ ad.identity_limit     }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">屋內設備</th>
+                                            <th scope="row" colspan="3">
+                                                {% for equip in combined_list.equips %}
+                                                <span>{{ equip }}</span>
+                                                {% endfor %}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"class="table-info">公共設施</th>
+                                            <th scope="row" colspan="3">
+                                                {% for public_equip in combined_list.public_equips %}
+                                                <span>{{ public_equip }}</span>
+                                                {% endfor %}
+                                            </th>
+                                        </tr>
+                                    </table>
+                                    <table class="table table-bordered font-weight-bold text-gray-800 mb-0">
+                                        <tr>
+                                            <th scope="col"class="table-info">屋況說明</th>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <th scope="row"colspan="3">{{ ad.description }}</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content mb-2" id="content-2">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 font-weight-bold text-info mb-2">
+                                        <i class="fas fa-user-shield"></i>
+                                        安全訪視項目
+                                    </div>
+                                    <table class="table table-bordered font-weight-bold text-gray-800 mb-0">
+                                        <tr>
+                                            <td scope="row"class="table-info"width="30%">熱水器</td>
+                                            <td scope="row"class="table-light"width="70%">
+                                                {% for heater in combined_list.heaters %}
+                                                <span>{{ heater }}</span>
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td scope="row"class="table-info"width="30%">安全設施</td>
+                                            <td scope="row"class="table-light"width="70%">
+                                                {% for safty_equip in combined_list.safty_equips %}
+                                                <span>{{ safty_equip }}</span>
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td scope="row"class="table-info"width="30%">證明文件</td>
+                                            <td scope="row"class="table-light"width="70%">
+                                                {% for doc in combined_list.docs %}
+                                                <span>{{ doc }}</span>
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td scope="row"class="table-info"width="30%">安全訪評</td>
+                                            <td scope="row"class="table-light"width="70%">
+                                                {% if ad.meets_ministry_of_education_safety_standards == 1 %}
+                                                符合教育部安全訪評規範
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Side -->
+            {% set image_urls = ad.image_urls.split(',') %}
+            <div class="col-md-6">
+                <div class="content mb-2" id="content-3">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 font-weight-bold text-info mb-2">
+                                        <i class="fas fa-address-card"></i>
+                                        房東資料
+                                    </div>
+                                    <table class="table table-bordered font-weight-bold text-gray-800 mb-0">
+                                        <tr>
+                                            <td scope="row"class="table-info"width="30%">姓名</td>
+                                            <td scope="row"class="table-light"width="70%">{{ landlord.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td scope="row"class="table-info"width="30%">連絡電話</td>
+                                            <td scope="row"class="table-light"width="70%">{{ landlord.tel }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td scope="row"class="table-info"width="30%">Email</td>
+                                            <td scope="row"class="table-light"width="70%">{{ landlord.email }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content mb-2" id="content-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 font-weight-bold text-info mb-2">
+                                        <i class="fas fa-image"></i>
+                                        房屋照片
+                                    </div>
+                                    <!-- Carousel -->
+                                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            {% for index in range(image_urls|length) %}
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="{{ index }}" class="{% if index == 0 %}active{% endif %}"></li>
+                                            {% endfor %}
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            {% for url in image_urls %}
+                                            <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                                                <img class="d-block w-100" src="{{ url_for('static', filename='uploads/' + url.strip()) }}" alt="Slide {{ loop.index }}">
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+{% endblock content %}
