@@ -1,11 +1,8 @@
-from flask import Flask, flash, redirect, url_for
-from config import MYSQL_USER, MYSQL_PASSWORD, SECRET_KEY
-from app.extensions import db, login_manager, bcrypt
-from functools import wraps
 import datetime
 
 from flask import Flask
 
+from app.extensions import db, login_manager, bcrypt
 from app.extensions import db, login_manager, bcrypt
 from config import SECRET_KEY, DATABASE_URI
 

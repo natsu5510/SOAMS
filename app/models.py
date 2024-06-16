@@ -149,8 +149,8 @@ class Advertisement(db.Model):
     __tablename__ = 'advertisement'
     id = db.Column(db.Integer, primary_key=True, comment='租屋廣告編號')
     title = db.Column(db.String(256), unique=False, nullable=False, comment='租屋廣告標題')
-    rent_lower = db.Column(db.Integer, unique=False, nullable=False ,comment='月租金下限')
-    rent_upper = db.Column(db.Integer, unique=False, nullable=False ,comment='月租金上限')
+    rent_lower = db.Column(db.Integer, unique=False, nullable=False, comment='月租金下限')
+    rent_upper = db.Column(db.Integer, unique=False, nullable=False, comment='月租金上限')
     addr = db.Column(db.String(256), unique=False, nullable=False, comment='地址')
 
     suite_num = db.Column(db.Integer, unique=False, nullable=False, comment='套房總數')
@@ -161,15 +161,15 @@ class Advertisement(db.Model):
     room_size = db.Column(db.Integer, unique=False, nullable=False, comment='雅房坪數')
 
     building_type = db.Column(db.String(256), unique=False, nullable=False, comment='房屋類型')
-    building_age = db.Column(db.Integer, unique=False, nullable=False ,comment='屋齡')
-    floor1 = db.Column(db.Integer, unique=False, nullable=False ,comment='樓')
-    floor2 = db.Column(db.Integer, unique=False, nullable=False ,comment='層')
-    size = db.Column(db.Integer, unique=False, nullable=False ,comment='坪數')
+    building_age = db.Column(db.Integer, unique=False, nullable=False, comment='屋齡')
+    floor1 = db.Column(db.Integer, unique=False, nullable=False, comment='樓')
+    floor2 = db.Column(db.Integer, unique=False, nullable=False, comment='層')
+    size = db.Column(db.Integer, unique=False, nullable=False, comment='坪數')
 
     rental_type = db.Column(db.String(256), unique=False, nullable=False, comment='出租類型')
     electricity_meter = db.Column(db.Integer, unique=False, nullable=True, comment='有無獨立電表')
     partition_material = db.Column(db.String(256), unique=False, nullable=False, comment='隔間材質')
-    deposit = db.Column(db.String(256), unique=False, nullable=False ,comment='押金')
+    deposit = db.Column(db.String(256), unique=False, nullable=False, comment='押金')
     sex_limit = db.Column(db.String(256), unique=False, nullable=False, comment='性別要求')
     identity_limit = db.Column(db.String(256), unique=False, nullable=False, comment='身分要求')
     others_fee = db.Column(db.String(256), unique=False, nullable=False, comment='其他費用')
@@ -197,7 +197,8 @@ class Advertisement(db.Model):
     broadband_network = db.Column(db.Integer, unique=False, nullable=True, comment='寬頻網路')
 
     # 公共設施
-    fire_extinguishers_smoke_detectors_and_monitors_per_floor = db.Column(db.Integer, unique=False, nullable=True, comment='每層樓滅火器及煙霧偵測器及監視器')
+    fire_extinguishers_smoke_detectors_and_monitors_per_floor = db.Column(db.Integer, unique=False, nullable=True,
+                                                                          comment='每層樓滅火器及煙霧偵測器及監視器')
     parking_lot = db.Column(db.Integer, unique=False, nullable=True, comment='停車場')
     kitchen = db.Column(db.Integer, unique=False, nullable=True, comment='廚房')
     laundry_area = db.Column(db.Integer, unique=False, nullable=True, comment='晒衣場')
@@ -223,8 +224,10 @@ class Advertisement(db.Model):
     security_personnel = db.Column(db.Integer, unique=False, nullable=False, comment='保全人員')
     slow_descend_device = db.Column(db.Integer, unique=False, nullable=False, comment='緩降梯')
     carbon_monoxide_detector = db.Column(db.Integer, unique=False, nullable=False, comment='一氧化碳警報器')
-    electric_water_heater_power_cut_off_device = db.Column(db.Integer, unique=False, nullable=False, comment='電用熱水器斷電設備')
-    gas_water_heater_forced_exhaust_device = db.Column(db.Integer, unique=False, nullable=False, comment='瓦斯熱水器強制排氣設備')
+    electric_water_heater_power_cut_off_device = db.Column(db.Integer, unique=False, nullable=False,
+                                                           comment='電用熱水器斷電設備')
+    gas_water_heater_forced_exhaust_device = db.Column(db.Integer, unique=False, nullable=False,
+                                                       comment='瓦斯熱水器強制排氣設備')
     fire_extinguisher = db.Column(db.Integer, unique=False, nullable=False, comment='滅火器')
     smoke_detector = db.Column(db.Integer, unique=False, nullable=False, comment='偵煙設備')
     escape_route_clear_and_marked = db.Column(db.Integer, unique=False, nullable=False, comment='逃生路線暢通及標示')
@@ -240,8 +243,9 @@ class Advertisement(db.Model):
     property_tax_bill = db.Column(db.Integer, unique=False, nullable=False, comment='房屋稅單')
 
     # 安全訪評
-    meets_ministry_of_education_safety_standards = db.Column(db.Integer, unique=False, nullable=False, comment='符合教育部安全訪評規範')
-    
+    meets_ministry_of_education_safety_standards = db.Column(db.Integer, unique=False, nullable=False,
+                                                             comment='符合教育部安全訪評規範')
+
     image_urls = db.Column(db.Text, unique=False, nullable=True, comment='廣告圖檔路徑')
     pulish_date = db.Column(db.DateTime, unique=False, nullable=True, comment='刊登日期')
     update_date = db.Column(db.DateTime, unique=False, nullable=True, comment='更新日期')
@@ -251,62 +255,62 @@ class Advertisement(db.Model):
     landlord_id = db.Column(db.String(10), db.ForeignKey('landlord.id'), unique=False, nullable=False, comment='房東ID')
 
     def __init__(self,
-                electricity_meter,
-                smoke,
-                sofa,
-                telephone,
-                bookcase,
-                wardrobe,
-                central_air_conditioning,
-                fiber_optic_network1,
-                washing_machine,
-                single_bed,
-                dehydrator,
-                cable_television,
-                dryer,
-                desk_and_chair,
-                refrigerator,
-                double_bed,
-                water_dispenser,
-                television,
-                air_conditioner,
-                table_lamp,
-                broadband_network,
-                fire_extinguishers_smoke_detectors_and_monitors_per_floor,
-                parking_lot,
-                kitchen,
-                laundry_area,
-                parking_lot_elevator,
-                public_balcony,
-                courtyard,
-                elevator,
-                fiber_optic_network2,
-                courtyard_parking_lot,
-                lounge,
-                electric_water_heater,
-                gas_water_heater,
-                solar_water_heater,
-                natural_gas,
-                bottled_gas,
-                escape_ladder,
-                security_personnel,
-                slow_descend_device,
-                carbon_monoxide_detector,
-                electric_water_heater_power_cut_off_device,
-                gas_water_heater_forced_exhaust_device,
-                fire_extinguisher,
-                smoke_detector,
-                escape_route_clear_and_marked,
-                lighting_equipment,
-                surveillance_system,
-                access_control_system,
-                firefighting_system,
-                landlord_identification_documents,
-                power_of_attorney,
-                property_ownership_certificate,
-                property_tax_bill,
-                meets_ministry_of_education_safety_standards,
-                ):
+                 electricity_meter,
+                 smoke,
+                 sofa,
+                 telephone,
+                 bookcase,
+                 wardrobe,
+                 central_air_conditioning,
+                 fiber_optic_network1,
+                 washing_machine,
+                 single_bed,
+                 dehydrator,
+                 cable_television,
+                 dryer,
+                 desk_and_chair,
+                 refrigerator,
+                 double_bed,
+                 water_dispenser,
+                 television,
+                 air_conditioner,
+                 table_lamp,
+                 broadband_network,
+                 fire_extinguishers_smoke_detectors_and_monitors_per_floor,
+                 parking_lot,
+                 kitchen,
+                 laundry_area,
+                 parking_lot_elevator,
+                 public_balcony,
+                 courtyard,
+                 elevator,
+                 fiber_optic_network2,
+                 courtyard_parking_lot,
+                 lounge,
+                 electric_water_heater,
+                 gas_water_heater,
+                 solar_water_heater,
+                 natural_gas,
+                 bottled_gas,
+                 escape_ladder,
+                 security_personnel,
+                 slow_descend_device,
+                 carbon_monoxide_detector,
+                 electric_water_heater_power_cut_off_device,
+                 gas_water_heater_forced_exhaust_device,
+                 fire_extinguisher,
+                 smoke_detector,
+                 escape_route_clear_and_marked,
+                 lighting_equipment,
+                 surveillance_system,
+                 access_control_system,
+                 firefighting_system,
+                 landlord_identification_documents,
+                 power_of_attorney,
+                 property_ownership_certificate,
+                 property_tax_bill,
+                 meets_ministry_of_education_safety_standards,
+                 ):
         self.electricity_meter = electricity_meter
         self.smoke = smoke
         # 屋內設備
@@ -368,8 +372,7 @@ class Advertisement(db.Model):
         self.property_tax_bill = property_tax_bill
         # 安全訪評
         self.meets_ministry_of_education_safety_standards = meets_ministry_of_education_safety_standards
-    
-    
+
     def get_equip_list(self):
         equip_list = []
         equip_list.append('沙發') if self.sofa == 1 else None
@@ -392,10 +395,11 @@ class Advertisement(db.Model):
         equip_list.append('檯燈') if self.table_lamp == 1 else None
         equip_list.append('寬頻網路') if self.broadband_network == 1 else None
         return equip_list
-    
+
     def get_public_equip_list(self):
         public_equip_list = []
-        public_equip_list.append('每層樓滅火器及煙霧偵測器及監視器') if self.fire_extinguishers_smoke_detectors_and_monitors_per_floor == 1 else None
+        public_equip_list.append(
+            '每層樓滅火器及煙霧偵測器及監視器') if self.fire_extinguishers_smoke_detectors_and_monitors_per_floor == 1 else None
         public_equip_list.append('停車場') if self.parking_lot == 1 else None
         public_equip_list.append('廚房') if self.kitchen == 1 else None
         public_equip_list.append('晒衣場') if self.laundry_area == 1 else None
@@ -407,7 +411,7 @@ class Advertisement(db.Model):
         public_equip_list.append('中庭停車場') if self.courtyard_parking_lot == 1 else None
         public_equip_list.append('交誼廳') if self.lounge == 1 else None
         return public_equip_list
-    
+
     def get_heater_list(self):
         heater_list = []
         heater_list.append('電熱水器') if self.electric_water_heater == 1 else None
@@ -416,7 +420,7 @@ class Advertisement(db.Model):
         heater_list.append('天然瓦斯') if self.natural_gas == 1 else None
         heater_list.append('桶裝瓦斯') if self.bottled_gas == 1 else None
         return heater_list
-    
+
     def get_safety_equip_list(self):
         safety_equip_list = []
         safety_equip_list.append('逃生梯') if self.escape_ladder == 1 else None
@@ -433,7 +437,7 @@ class Advertisement(db.Model):
         safety_equip_list.append('門禁系統') if self.access_control_system == 1 else None
         safety_equip_list.append('消防系統') if self.firefighting_system == 1 else None
         return safety_equip_list
-    
+
     def get_document_list(self):
         doc_list = []
         doc_list.append('房東身分證明文件') if self.landlord_identification_documents == 1 else None
@@ -442,6 +446,7 @@ class Advertisement(db.Model):
         doc_list.append('房屋稅單') if self.property_tax_bill == 1 else None
         return doc_list
 
+
 class Test(db.Model):
     __tablename__ = 'test'
     id = db.Column(db.Integer, primary_key=True, comment='Po文編號')
@@ -449,6 +454,7 @@ class Test(db.Model):
 
     def __init__(self, fuck):
         self.fuck = fuck
+
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -464,6 +470,7 @@ class Post(db.Model):
         self.text = text
         self.image_urls = image_urls
         self.user_id = user_id
+
 
 class Comment(db.Model):
     __tablename__ = 'comment'

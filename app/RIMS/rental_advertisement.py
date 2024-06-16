@@ -1,17 +1,18 @@
-from flask import Blueprint, render_template, url_for, redirect, flash, request, current_app as app
-from flask_login import login_user, logout_user, login_required, current_user
-from app.AIMS.login_management import role_required
-from app.models import Advertisement, Landlord, Test
-from app.extensions import db
-from sqlalchemy import func, desc
-from datetime import datetime
-from werkzeug.utils import secure_filename
-from distutils.util import strtobool
+import json
 import os
 import pathlib
-import re
 import random
-import json
+import re
+from datetime import datetime
+
+from distutils.util import strtobool
+from flask import Blueprint, render_template, url_for, redirect, flash, request, current_app as app
+from flask_login import login_required, current_user
+from sqlalchemy import func, desc
+
+from app.AIMS.login_management import role_required
+from app.extensions import db
+from app.models import Advertisement, Landlord, Test
 
 rental_advertisement = Blueprint('rental_advertisement', __name__)
 
