@@ -1,24 +1,685 @@
 {% extends "base.html" %}
 
-{% block title%} 首頁 {% endblock title%}
+{% block title %}首頁{% endblock title %}
 
 {% block heading %}
-    <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
-        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">校外住宿管理暨租屋資訊系統</h1>
-    </div>
+<div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+    <h1 class="h3 mb-0 text-gray-800 font-weight-bold">校外住宿管理暨租屋資訊系統</h1>
+</div>
 {% endblock heading %}
 
-{% block content%}
-    {% if current_user.type == 'administrator' %}
-    <h1 class="h3 mb-0 text-gray-800">管理員使用說明</h1>
-    {% endif %}
-    {% if current_user.type == 'advisor' %}
-    <h1 class="h3 mb-0 text-gray-800">導師使用說明</h1>
-    {% endif %}
-    {% if current_user.type == 'student' %}
-    <h1 class="h3 mb-0 text-gray-800">學生使用說明</h1>
-    {% endif %}
-    {% if current_user.type == 'landlord' %}
-    <h1 class="h3 mb-0 text-gray-800">房東使用說明</h1>
-    {% endif %}
-{% endblock content%}
+{% block content %}
+<!-- 美化的CSS樣式 -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+    }
+    .card {
+        margin: 20px;
+        padding: 20px;
+    }
+    h5, h6 {
+        color: #007BFF;
+        margin-top: 20px;
+    }
+    p, ol, ul {
+        margin-bottom: 10px;
+    }
+    ol {
+        padding-left: 20px;
+    }
+    ul {
+        padding-left: 20px;
+    }
+    .card-header h6 {
+        font-size: 1.25rem;
+    }
+    .card-body p {
+        font-size: 1rem;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        {% if current_user.type == 'administrator' %}
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">管理員使用說明</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>目錄</strong></p>
+                <ol>
+                    <li>基本資料
+                        <ul>
+                            <li>更改密碼</li>
+                            <li>新增使用者</li>
+                            <li>修改使用者資料</li>
+                        </ul>
+                    </li>
+                    <li>住宿與訪視
+                        <ul>
+                            <li>查看學生住宿資料</li>
+                            <li>填寫訪視資料</li>
+                        </ul>
+                    </li>
+                    <li>租屋資訊
+                        <ul>
+                            <li>瀏覽租屋廣告</li>
+                            <li>審核廣告</li>
+                            <li>討論版</li>
+                        </ul>
+                    </li>
+                </ol>
+                <hr>
+                <h5>基本資料</h5>
+                <h6>更改密碼</h6>
+                <p>
+                    <strong>功能描述:</strong> 本功能允許管理員更改自己的系統登入密碼。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>登入系統後，點擊左側選單中的「基本資料」以展開選單。</li>
+                        <li>選擇「更改密碼」。</li>
+                        <li>輸入當前密碼及新密碼。</li>
+                        <li>再次輸入新密碼以確認。</li>
+                        <li>點擊「保存」按鈕以保存修改。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請選擇一個強度較高的密碼，確保帳號安全。</li>
+                        <li>如果忘記密碼，請聯絡系統管理員重置密碼。</li>
+                    </ul>
+                </p>
+                <h6>新增使用者</h6>
+                <p>
+                    <strong>功能描述:</strong> 本功能允許管理員新增系統使用者。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>登入系統後，點擊左側選單中的「基本資料」以展開選單。</li>
+                        <li>選擇「新增使用者」。</li>
+                        <li>填寫新使用者的基本資料，如姓名、帳號、密碼等。</li>
+                        <li>設定新使用者的角色和權限。</li>
+                        <li>點擊「保存」按鈕以創建新使用者。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>確保填寫的資料正確，以便新使用者能夠正常登入系統。</li>
+                        <li>如果遇到問題，請聯絡系統開發人員。</li>
+                    </ul>
+                </p>
+                <h6>修改使用者資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 本功能允許管理員修改現有使用者的基本資料和權限。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>登入系統後，點擊左側選單中的「基本資料」以展開選單。</li>
+                        <li>選擇「修改使用者資料」。</li>
+                        <li>從列表中選擇需要修改的使用者。</li>
+                        <li>修改使用者的基本資料或權限。</li>
+                        <li>點擊「保存」按鈕以保存修改。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請謹慎修改使用者的權限，避免誤操作。</li>
+                        <li>如果遇到問題，請聯絡系統開發人員。</li>
+                    </ul>
+                </p>
+                <hr>
+                <h5>住宿與訪視</h5>
+                <h6>查看學生住宿資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許導師查看學生的住宿資料，包括住宿地址、房型和入住日期等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「住宿與訪視」以展開選單。</li>
+                        <li>選擇「查看學生住宿資料」。</li>
+                        <li>系統將顯示所有學生的住宿信息。</li>
+                        <li>可以根據需要搜索或篩選特定學生的住宿資料。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請注意學生資料的隱私保護，不要隨意洩露學生的住宿信息。</li>
+                        <li>如需更新或修改學生的住宿資料，請聯絡相關部門或管理員。</li>
+                    </ul>
+                </p>
+                <h6>填寫訪視資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許使用者填寫和提交訪視資料，包括訪視日期、訪視對象和訪視目的等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「住宿與訪視」以展開選單。</li>
+                        <li>選擇「填寫訪視資料」。</li>
+                        <li>填寫所需的訪視信息，例如訪視日期、訪視對象和訪視目的。</li>
+                        <li>檢查所有信息是否正確。</li>
+                        <li>點擊「提交」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請詳細填寫訪視目的和訪視對象，以便相關部門能夠更好地協助您。</li>
+                        <li>如果訪視計劃有變更，請及時更新訪視資料或聯絡系統管理員。</li>
+                    </ul>
+                </p>
+                <hr>
+                <h5>租屋資訊</h5>
+                <h6>瀏覽租屋廣告</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許使用者查看租屋廣告，包括房屋描述、租金和聯絡方式等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「瀏覽租屋廣告」。</li>
+                        <li>系統將顯示所有現有的租屋廣告。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所發布的租屋信息真實準確。</li>
+                        <li>不要發布任何虛假或誤導信息，以免影響其他使用者。</li>
+                    </ul>
+                </p>
+                <h6>審核廣告</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許管理員審核房東刊登的廣告。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「審核廣告」。</li>
+                        <li>查看所有待審核的廣告。</li>
+                        <li>對廣告進行審核，確保內容符合規定。</li>
+                        <li>選擇「通過」或「拒絕」並添加相關備註。</li>
+                        <li>點擊「提交」按鈕以完成審核。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請仔細審核廣告內容，確保其真實性和準確性。</li>
+                        <li>對於不符合規定的廣告，請提供詳細的拒絕理由。</li>
+                    </ul>
+                </p>
+                <h6>討論版</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能提供一個平台，讓使用者可以就租屋相關的問題和經驗進行討論和交流。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「討論版」。</li>
+                        <li>瀏覽現有的討論話題，或點擊「新增話題」來發起新的討論。</li>
+                        <li>填寫討論標題和內容。</li>
+                        <li>點擊「發布」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請遵守討論版的使用規則，不發布任何不當或攻擊性的言論。</li>
+                        <li>尊重他人的意見和隱私，保持良好的交流氛圍。</li>
+                    </ul>
+                </p>
+                <hr>
+                <p>這份使用者說明內容旨在幫助您熟悉並有效地使用我們的系統。如果您在使用過程中遇到任何問題，請隨時聯絡我們的客服或系統管理員。我們將竭誠為您提供幫助。</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if current_user.type == 'advisor' %}
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">導師使用說明</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>目錄</strong></p>
+                <ol>
+                    <li>基本資料
+                        <ul>
+                            <li>修改個人資料</li>
+                        </ul>
+                    </li>
+                    <li>住宿與訪視
+                        <ul>
+                            <li>查看學生住宿資料</li>
+                            <li>填寫訪視資料</li>
+                        </ul>
+                    </li>
+                    <li>租屋資訊
+                        <ul>
+                            <li>瀏覽租屋廣告</li>
+                            <li>討論版</li>
+                        </ul>
+                    </li>
+                </ol>
+                <hr>
+                <h5>基本資料</h5>
+                <h6>修改個人資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 本功能允許使用者查看並更新個人的基本資訊，包括姓名、聯絡電話和電子郵件等。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>登入系統後，點擊左側選單中的「基本資料」以展開選單。</li>
+                        <li>選擇「修改個人資料」。</li>
+                        <li>系統將顯示您的現有個人資料。</li>
+                        <li>修改需要更新的欄位，例如電話號碼或電子郵件地址。</li>
+                        <li>點擊「保存」按鈕以保存修改。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所填寫的聯絡資訊真實有效，以便在需要時能夠及時聯絡您。</li>
+                        <li>如果遇到問題，請聯絡系統管理員。</li>
+                    </ul>
+                </p>
+                <hr>
+                <h5>住宿與訪視</h5>
+                <h6>查看學生住宿資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許導師查看學生的住宿資料，包括住宿地址、房型和入住日期等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「住宿與訪視」以展開選單。</li>
+                        <li>選擇「查看學生住宿資料」。</li>
+                        <li>系統將顯示所有學生的住宿信息。</li>
+                        <li>可以根據需要搜索或篩選特定學生的住宿資料。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請注意學生資料的隱私保護，不要隨意洩露學生的住宿信息。</li>
+                        <li>如需更新或修改學生的住宿資料，請聯絡相關部門或管理員。</li>
+                    </ul>
+                </p>
+                <h6>填寫訪視資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許使用者填寫和提交訪視資料，包括訪視日期、訪視對象和訪視目的等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「住宿與訪視」以展開選單。</li>
+                        <li>選擇「填寫訪視資料」。</li>
+                        <li>填寫所需的訪視信息，例如訪視日期、訪視對象和訪視目的。</li>
+                        <li>檢查所有信息是否正確。</li>
+                        <li>點擊「提交」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請詳細填寫訪視目的和訪視對象，以便相關部門能夠更好地協助您。</li>
+                        <li>如果訪視計劃有變更，請及時更新訪視資料或聯絡系統管理員。</li>
+                    </ul>
+                </p>
+                <hr>
+                <h5>租屋資訊</h5>
+                <h6>瀏覽租屋廣告</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許使用者查看租屋廣告，包括房屋描述、租金和聯絡方式等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「租屋廣告」。</li>
+                        <li>系統將顯示所有現有的租屋廣告。</li>
+                        <li>要發布新廣告，點擊「新增廣告」按鈕。</li>
+                        <li>填寫房屋描述、租金、聯絡方式等信息。</li>
+                        <li>點擊「發布」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所發布的租屋信息真實準確。</li>
+                        <li>不要發布任何虛假或誤導信息，以免影響其他使用者。</li>
+                    </ul>
+                </p>
+                <h6>討論版</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能提供一個平台，讓使用者可以就租屋相關的問題和經驗進行討論和交流。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「討論版」。</li>
+                        <li>瀏覽現有的討論話題，或點擊「新增話題」來發起新的討論。</li>
+                        <li>填寫討論標題和內容。</li>
+                        <li>點擊「發布」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請遵守討論版的使用規則，不發布任何不當或攻擊性的言論。</li>
+                        <li>尊重他人的意見和隱私，保持良好的交流氛圍。</li>
+                    </ul>
+                </p>
+                <hr>
+                <p>這份使用者說明內容旨在幫助您熟悉並有效地使用我們的系統。如果您在使用過程中遇到任何問題，請隨時聯絡我們的客服或系統管理員。我們將竭誠為您提供幫助。</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if current_user.type == 'student' %}
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">學生使用說明</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>目錄</strong></p>
+                <ol>
+                    <li>基本資料
+                        <ul>
+                            <li>修改個人資料</li>
+                        </ul>
+                    </li>
+                    <li>住宿與訪視
+                        <ul>
+                            <li>填寫住宿資料</li>
+                            <li>填寫訪視資料</li>
+                        </ul>
+                    </li>
+                    <li>租屋資訊
+                        <ul>
+                            <li>瀏覽租屋廣告</li>
+                            <li>討論版</li>
+                        </ul>
+                    </li>
+                </ol>
+                <hr>
+                <h5>基本資料</h5>
+                <h6>修改個人資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 本功能允許使用者查看並更新個人的基本資訊，包括姓名、聯絡電話和電子郵件等。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>登入系統後，點擊左側選單中的「基本資料」以展開選單。</li>
+                        <li>選擇「修改個人資料」。</li>
+                        <li>系統將顯示您的現有個人資料。</li>
+                        <li>修改需要更新的欄位，例如電話號碼或電子郵件地址。</li>
+                        <li>點擊「保存」按鈕以保存修改。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所填寫的聯絡資訊真實有效，以便在需要時能夠及時聯絡您。</li>
+                        <li>如果遇到問題，請聯絡系統管理員。</li>
+                    </ul>
+                </p>
+                <hr>
+                <h5>住宿與訪視</h5>
+                <h6>填寫住宿資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許使用者填寫和提交住宿資料，包括住宿地址、房型和入住日期等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「住宿與訪視」以展開選單。</li>
+                        <li>選擇「填寫住宿資料」。</li>
+                        <li>填寫所需的住宿信息，例如地址、房型和入住日期。</li>
+                        <li>檢查所有信息是否正確。</li>
+                        <li>點擊「提交」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所填寫的住宿信息真實準確，以免影響您的住宿安排。</li>
+                        <li>提交後，如果需要修改，請聯絡系統管理員或使用修改功能（如有）。</li>
+                    </ul>
+                </p>
+                <h6>填寫訪視資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許使用者填寫和提交訪視資料，包括訪視日期、訪視對象和訪視目的等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「住宿與訪視」以展開選單。</li>
+                        <li>選擇「填寫訪視資料」。</li>
+                        <li>填寫所需的訪視信息，例如訪視日期、訪視對象和訪視目的。</li>
+                        <li>檢查所有信息是否正確。</li>
+                        <li>點擊「提交」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請詳細填寫訪視目的和訪視對象，以便相關部門能夠更好地協助您。</li>
+                        <li>如果訪視計劃有變更，請及時更新訪視資料或聯絡系統管理員。</li>
+                    </ul>
+                </p>
+                <hr>
+                <h5>租屋資訊</h5>
+                <h6>瀏覽租屋廣告</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許使用者查看租屋廣告，包括房屋描述、租金和聯絡方式等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「租屋廣告」。</li>
+                        <li>系統將顯示所有現有的租屋廣告。</li>
+                        <li>要發布新廣告，點擊「新增廣告」按鈕。</li>
+                        <li>填寫房屋描述、租金、聯絡方式等信息。</li>
+                        <li>點擊「發布」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所發布的租屋信息真實準確。</li>
+                        <li>不要發布任何虛假或誤導信息，以免影響其他使用者。</li>
+                    </ul>
+                </p>
+                <h6>討論版</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能提供一個平台，讓使用者可以就租屋相關的問題和經驗進行討論和交流。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「討論版」。</li>
+                        <li>瀏覽現有的討論話題，或點擊「新增話題」來發起新的討論。</li>
+                        <li>填寫討論標題和內容。</li>
+                        <li>點擊「發布」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請遵守討論版的使用規則，不發布任何不當或攻擊性的言論。</li>
+                        <li>尊重他人的意見和隱私，保持良好的交流氛圍。</li>
+                    </ul>
+                </p>
+                <hr>
+                <p>這份使用者說明內容旨在幫助您熟悉並有效地使用我們的系統。如果您在使用過程中遇到任何問題，請隨時聯絡我們的客服或系統管理員。我們將竭誠為您提供幫助。</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if current_user.type == 'landlord' %}
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">房東使用說明</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>目錄</strong></p>
+                <ol>
+                    <li>基本資料
+                        <ul>
+                            <li>修改個人資料</li>
+                        </ul>
+                    </li>
+                    <li>租屋資訊
+                        <ul>
+                            <li>瀏覽租屋廣告</li>
+                            <li>刊登廣告</li>
+                            <li>編輯廣告</li>
+                            <li>討論版</li>
+                        </ul>
+                    </li>
+                </ol>
+                <hr>
+                <h5>基本資料</h5>
+                <h6>修改個人資料</h6>
+                <p>
+                    <strong>功能描述:</strong> 本功能允許使用者查看並更新個人的基本資訊，包括姓名、聯絡電話和電子郵件等。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>登入系統後，點擊左側選單中的「基本資料」以展開選單。</li>
+                        <li>選擇「修改個人資料」。</li>
+                        <li>系統將顯示您的現有個人資料。</li>
+                        <li>修改需要更新的欄位，例如電話號碼或電子郵件地址。</li>
+                        <li>點擊「保存」按鈕以保存修改。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所填寫的聯絡資訊真實有效，以便在需要時能夠及時聯絡您。</li>
+                        <li>如果遇到問題，請聯絡系統管理員。</li>
+                    </ul>
+                </p>
+                <hr>
+                <h5>租屋資訊</h5>
+                <h6>瀏覽租屋廣告</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許使用者查看租屋廣告，包括房屋描述、租金和聯絡方式等信息。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「瀏覽租屋廣告」。</li>
+                        <li>系統將顯示所有現有的租屋廣告。</li>
+                        <li>要發布新廣告，點擊「刊登廣告」按鈕。</li>
+                        <li>填寫房屋描述、租金、聯絡方式等信息。</li>
+                        <li>點擊「發布」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所發布的租屋信息真實準確。</li>
+                        <li>不要發布任何虛假或誤導信息，以免影響其他使用者。</li>
+                    </ul>
+                </p>
+                <h6>刊登廣告</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許房東發布新的租屋廣告。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「刊登廣告」。</li>
+                        <li>填寫房屋描述、租金、聯絡方式等信息。</li>
+                        <li>點擊「發布」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保所發布的租屋信息真實準確。</li>
+                        <li>不要發布任何虛假或誤導信息，以免影響其他使用者。</li>
+                    </ul>
+                </p>
+                <h6>編輯廣告</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能允許房東編輯已發布的租屋廣告。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「編輯廣告」。</li>
+                        <li>選擇要編輯的廣告並更新信息。</li>
+                        <li>點擊「保存」按鈕以保存修改。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請確保更新的租屋信息真實準確。</li>
+                        <li>如有必要，及時更新廣告信息以反映最新狀況。</li>
+                    </ul>
+                </p>
+                <h6>討論版</h6>
+                <p>
+                    <strong>功能描述:</strong> 此功能提供一個平台，讓使用者可以就租屋相關的問題和經驗進行討論和交流。
+                </p>
+                <p>
+                    <strong>操作步驟:</strong>
+                    <ol>
+                        <li>在左側選單中點擊「租屋資訊」以展開選單。</li>
+                        <li>選擇「討論版」。</li>
+                        <li>瀏覽現有的討論話題，或點擊「新增話題」來發起新的討論。</li>
+                        <li>填寫討論標題和內容。</li>
+                        <li>點擊「發布」按鈕。</li>
+                    </ol>
+                </p>
+                <p>
+                    <strong>注意事項:</strong>
+                    <ul>
+                        <li>請遵守討論版的使用規則，不發布任何不當或攻擊性的言論。</li>
+                        <li>尊重他人的意見和隱私，保持良好的交流氛圍。</li>
+                    </ul>
+                </p>
+                <hr>
+                <p>這份使用者說明內容旨在幫助您熟悉並有效地使用我們的系統。如果您在使用過程中遇到任何問題，請隨時聯絡我們的客服或系統管理員。我們將竭誠為您提供幫助。</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="animation-container" style="width: 97%; height: 20vh;"></div>
+    </div>
+</div>
+
+
+<!-- Include Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Include your custom 3D animation script -->
+<script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+{% endblock content %}

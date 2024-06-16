@@ -25,8 +25,9 @@ def create_app():
     app.register_blueprint(update_personal_information)
 
     from app.AIVS.accommodation_management import accommodation_management
-    app.register_blueprint(accommodation_management, url_prefix='/AIVS')
-
+    app.register_blueprint(accommodation_management, url_prefix='/accommodation_management')
+    from app.AIVS.visitation_management import visitation_management
+    app.register_blueprint(visitation_management, url_prefix='/visitation_management')
     from app.RIMS.rental_advertisement import rental_advertisement
     app.register_blueprint(rental_advertisement, url_prefix='/rental_advertisement')
 
