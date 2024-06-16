@@ -45,49 +45,5 @@
             </div>
         </div>
         {% endfor %}
-
-        <!-- <div class="row">
-            {% for ad in ads %}
-            <div class="col-md-12 mb-4">
-                <div class="card shadow" onclick="redirectTo('{{ url_for('rental_advertisement.advertisement', adid=ad.id) }}')">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            {% set image_urls = ad.image_urls.split(',') %}
-                            <img height="200" width="200" class="card-img" src="{{ url_for('static', filename='uploads/' + image_urls[0].strip()) }}" alt="房屋圖片">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <div class="h5 font-weight-bold text-info">{{ ad.title }}</div>
-                                <div>
-                                    【{{ ad.building_type }}】
-                                    {% if ad.suite_num != 0 %}
-                                    <span style="margin-right: 10px;">{{ad.suite_size}} 坪套房</span>
-                                    {% endif %}
-                                    {% if ad.suite_num != 0 and ad.room_num != 0%}
-                                    <span></span>
-                                    {% endif %}
-                                    {% if ad.room_num != 0 %}
-                                    <span>{{ad.room_size}} 坪雅房</span>
-                                    {% endif %}
-                                </div>
-                                <div class="">地址：{{ ad.addr }}</div>
-                                <div class="">
-                                    租金：
-                                    <span class="text-danger font-weight-bold">
-                                        {% if ad.rent_lower == ad.rent_upper %}
-                                        {{ ad.rent_lower }}
-                                        {% else %}
-                                        {{ ad.rent_lower }}~{{ ad.rent_upper }}
-                                        {% endif %}
-                                    </span> 元 / 月
-                                </div>
-                                <div>更新時間：{{ ad.update_time }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div> -->
     </div>
 {% endblock content %}

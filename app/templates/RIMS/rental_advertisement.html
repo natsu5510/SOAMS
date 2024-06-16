@@ -63,7 +63,6 @@
             {% endif %}
         {% endwith %}
         
-        <!-- 更換版面配置按鈕 -->
         <div class="d-flex justify-content-between">
             <!-- 篩選表單 -->
             <form class="d-inline-flex mb-2" method="GET" action="{{ url_for('rental_advertisement.index', page=1) }}" class="mb-4">
@@ -96,7 +95,6 @@
                             <option value="不限">不限</option>
                             <option value="整棟出租">整棟出租</option>
                             <option value="獨立套房">獨立套房</option>
-                            <option value="學舍">學舍</option>
                             <option value="房間分租">房間分租</option>
                         </select>
                     </div>
@@ -105,6 +103,7 @@
                     </div>
                 </div>
             </form>
+            <!-- 更換版面配置按鈕 -->
             <div id="layout-btn">
                 <button id="grid-button" class="btn btn-warning mr-2" onclick="toggleLayout('grid')"><i class="fa fa-table"></i></button>
                 <button id="list-button" class="btn btn-secondary" onclick="toggleLayout('list')"><i class="fa fa-list"></i></button>

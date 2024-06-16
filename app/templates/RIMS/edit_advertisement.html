@@ -22,7 +22,7 @@
                 </div>
             {% endif %}
         {% endwith %}
-        {% for ad in ads %}
+        <!-- {% for ad in ads %}
         <div class="row">
             <div class="col-lg-12">
                 <div class="card shadow mb-4">
@@ -39,6 +39,39 @@
                         <div class="text-success">狀態：通過</div>
                         {% elif ad.status == 2 %}
                         <div class="text-danger">狀態：駁回</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %} -->
+        {% for ad in ads %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div class="h4 font-weight-bold text-info">編號：{{ ad.id }}</div>
+                            <div>
+                                <!-- <a class="btn btn-danger" href="{{ url_for('rental_advertisement.edit_advertisement_detail', adid=ad.id) }}">移除</a> -->
+                                <a class="btn btn-info" href="{{ url_for('rental_advertisement.edit_advertisement_detail', adid=ad.id) }}">編輯</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="h5">廣告標題：{{ ad.title }}</div>
+                        <div class="h5">申請日期：{{ ad.timestamp.strftime("%Y-%m-%d") }}</div>
+                        <div class="h5">審核日期：
+                            {% if ad.pulish_date != None %}
+                            {{ ad.pulish_date.strftime("%Y-%m-%d") }}
+                            {% endif %}
+                        </div>
+                        {% if ad.status == 0 %}
+                        <div class="h5 text-warning font-weight-bold">狀態：待審核</div>
+                        {% elif ad.status == 1 %}
+                        <div class="h5 text-success font-weight-bold">狀態：通過，已刊登</div>
+                        {% elif ad.status == 2 %}
+                        <div class="h5 text-danger font-weight-bold">狀態：駁回</div>
                         {% endif %}
                     </div>
                 </div>

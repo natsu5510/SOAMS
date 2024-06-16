@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from app.AIMS.login_management import role_required
 from app.models import Advertisement, Landlord, Test
 from app.extensions import db
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from distutils.util import strtobool
@@ -23,10 +23,10 @@ UPLOAD_FOLDER = os.path.join(SRC_PATH,  'static', 'uploads')
 @rental_advertisement.route('/<int:page>')
 @login_required
 def index(page):
-    advertisements = Advertisement.query.filter_by(status=1).paginate(page=page, per_page=10, error_out=False)
+    advertisements = Advertisement.query.filter_by(status=1).order_by(desc(Advertisement.timestamp)).paginate(page=page, per_page=10, error_out=False)
     return render_template('/RIMS/rental_advertisement.html', ads=advertisements)
 
-# 瀏覽廣告
+# 瀏覽廣告詳細頁面
 @rental_advertisement.route('/advertisement/<int:adid>')
 @login_required
 def advertisement(adid):
@@ -49,58 +49,63 @@ def advertise():
         new_ad = Advertisement(
             electricity_meter = strtobool(request.form.get('electricity_meter')),
             smoke = strtobool(request.form.get('smoke')),
-            sofa = strtobool(request.form.get('sofa')),
-            telephone = strtobool(request.form.get('telephone')),
-            bookcase = strtobool(request.form.get('bookcase')),
-            wardrobe = strtobool(request.form.get('wardrobe')),
-            central_air_conditioning = strtobool(request.form.get('central_air_conditioning')),
-            fiber_optic_network1 = strtobool(request.form.get('fiber_optic_network')),
-            washing_machine = strtobool(request.form.get('washing_machine')),
-            single_bed = strtobool(request.form.get('single_bed')),
-            dehydrator = strtobool(request.form.get('dehydrator')),
-            cable_television = strtobool(request.form.get('cable_television')),
-            dryer = strtobool(request.form.get('dryer')),
-            desk_and_chair = strtobool(request.form.get('desk_and_chair')),
-            refrigerator = strtobool(request.form.get('refrigerator')),
-            double_bed = strtobool(request.form.get('double_bed')),
-            water_dispenser = strtobool(request.form.get('water_dispenser')),
-            television = strtobool(request.form.get('television')),
-            air_conditioner = strtobool(request.form.get('air_conditioner')),
-            table_lamp = strtobool(request.form.get('table_lamp')),
-            broadband_network = strtobool(request.form.get('broadband_network')),
-            fire_extinguishers_smoke_detectors_and_monitors_per_floor = strtobool(request.form.get('fire_extinguishers_smoke_detectors_and_monitors_per_floor')),
-            parking_lot = strtobool(request.form.get('parking_lot')),
-            kitchen = strtobool(request.form.get('kitchen')),
-            laundry_area = strtobool(request.form.get('laundry_area')),
-            parking_lot_elevator = strtobool(request.form.get('parking_lot_elevator')),
-            public_balcony = strtobool(request.form.get('public_balcony')),
-            courtyard = strtobool(request.form.get('courtyard')),
-            elevator = strtobool(request.form.get('elevator')),
-            fiber_optic_network2 = strtobool(request.form.get('fiber_optic_network_2')),
-            courtyard_parking_lot = strtobool(request.form.get('courtyard_parking_lot')),
-            lounge = strtobool(request.form.get('lounge')),
-            electric_water_heater = strtobool(request.form.get('electric_water_heater')),
-            gas_water_heater = strtobool(request.form.get('gas_water_heater')),
-            solar_water_heater = strtobool(request.form.get('solar_water_heater')),
-            natural_gas = strtobool(request.form.get('natural_gas')),
-            bottled_gas = strtobool(request.form.get('bottled_gas')),
-            escape_ladder = strtobool(request.form.get('escape_ladder')),
-            security_personnel = strtobool(request.form.get('security_personnel')),
-            slow_descend_device = strtobool(request.form.get('slow_descend_device')),
-            carbon_monoxide_detector = strtobool(request.form.get('carbon_monoxide_detector')),
-            electric_water_heater_power_cut_off_device = strtobool(request.form.get('electric_water_heater_power_cut_off_device')),
-            gas_water_heater_forced_exhaust_device = strtobool(request.form.get('gas_water_heater_forced_exhaust_device')),
-            fire_extinguisher = strtobool(request.form.get('fire_extinguisher')),
-            smoke_detector = strtobool(request.form.get('smoke_detector')),
-            escape_route_clear_and_marked = strtobool(request.form.get('escape_route_clear_and_marked')),
-            lighting_equipment = strtobool(request.form.get('lighting_equipment')),
-            surveillance_system = strtobool(request.form.get('surveillance_system')),
-            access_control_system = strtobool(request.form.get('access_control_system')),
-            firefighting_system = strtobool(request.form.get('firefighting_system')),
-            landlord_identification_documents = strtobool(request.form.get('landlord_identification_documents')),
-            power_of_attorney = strtobool(request.form.get('power_of_attorney')),
-            property_ownership_certificate = strtobool(request.form.get('property_ownership_certificate')),
-            property_tax_bill = strtobool(request.form.get('property_tax_bill')),
+
+            sofa = 0 if request.form.get('sofa') == None else 1,
+            telephone = 0 if request.form.get('telephone') == None else 1,
+            bookcase = 0 if request.form.get('bookcase') == None else 1,
+            wardrobe = 0 if request.form.get('wardrobe') == None else 1,
+            central_air_conditioning = 0 if request.form.get('central_air_conditioning') == None else 1,
+            fiber_optic_network1 = 0 if request.form.get('fiber_optic_network') == None else 1,
+            washing_machine = 0 if request.form.get('washing_machine') == None else 1,
+            single_bed = 0 if request.form.get('single_bed') == None else 1,
+            dehydrator = 0 if request.form.get('dehydrator') == None else 1,
+            cable_television = 0 if request.form.get('cable_television') == None else 1,
+            dryer = 0 if request.form.get('dryer') == None else 1,
+            desk_and_chair = 0 if request.form.get('desk_and_chair') == None else 1,
+            refrigerator = 0 if request.form.get('refrigerator') == None else 1,
+            double_bed = 0 if request.form.get('double_bed') == None else 1,
+            water_dispenser = 0 if request.form.get('water_dispenser') == None else 1,
+            television = 0 if request.form.get('television') == None else 1,
+            air_conditioner = 0 if request.form.get('air_conditioner') == None else 1,
+            table_lamp = 0 if request.form.get('table_lamp') == None else 1,
+
+            broadband_network = 0 if request.form.get('broadband_network') == None else 1,
+            fire_extinguishers_smoke_detectors_and_monitors_per_floor = 0 if request.form.get('fire_extinguishers_smoke_detectors_and_monitors_per_floor') == None else 1,
+            parking_lot = 0 if request.form.get('parking_lot') == None else 1,
+            kitchen = 0 if request.form.get('kitchen') == None else 1,
+            laundry_area = 0 if request.form.get('laundry_area') == None else 1,
+            parking_lot_elevator = 0 if request.form.get('parking_lot_elevator') == None else 1,
+            public_balcony = 0 if request.form.get('public_balcony') == None else 1,
+            courtyard = 0 if request.form.get('courtyard') == None else 1,
+            elevator = 0 if request.form.get('elevator') == None else 1,
+            fiber_optic_network2 = 0 if request.form.get('fiber_optic_network_2') == None else 1,
+
+            courtyard_parking_lot = 0 if request.form.get('courtyard_parking_lot') == None else 1,
+            lounge = 0 if request.form.get('lounge') == None else 1,
+            electric_water_heater = 0 if request.form.get('electric_water_heater') == None else 1,
+            gas_water_heater = 0 if request.form.get('gas_water_heater') == None else 1,
+            solar_water_heater = 0 if request.form.get('solar_water_heater') == None else 1,
+            natural_gas = 0 if request.form.get('natural_gas') == None else 1,
+            bottled_gas = 0 if request.form.get('bottled_gas') == None else 1,
+            escape_ladder = 0 if request.form.get('escape_ladder') == None else 1,
+            security_personnel = 0 if request.form.get('security_personnel') == None else 1,
+            slow_descend_device = 0 if request.form.get('slow_descend_device') == None else 1,
+
+            carbon_monoxide_detector = 0 if request.form.get('carbon_monoxide_detector') == None else 1,
+            electric_water_heater_power_cut_off_device = 0 if request.form.get('electric_water_heater_power_cut_off_device') == None else 1,
+            gas_water_heater_forced_exhaust_device = 0 if request.form.get('gas_water_heater_forced_exhaust_device') == None else 1,
+            fire_extinguisher = 0 if request.form.get('fire_extinguisher') == None else 1,
+            smoke_detector = 0 if request.form.get('smoke_detector') == None else 1,
+            escape_route_clear_and_marked = 0 if request.form.get('escape_route_clear_and_marked') == None else 1,
+            lighting_equipment = 0 if request.form.get('lighting_equipment') == None else 1,
+            surveillance_system = 0 if request.form.get('surveillance_system') == None else 1,
+            access_control_system = 0 if request.form.get('access_control_system') == None else 1,
+            firefighting_system = 0 if request.form.get('firefighting_system') == None else 1,
+            landlord_identification_documents = 0 if request.form.get('landlord_identification_documents') == None else 1,
+            power_of_attorney = 0 if request.form.get('power_of_attorney') == None else 1,
+
+            property_ownership_certificate = 0 if request.form.get('property_ownership_certificate') == None else 1,
+            property_tax_bill = 0 if request.form.get('property_tax_bill') == None else 1,
             meets_ministry_of_education_safety_standards = strtobool(request.form.get('meets_ministry_of_education_safety_standards'))
         )
         new_ad.title=request.form.get('title')
@@ -174,10 +179,10 @@ def advertise():
 @login_required
 @role_required('landlord')
 def edit_advertisement():
-    ads = Advertisement.query.filter_by(landlord_id=current_user.id)
+    ads = Advertisement.query.filter_by(landlord_id=current_user.id).order_by(desc(Advertisement.timestamp))
     return render_template('/RIMS/edit_advertisement.html', ads=ads)
 
-# 房東編輯廣告
+# 房東編輯廣告詳細頁面
 @rental_advertisement.route('/edit_advertisement/<int:adid>', methods=['GET', 'POST'])
 @login_required
 @role_required('landlord')
@@ -186,32 +191,23 @@ def edit_advertisement_detail(adid):
     # 確保房東不能透過直接在路由輸入參數來編輯其他人的廣告
     if ad.landlord_id != current_user.id:
         return redirect(url_for('login_management.login'))
-    form = AdvertisementForm(obj=ad)
-    if form.validate_on_submit():
-        form.populate_obj(ad)
-        ad.electricity_meter=strtobool(form.electricity_meter.data)
-        ad.smoke=strtobool(form.smoke.data)
-        ad.wash_machine=strtobool(form.wash_machine.data)
-        ad.water_dispenser=strtobool(form.water_dispenser.data)
-        ad.internet=strtobool(form.internet.data)
-        ad.parking=strtobool(form.parking.data)
-        ad.air_con=strtobool(form.air_con.data)
-        ad.water_heater=strtobool(form.water_heater.data)
+    if request.method == 'POST':
+
         db.session.add(ad)
         db.session.commit()
         flash('編輯成功', 'success')
         return redirect(url_for('rental_advertisement.edit_advertisement'))
-    return render_template('/RIMS/edit_advertisement_detail.html', form=form)
+    return render_template('/RIMS/edit_advertisement_detail.html', ad=ad)
 
 # 管理員審核廣告
 @rental_advertisement.route('/review_advertisement')
 @login_required
 @role_required('administrator')
 def review_advertisement():
-    ads = Advertisement.query.filter_by(status=0)
+    ads = Advertisement.query.filter_by(status=0).order_by(Advertisement.timestamp)
     return render_template('/RIMS/review_advertisement.html', ads=ads)
 
-# 管理員審核廣告
+# 管理員審核廣告詳細頁面
 @rental_advertisement.route('/review_advertisement/<int:adid>', methods=['GET', 'POST'])
 @login_required
 @role_required('administrator')

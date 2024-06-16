@@ -13,426 +13,456 @@
 <!-- 主要內容 -->
 {% block content %}
     <div class="container">
-        <form method="POST" enctype="multipart/form-data" action="">
-            <label for="title">租屋廣告標題:</label>
-            <input type="text" id="title" name="title" required><br>
-
-            <label for="rent_lower">月租金下限:</label>
-            <input type="number" id="rent_lower" name="rent_lower" required><br>
-
-            <label for="rent_upper">月租金上限:</label>
-            <input type="number" id="rent_upper" name="rent_upper" required><br>
-
-            <label for="addr">地址:</label>
-            <input type="text" id="addr" name="addr" required><br>
-
-            <label for="suite_num">套房總數:</label>
-            <input type="number" id="suite_num" name="suite_num" required><br>
-
-            <label for="room_num">雅房總數:</label>
-            <input type="number" id="room_num" name="room_num" required><br>
-
-            <label for="suite_empty">空套房數量:</label>
-            <input type="number" id="suite_empty" name="suite_empty" required><br>
-
-            <label for="room_empty">空雅房數量:</label>
-            <input type="number" id="room_empty" name="room_empty" required><br>
-
-            <label for="suite_size">套房坪數:</label>
-            <input type="number" id="suite_size" name="suite_size" required><br>
-
-            <label for="room_size">雅房坪數:</label>
-            <input type="number" id="room_size" name="room_size" required><br>
-
-            <label for="building_type">房屋類型:</label>
-            <input type="text" id="building_type" name="building_type" required><br>
-
-            <label for="building_age">屋齡:</label>
-            <input type="number" id="building_age" name="building_age" required><br>
-
-            <label for="floor1">樓:</label>
-            <input type="number" id="floor1" name="floor1" required><br>
-
-            <label for="floor2">層:</label>
-            <input type="number" id="floor2" name="floor2" required><br>
-
-            <label for="size">坪數:</label>
-            <input type="number" id="size" name="size" required><br>
-
-            <label for="rental_type">出租類型:</label>
-            <input type="text" id="rental_type" name="rental_type" required><br>
-
-            <label for="electricity_meter">有無獨立電表:</label>
-            <input type="radio" id="electricity_meter_yes" name="electricity_meter" value="True" required>
-            <label for="electricity_meter_yes">是</label>
-            <input type="radio" id="electricity_meter_no" name="electricity_meter" value="False">
-            <label for="electricity_meter_no">否</label><br>
-
-
-            <label for="partition_material">隔間材質:</label>
-            <input type="text" id="partition_material" name="partition_material" required><br>
-
-            <label for="deposit">押金:</label>
-            <input type="text" id="deposit" name="deposit" required><br>
-
-            <label for="sex_limit">性別要求:</label>
-            <input type="text" id="sex_limit" name="sex_limit" required><br>
-
-            <label for="identity_limit">身分要求:</label>
-            <input type="text" id="identity_limit" name="identity_limit" required><br>
-
-            <label for="others_fee">其他費用:</label>
-            <input type="text" id="others_fee" name="others_fee" required><br>
-
-            <label for="smoke">無菸租屋:</label>
-            <input type="radio" id="smoke_yes" name="smoke" value="True" required>
-            <label for="smoke_yes">是</label>
-            <input type="radio" id="smoke_no" name="smoke" value="False">
-            <label for="smoke_no">否</label><br>
-
-
-            <label>屋內設備:</label><br>
-            <div>沙發</div>
-            <input type="radio" id="sofa_yes" name="sofa" value="True" required>
-            <label for="sofa_yes">有</label>
-            <input type="radio" id="sofa_no" name="sofa" value="False">
-            <label for="sofa_no">無</label><br>
-
-            <div>電話</div>
-            <input type="radio" id="telephone_yes" name="telephone" value="True" required>
-            <label for="telephone_yes">有</label>
-            <input type="radio" id="telephone_no" name="telephone" value="False">
-            <label for="telephone_no">無</label><br>
-
-            <div>書櫃</div>
-            <input type="radio" id="bookcase_yes" name="bookcase" value="True" required>
-            <label for="bookcase_yes">有</label>
-            <input type="radio" id="bookcase_no" name="bookcase" value="False">
-            <label for="bookcase_no">無</label><br>
-
-            <div>衣櫃</div>
-            <input type="radio" id="wardrobe_yes" name="wardrobe" value="True" required>
-            <label for="wardrobe_yes">有</label>
-            <input type="radio" id="wardrobe_no" name="wardrobe" value="False">
-            <label for="wardrobe_no">無</label><br>
-
-            <div>中央空調</div>
-            <input type="radio" id="central_air_conditioning_yes" name="central_air_conditioning" value="True" required>
-            <label for="central_air_conditioning_yes">有</label>
-            <input type="radio" id="central_air_conditioning_no" name="central_air_conditioning" value="False">
-            <label for="central_air_conditioning_no">無</label><br>
-
-            <div>光纖網路</div>
-            <input type="radio" id="fiber_optic_network_yes" name="fiber_optic_network" value="True" required>
-            <label for="fiber_optic_network_yes">有</label>
-            <input type="radio" id="fiber_optic_network_no" name="fiber_optic_network" value="False">
-            <label for="fiber_optic_network_no">無</label><br>
-
-            <div>洗衣機</div>
-            <input type="radio" id="washing_machine_yes" name="washing_machine" value="True" required>
-            <label for="washing_machine_yes">有</label>
-            <input type="radio" id="washing_machine_no" name="washing_machine" value="False">
-            <label for="washing_machine_no">無</label><br>
-
-            <div>單人床</div>
-            <input type="radio" id="single_bed_yes" name="single_bed" value="True" required>
-            <label for="single_bed_yes">有</label>
-            <input type="radio" id="single_bed_no" name="single_bed" value="False">
-            <label for="single_bed_no">無</label><br>
-
-            <div>脫水機</div>
-            <input type="radio" id="dehydrator_yes" name="dehydrator" value="True" required>
-            <label for="dehydrator_yes">有</label>
-            <input type="radio" id="dehydrator_no" name="dehydrator" value="False">
-            <label for="dehydrator_no">無</label><br>
-
-            <div>第四台</div>
-            <input type="radio" id="cable_television_yes" name="cable_television" value="True" required>
-            <label for="cable_television_yes">有</label>
-            <input type="radio" id="cable_television_no" name="cable_television" value="False">
-            <label for="cable_television_no">無</label><br>
-
-            <div>烘乾機</div>
-            <input type="radio" id="dryer_yes" name="dryer" value="True" required>
-            <label for="dryer_yes">有</label>
-            <input type="radio" id="dryer_no" name="dryer" value="False">
-            <label for="dryer_no">無</label><br>
-
-            <div>書桌(椅)</div>
-            <input type="radio" id="desk_and_chair_yes" name="desk_and_chair" value="True" required>
-            <label for="desk_and_chair_yes">有</label>
-            <input type="radio" id="desk_and_chair_no" name="desk_and_chair" value="False">
-            <label for="desk_and_chair_no">無</label><br>
-
-            <div>電冰箱</div>
-            <input type="radio" id="refrigerator_yes" name="refrigerator" value="True" required>
-            <label for="refrigerator_yes">有</label>
-            <input type="radio" id="refrigerator_no" name="refrigerator" value="False">
-            <label for="refrigerator_no">無</label><br>
-
-            <div>雙人床</div>
-            <input type="radio" id="double_bed_yes" name="double_bed" value="True" required>
-            <label for="double_bed_yes">有</label>
-            <input type="radio" id="double_bed_no" name="double_bed" value="False">
-            <label for="double_bed_no">無</label><br>
-
-            <div>飲水機</div>
-            <input type="radio" id="water_dispenser_yes" name="water_dispenser" value="True" required>
-            <label for="water_dispenser_yes">有</label>
-            <input type="radio" id="water_dispenser_no" name="water_dispenser" value="False">
-            <label for="water_dispenser_no">無</label><br>
-
-            <div>電視機</div>
-            <input type="radio" id="television_yes" name="television" value="True" required>
-            <label for="television_yes">有</label>
-            <input type="radio" id="television_no" name="television" value="False">
-            <label for="television_no">無</label><br>
-
-            <div>冷氣機</div>
-            <input type="radio" id="air_conditioner_yes" name="air_conditioner" value="True" required>
-            <label for="air_conditioner_yes">有</label>
-            <input type="radio" id="air_conditioner_no" name="air_conditioner" value="False">
-            <label for="air_conditioner_no">無</label><br>
-
-            <div>檯燈</div>
-            <input type="radio" id="table_lamp_yes" name="table_lamp" value="True" required>
-            <label for="table_lamp_yes">有</label>
-            <input type="radio" id="table_lamp_no" name="table_lamp" value="False">
-            <label for="table_lamp_no">無</label><br>
-
-            <div>寬頻網路</div>
-            <input type="radio" id="broadband_network_yes" name="broadband_network" value="True" required>
-            <label for="broadband_network_yes">有</label>
-            <input type="radio" id="broadband_network_no" name="broadband_network" value="False">
-            <label for="broadband_network_no">無</label><br>
-
-
-            <label>公共設施:</label><br>
-            <div>每層樓滅火器及煙霧偵測器及監視器</div>
-            <input type="radio" id="fire_extinguishers_smoke_detectors_and_monitors_per_floor_yes" name="fire_extinguishers_smoke_detectors_and_monitors_per_floor" value="True" required>
-            <label for="fire_extinguishers_smoke_detectors_and_monitors_per_floor_yes">有</label>
-            <input type="radio" id="fire_extinguishers_smoke_detectors_and_monitors_per_floor_no" name="fire_extinguishers_smoke_detectors_and_monitors_per_floor" value="False">
-            <label for="fire_extinguishers_smoke_detectors_and_monitors_per_floor_no">無</label><br>
-
-            <div>停車場</div>
-            <input type="radio" id="parking_lot_yes" name="parking_lot" value="True" required>
-            <label for="parking_lot_yes">有</label>
-            <input type="radio" id="parking_lot_no" name="parking_lot" value="False">
-            <label for="parking_lot_no">無</label><br>
-
-            <div>廚房</div>
-            <input type="radio" id="kitchen_yes" name="kitchen" value="True" required>
-            <label for="kitchen_yes">有</label>
-            <input type="radio" id="kitchen_no" name="kitchen" value="False">
-            <label for="kitchen_no">無</label><br>
-
-            <div>晒衣場</div>
-            <input type="radio" id="laundry_area_yes" name="laundry_area" value="True" required>
-            <label for="laundry_area_yes">有</label>
-            <input type="radio" id="laundry_area_no" name="laundry_area" value="False">
-            <label for="laundry_area_no">無</label><br>
-
-            <div>停車場電梯</div>
-            <input type="radio" id="parking_lot_elevator_yes" name="parking_lot_elevator" value="True" required>
-            <label for="parking_lot_elevator_yes">有</label>
-            <input type="radio" id="parking_lot_elevator_no" name="parking_lot_elevator" value="False">
-            <label for="parking_lot_elevator_no">無</label><br>
-
-            <div>公共陽台</div>
-            <input type="radio" id="public_balcony_yes" name="public_balcony" value="True" required>
-            <label for="public_balcony_yes">有</label>
-            <input type="radio" id="public_balcony_no" name="public_balcony" value="False">
-            <label for="public_balcony_no">無</label><br>
-
-            <div>中庭</div>
-            <input type="radio" id="courtyard_yes" name="courtyard" value="True" required>
-            <label for="courtyard_yes">有</label>
-            <input type="radio" id="courtyard_no" name="courtyard" value="False">
-            <label for="courtyard_no">無</label><br>
-
-            <div>電梯</div>
-            <input type="radio" id="elevator_yes" name="elevator" value="True" required>
-            <label for="elevator_yes">有</label>
-            <input type="radio" id="elevator_no" name="elevator" value="False">
-            <label for="elevator_no">無</label><br>
-
-            <div>光纖網路</div>
-            <input type="radio" id="fiber_optic_network_2_yes" name="fiber_optic_network_2" value="True" required>
-            <label for="fiber_optic_network_2_yes">有</label>
-            <input type="radio" id="fiber_optic_network_2_no" name="fiber_optic_network_2" value="False">
-            <label for="fiber_optic_network_2_no">無</label><br>
-
-            <div>中庭停車場</div>
-            <input type="radio" id="courtyard_parking_lot_yes" name="courtyard_parking_lot" value="True" required>
-            <label for="courtyard_parking_lot_yes">有</label>
-            <input type="radio" id="courtyard_parking_lot_no" name="courtyard_parking_lot" value="False">
-            <label for="courtyard_parking_lot_no">無</label><br>
-
-            <div>交誼廳</div>
-            <input type="radio" id="lounge_yes" name="lounge" value="True" required>
-            <label for="lounge_yes">有</label>
-            <input type="radio" id="lounge_no" name="lounge" value="False">
-            <label for="lounge_no">無</label><br>
-
-
-            <label>熱水器:</label><br>
-            <div>電熱水器</div>
-            <input type="radio" id="electric_water_heater_yes" name="electric_water_heater" value="True" required>
-            <label for="electric_water_heater_yes">有</label>
-            <input type="radio" id="electric_water_heater_no" name="electric_water_heater" value="False">
-            <label for="electric_water_heater_no">無</label><br>
-
-            <div>瓦斯熱水器</div>
-            <input type="radio" id="gas_water_heater_yes" name="gas_water_heater" value="True" required>
-            <label for="gas_water_heater_yes">有</label>
-            <input type="radio" id="gas_water_heater_no" name="gas_water_heater" value="False">
-            <label for="gas_water_heater_no">無</label><br>
-
-            <div>太陽能熱水器</div>
-            <input type="radio" id="solar_water_heater_yes" name="solar_water_heater" value="True" required>
-            <label for="solar_water_heater_yes">有</label>
-            <input type="radio" id="solar_water_heater_no" name="solar_water_heater" value="False">
-            <label for="solar_water_heater_no">無</label><br>
-
-            <div>天然瓦斯</div>
-            <input type="radio" id="natural_gas_yes" name="natural_gas" value="True" required>
-            <label for="natural_gas_yes">有</label>
-            <input type="radio" id="natural_gas_no" name="natural_gas" value="False">
-            <label for="natural_gas_no">無</label><br>
-
-            <div>桶裝瓦斯</div>
-            <input type="radio" id="bottled_gas_yes" name="bottled_gas" value="True" required>
-            <label for="bottled_gas_yes">有</label>
-            <input type="radio" id="bottled_gas_no" name="bottled_gas" value="False">
-            <label for="bottled_gas_no">無</label><br>
-
-            <label>安全設施:</label><br>
-
-            <div>逃生梯</div>
-            <input type="radio" id="escape_ladder_yes" name="escape_ladder" value="True" required>
-            <label for="escape_ladder_yes">有</label>
-            <input type="radio" id="escape_ladder_no" name="escape_ladder" value="False">
-            <label for="escape_ladder_no">無</label><br>
-
-            <div>保全人員</div>
-            <input type="radio" id="security_personnel_yes" name="security_personnel" value="True" required>
-            <label for="security_personnel_yes">有</label>
-            <input type="radio" id="security_personnel_no" name="security_personnel" value="False">
-            <label for="security_personnel_no">無</label><br>
-
-            <div>緩降梯</div>
-            <input type="radio" id="slow_descend_device_yes" name="slow_descend_device" value="True" required>
-            <label for="slow_descend_device_yes">有</label>
-            <input type="radio" id="slow_descend_device_no" name="slow_descend_device" value="False">
-            <label for="slow_descend_device_no">無</label><br>
-
-            <div>一氧化碳警報器</div>
-            <input type="radio" id="carbon_monoxide_detector_yes" name="carbon_monoxide_detector" value="True" required>
-            <label for="carbon_monoxide_detector_yes">有</label>
-            <input type="radio" id="carbon_monoxide_detector_no" name="carbon_monoxide_detector" value="False">
-            <label for="carbon_monoxide_detector_no">無</label><br>
-
-            <div>電用熱水器斷電設備</div>
-            <input type="radio" id="electric_water_heater_power_cut_off_device_yes" name="electric_water_heater_power_cut_off_device" value="True" required>
-            <label for="electric_water_heater_power_cut_off_device_yes">有</label>
-            <input type="radio" id="electric_water_heater_power_cut_off_device_no" name="electric_water_heater_power_cut_off_device" value="False">
-            <label for="electric_water_heater_power_cut_off_device_no">無</label><br>
-
-            <div>瓦斯熱水器強制排氣設備</div>
-            <input type="radio" id="gas_water_heater_forced_exhaust_device_yes" name="gas_water_heater_forced_exhaust_device" value="True" required>
-            <label for="gas_water_heater_forced_exhaust_device_yes">有</label>
-            <input type="radio" id="gas_water_heater_forced_exhaust_device_no" name="gas_water_heater_forced_exhaust_device" value="False">
-            <label for="gas_water_heater_forced_exhaust_device_no">無</label><br>
-
-            <div>滅火器</div>
-            <input type="radio" id="fire_extinguisher_yes" name="fire_extinguisher" value="True" required>
-            <label for="fire_extinguisher_yes">有</label>
-            <input type="radio" id="fire_extinguisher_no" name="fire_extinguisher" value="False">
-            <label for="fire_extinguisher_no">無</label><br>
-
-            <div>偵煙設備</div>
-            <input type="radio" id="smoke_detector_yes" name="smoke_detector" value="True" required>
-            <label for="smoke_detector_yes">有</label>
-            <input type="radio" id="smoke_detector_no" name="smoke_detector" value="False">
-            <label for="smoke_detector_no">無</label><br>
-
-            <div>逃生路線暢通及標示</div>
-            <input type="radio" id="escape_route_clear_and_marked_yes" name="escape_route_clear_and_marked" value="True" required>
-            <label for="escape_route_clear_and_marked_yes">有</label>
-            <input type="radio" id="escape_route_clear_and_marked_no" name="escape_route_clear_and_marked" value="False">
-            <label for="escape_route_clear_and_marked_no">無</label><br>
-
-            <div>照明設備</div>
-            <input type="radio" id="lighting_equipment_yes" name="lighting_equipment" value="True" required>
-            <label for="lighting_equipment_yes">有</label>
-            <input type="radio" id="lighting_equipment_no" name="lighting_equipment" value="False">
-            <label for="lighting_equipment_no">無</label><br>
-
-            <div>監視錄影設備(系統)</div>
-            <input type="radio" id="surveillance_system_yes" name="surveillance_system" value="True" required>
-            <label for="surveillance_system_yes">有</label>
-            <input type="radio" id="surveillance_system_no" name="surveillance_system" value="False">
-            <label for="surveillance_system_no">無</label><br>
-
-            <div>門禁系統</div>
-            <input type="radio" id="access_control_system_yes" name="access_control_system" value="True" required>
-            <label for="access_control_system_yes">有</label>
-            <input type="radio" id="access_control_system_no" name="access_control_system" value="False">
-            <label for="access_control_system_no">無</label><br>
-
-            <div>消防系統</div>
-            <input type="radio" id="firefighting_system_yes" name="firefighting_system" value="True" required>
-            <label for="firefighting_system_yes">有</label>
-            <input type="radio" id="firefighting_system_no" name="firefighting_system" value="False">
-            <label for="firefighting_system_no">無</label><br>
-
-
-            <label>證明文件:</label><br>
-            <div>房東身分證明文件</div>
-            <input type="radio" id="landlord_identification_documents_yes" name="landlord_identification_documents" value="True" required>
-            <label for="landlord_identification_documents_yes">有</label>
-            <input type="radio" id="landlord_identification_documents_no" name="landlord_identification_documents" value="False">
-            <label for="landlord_identification_documents_no">無</label><br>
-
-            <div>委託書</div>
-            <input type="radio" id="power_of_attorney_yes" name="power_of_attorney" value="True" required>
-            <label for="power_of_attorney_yes">有</label>
-            <input type="radio" id="power_of_attorney_no" name="power_of_attorney" value="False">
-            <label for="power_of_attorney_no">無</label><br>
-
-            <div>房屋所有權狀</div>
-            <input type="radio" id="property_ownership_certificate_yes" name="property_ownership_certificate" value="True" required>
-            <label for="property_ownership_certificate_yes">有</label>
-            <input type="radio" id="property_ownership_certificate_no" name="property_ownership_certificate" value="False">
-            <label for="property_ownership_certificate_no">無</label><br>
-
-            <div>房屋稅單</div>
-            <input type="radio" id="property_tax_bill_yes" name="property_tax_bill" value="True" required>
-            <label for="property_tax_bill_yes">有</label>
-            <input type="radio" id="property_tax_bill_no" name="property_tax_bill" value="False">
-            <label for="property_tax_bill_no">無</label><br>
-
-            <label>安全訪評:</label><br>
-
-            <div>符合教育部安全訪評規範</div>
-            <input type="radio" id="meets_ministry_of_education_safety_standards_yes" name="meets_ministry_of_education_safety_standards" value="True" required>
-            <label for="meets_ministry_of_education_safety_standards_yes">有</label>
-            <input type="radio" id="meets_ministry_of_education_safety_standards_no" name="meets_ministry_of_education_safety_standards" value="False">
-            <label for="meets_ministry_of_education_safety_standards_no">無</label><br>
-
-            <label for="building_type">屋況說明:</label>
-            <textarea id="description" name="description" required></textarea><br>
-
-
-
-
-
-            <div class="form-group">
-                <label for="title">上傳圖片</label>
-                <input type="file"  name="filename" multiple accept=".png, .jpg, .gif">
-            </div>
-
-            <button type="submit">提交</button>
-        </form>
+        <div class="col-8 offset-2 mb-4">
+            <form method="POST" enctype="multipart/form-data" action="">
+
+                <div class="form-group row">
+                    <div class="col-12">
+                        <label for="title" class="col-form-label">租屋廣告標題：</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label for="rent_lower" class="col-form-label">月租金：</label>
+                    </div>
+                    <div class="col-2">
+                        <input type="number" class="form-control" id="rent_lower" name="rent_lower" required>
+                    </div>
+                    <div class="col-1">
+                        <label for="rent_upper" class="col-form-label">~</label>
+                    </div>
+                    <div class="col-2">
+                        <input type="number" class="form-control" id="rent_upper" name="rent_upper" required>
+                    </div>
+                    <div class="col-1">
+                        <label class="col-form-label">元</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label for="addr" class="col-form-label">房屋地址：</label>
+                    </div>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="addr" name="addr" required>
+                    </div>
+                </div>
+
+                套房
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label class="col-form-label" for="suite_num">總數：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="suite_num" name="suite_num" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" for="suite_empty">空房：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="suite_empty" name="suite_empty" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" for="suite_size">坪數：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="suite_size" name="suite_size" required>
+                    </div>
+                </div>
+
+                雅房
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label class="col-form-label" for="room_num">總數：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="room_num" name="room_num" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" for="room_empty">空房：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="room_empty" name="room_empty" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" for="room_size">坪數：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="room_size" name="room_size" required>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label class="col-form-label" for="building_type">房屋類型：</label>
+                    </div>
+                    <div class="col-3">
+                        <!-- <input class="form-control" type="text" id="building_type" name="building_type" required> -->
+                        <select class="form-control" id="building_type" name="building_type" required>
+                            <option value="公寓">公寓</option>
+                            <option value="大樓">大樓</option>
+                            <option value="學舍">學舍</option>
+                            <option value="透天">透天</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label class="col-form-label" for="building_age">屋齡：</label>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" type="number" id="building_age" name="building_age" required>
+                    </div>
+                </div>
+                
+
+                <label for="">建物樓層</label><br>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label class="col-form-label" for="floor1">樓：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="floor1" name="floor1" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" for="floor2">層：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="floor2" name="floor2" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" for="size">坪數：</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="number" id="size" name="size" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label class="col-form-label" for="rental_type">出租類型：</label>
+                    </div>
+                    <div class="col-3">
+                        <!-- <input class="form-control" type="text" id="rental_type" name="rental_type" required> -->
+                        <select class="form-control" id="rental_type" name="rental_type" required>
+                            <option value="整棟出租">整棟出租</option>
+                            <option value="獨立套房">獨立套房</option>
+                            <option value="房間分租">房間分租</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label class="col-form-label" for="partition_material">隔間材質：</label>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" type="text" id="partition_material" name="partition_material" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label class="col-form-label" for="sex_limit">性別要求：</label>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" type="text" id="sex_limit" name="sex_limit" required>
+                    </div>
+                    <div class="col-3">
+                        <label class="col-form-label" for="identity_limit">身份要求：</label>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" type="text" id="identity_limit" name="identity_limit" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label class="col-form-label" for="deposit">押金：</label>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" type="text" id="deposit" name="deposit" required>
+                    </div>
+                    <div class="col-3">
+                        <label class="col-form-label" for="others_fee">其他費用：</label>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" type="text" id="others_fee" name="others_fee" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label for="electricity_meter">有無獨立電表：</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="electricity_meter_yes" name="electricity_meter" value="True" required>
+                            <label class="form-check-label" for="electricity_meter_yes">有</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="electricity_meter_no" name="electricity_meter" value="False">
+                            <label class="form-check-label" for="electricity_meter_no">無</label>
+                        </div>
+                    </div>
+                        
+                    <div class="col-6">
+                        <label for="smoke">無菸租屋：</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="smoke_yes" name="smoke" value="True" required>
+                            <label class="form-check-label" for="smoke_yes">是</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="smoke_no" name="smoke" value="False">
+                            <label class="form-check-label" for="smoke_no">否</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>屋內設備：</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="sofa" id="sofa" value="1">
+                        <label class="form-check-label" for="sofa">沙發</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="telephone" id="telephone" value="1">
+                        <label class="form-check-label" for="telephone">電話</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="bookcase" id="bookcase" value="1">
+                        <label class="form-check-label" for="bookcase">書櫃</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="wardrobe" id="wardrobe" value="1">
+                        <label class="form-check-label" for="wardrobe">衣櫃</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="central_air_conditioning" id="central_air_conditioning" value="1">
+                        <label class="form-check-label" for="central_air_conditioning">中央空調</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="fiber_optic_network" id="fiber_optic_network" value="1">
+                        <label class="form-check-label" for="fiber_optic_network">光纖網路</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="washing_machine" id="washing_machine" value="1">
+                        <label class="form-check-label" for="washing_machine">洗衣機</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="single_bed" id="single_bed" value="1">
+                        <label class="form-check-label" for="single_bed">單人床</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="dehydrator" id="dehydrator" value="1">
+                        <label class="form-check-label" for="dehydrator">脫水機</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="cable_television" id="cable_television" value="1">
+                        <label class="form-check-label" for="cable_television">第四台</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="dryer" id="dryer" value="1">
+                        <label class="form-check-label" for="dryer">烘乾機</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="desk_and_chair" id="desk_and_chair" value="1">
+                        <label class="form-check-label" for="desk_and_chair">書桌(椅)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="refrigerator" id="refrigerator" value="1">
+                        <label class="form-check-label" for="refrigerator">電冰箱</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="double_bed" id="double_bed" value="1">
+                        <label class="form-check-label" for="double_bed">雙人床</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="water_dispenser" id="water_dispenser" value="1">
+                        <label class="form-check-label" for="water_dispenser">飲水機</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="television" id="television" value="1">
+                        <label class="form-check-label" for="television">電視機</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="air_conditioner" id="air_conditioner" value="1">
+                        <label class="form-check-label" for="air_conditioner">冷氣機</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="table_lamp" id="table_lamp" value="1">
+                        <label class="form-check-label" for="table_lamp">檯燈</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="broadband_network" id="broadband_network" value="1">
+                        <label class="form-check-label" for="broadband_network">寬頻網路</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>公共設施：</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="fire_extinguishers_smoke_detectors_and_monitors_per_floor" id="fire_extinguishers_smoke_detectors_and_monitors_per_floor" value="1">
+                        <label class="form-check-label" for="fire_extinguishers_smoke_detectors_and_monitors_per_floor">每層樓滅火器及煙霧偵測器及監視器</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="parking_lot" id="parking_lot" value="1">
+                        <label class="form-check-label" for="parking_lot">停車場</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="kitchen" id="kitchen" value="1">
+                        <label class="form-check-label" for="kitchen">廚房</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="laundry_area" id="laundry_area" value="1">
+                        <label class="form-check-label" for="laundry_area">晒衣場</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="parking_lot_elevator" id="parking_lot_elevator" value="1">
+                        <label class="form-check-label" for="parking_lot_elevator">停車場電梯</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="public_balcony" id="public_balcony" value="1">
+                        <label class="form-check-label" for="public_balcony">公共陽台</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="courtyard" id="courtyard" value="1">
+                        <label class="form-check-label" for="courtyard">中庭</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="elevator" id="elevator" value="1">
+                        <label class="form-check-label" for="elevator">電梯</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="fiber_optic_network_2" id="fiber_optic_network_2" value="1">
+                        <label class="form-check-label" for="fiber_optic_network_2">光纖網路</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="courtyard_parking_lot" id="courtyard_parking_lot" value="1">
+                        <label class="form-check-label" for="courtyard_parking_lot">中庭停車場</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="lounge" id="lounge" value="1">
+                        <label class="form-check-label" for="lounge">交誼廳</label>
+                    </div>
+                </div>            
+
+                <div class="form-group">
+                    <label>熱水器：</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="electric_water_heater" id="electric_water_heater" value="1">
+                        <label class="form-check-label" for="electric_water_heater">電熱水器</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="gas_water_heater" id="gas_water_heater" value="1">
+                        <label class="form-check-label" for="gas_water_heater">瓦斯熱水器</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="solar_water_heater" id="solar_water_heater" value="1">
+                        <label class="form-check-label" for="solar_water_heater">太陽能熱水器</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="natural_gas" id="natural_gas" value="1">
+                        <label class="form-check-label" for="natural_gas">天然瓦斯</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="bottled_gas" id="bottled_gas" value="1">
+                        <label class="form-check-label" for="bottled_gas">桶裝瓦斯</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>安全設施：</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="escape_ladder" id="escape_ladder" value="1">
+                        <label class="form-check-label" for="escape_ladder">逃生梯</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="security_personnel" id="security_personnel" value="1">
+                        <label class="form-check-label" for="security_personnel">保全人員</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="slow_descend_device" id="slow_descend_device" value="1">
+                        <label class="form-check-label" for="slow_descend_device">緩降梯</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="carbon_monoxide_detector" id="carbon_monoxide_detector" value="1">
+                        <label class="form-check-label" for="carbon_monoxide_detector">一氧化碳警報器</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="electric_water_heater_power_cut_off_device" id="electric_water_heater_power_cut_off_device" value="1">
+                        <label class="form-check-label" for="electric_water_heater_power_cut_off_device">電用熱水器斷電設備</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="gas_water_heater_forced_exhaust_device" id="gas_water_heater_forced_exhaust_device" value="1">
+                        <label class="form-check-label" for="gas_water_heater_forced_exhaust_device">瓦斯熱水器強制排氣設備</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="fire_extinguisher" id="fire_extinguisher" value="1">
+                        <label class="form-check-label" for="fire_extinguisher">滅火器</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="smoke_detector" id="smoke_detector" value="1">
+                        <label class="form-check-label" for="smoke_detector">偵煙設備</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="escape_route_clear_and_marked" id="escape_route_clear_and_marked" value="1">
+                        <label class="form-check-label" for="escape_route_clear_and_marked">逃生路線暢通及標示</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="lighting_equipment" id="lighting_equipment" value="1">
+                        <label class="form-check-label" for="lighting_equipment">照明設備</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="surveillance_system" id="surveillance_system" value="1">
+                        <label class="form-check-label" for="surveillance_system">監視錄影設備(系統)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="access_control_system" id="access_control_system" value="1">
+                        <label class="form-check-label" for="access_control_system">門禁系統</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="firefighting_system" id="firefighting_system" value="1">
+                        <label class="form-check-label" for="firefighting_system">消防系統</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>證明文件：</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="landlord_identification_documents" id="landlord_identification_documents" value="1">
+                        <label class="form-check-label" for="landlord_identification_documents">房東身分證明文件</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="power_of_attorney" id="power_of_attorney" value="1">
+                        <label class="form-check-label" for="power_of_attorney">委託書</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="property_ownership_certificate" id="property_ownership_certificate" value="1">
+                        <label class="form-check-label" for="property_ownership_certificate">房屋所有權狀</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="property_tax_bill" id="property_tax_bill" value="1">
+                        <label class="form-check-label" for="property_tax_bill">房屋稅單</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>安全訪評：</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="meets_ministry_of_education_safety_standards" id="meets_ministry_of_education_safety_standards" value="1">
+                        <label class="form-check-label" for="meets_ministry_of_education_safety_standards">符合教育部安全訪評規範</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="building_type" class="form-label">屋況說明：</label>
+                    <textarea id="description" class="form-control" name="description" rows="5" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="title" class="form-label">上傳房屋圖片</label>
+                    <input type="file" class="form-control" name="filename" multiple accept=".png, .jpg, .gif">
+                </div>
+
+                <button class="btn btn-info col-8 offset-2" type="submit">提交</button>
+            </form>
+        </div>
     </div>
 {% endblock content %}
