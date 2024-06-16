@@ -1,0 +1,458 @@
+{% macro update_information(form, form_type, submit_function) %}
+
+    {# flash message #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="mt-5 mb-0">
+                    <div class="row justify-content-center">
+                        <div class="col-6 text-center">
+                            <h3 class="alert alert-{{ category }} text-center">{{ message }}</h3>
+                            <a href="{{ url_for(kwargs['back']) }}"
+                               class="btn btn-primary text-center mb-3">返回</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if form %}
+        {% set form_title = "修改" %}
+        {% if form_type == 'user' %}
+            {% set form_title = form_title + '使用者資料' %}
+        {% elif form_type == 'personal' %}
+            {% set form_title = form_title + '個人資料' %}
+        {% elif form_type == 'delete' %}
+            {% set form_title = '刪除使用者' %}
+        {% else %}
+            {% set form_title = form_title + '資料' %}
+        {% endif %}
+        <div class="container mt-5">
+            <h2 class="text-center">{{ form_title }}</h2>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    {% if form_type == 'user' %}
+                        <form id="user-form" method="POST"
+                              action="{{ url_for('update_user_information.update_form', user_id=form.id.data) }}">
+                    {% elif form_type == 'personal' %}
+                        <form id="user-form" action="{{ url_for('update_personal_information.update_form') }}"
+                              method="POST">
+                    {% elif form_type == 'delete' %}
+                        <form id="user-form" action="{{ url_for('delete_user.delete_form', user_id=form.id.data) }}"
+                              method="POST">
+                    {% endif %}
+                    {{ form.hidden_tag() }}
+
+                    {# User #}
+                    {# User.id #}
+                    {# User.id error #}
+                    {% if form.id.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.id.errors[0] }}
+                        </div>
+                    {% endif %}
+                    <div class="form-group row">
+                        {{ form.id.label(class='col-sm-3 col-form-label') }}
+                        <div class="col-sm-9">
+                            {{ form.id(class='form-control', disabled='disabled') }}
+                        </div>
+                    </div>
+
+                    {# User.name #}
+                    {# User.name error #}
+                    {% if form.name.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.name.errors[0] }}
+                        </div>
+                    {% endif %}
+                    {% if form_type == 'user' %}
+                        <div class="form-group row">
+                            {{ form.name.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-6">
+                                {{ form.name(class='form-control', id='name-input', disabled='disabled') }}
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" id="name-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('name')">修改
+                                </button>
+                            </div>
+                        </div>
+                    {% elif form_type == 'personal' or 'delete' %}
+                        <div class="form-group row">
+                            {{ form.name.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-9">
+                                {{ form.name(class='form-control', id='name-input', disabled='disabled') }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# User.passwd #}
+                    {# User.passwd error #}
+                    {% if form.passwd.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.passwd.errors[0] }}
+                        </div>
+                    {% endif %}
+                    {% if form_type == 'delete' %}
+                        <div class="form-group row">
+                            {{ form.passwd.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-9">
+                                {{ form.passwd(class='form-control', id='passwd-input', value='passwd', disabled='disabled') }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group row">
+                            {{ form.passwd.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-6">
+                                {{ form.passwd(class='form-control', id='passwd-input', value='passwd', disabled='disabled') }}
+                            </div>
+                            <div class="col-sm-3">
+                                {% if form_type == 'user' %}
+                                    <button type="button" id="passwd-reset-btn" class="btn btn-success btn-block"
+                                            onclick="resetPassword()">重置
+                                    </button>
+                                {% elif form_type == 'personal' or 'delete' %}
+                                    <a href="{{ url_for('update_personal_information.update_password') }}"
+                                       class="btn btn-success btn-block">變更</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# User.tel #}
+                    {# User.tel error #}
+                    {% if form.tel.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.tel.errors[0] }}
+                        </div>
+                    {% endif %}
+                    {% if form_type == 'delete' %}
+                        <div class="form-group row">
+                            {{ form.tel.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-9">
+                                {{ form.tel(class='form-control', id='tel-input', disabled='disabled') }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group row">
+                            {{ form.tel.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-6">
+                                {{ form.tel(class='form-control', id='tel-input', disabled='disabled') }}
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" id="tel-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('tel')">修改
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# User.email #}
+                    {# User.email error #}
+                    {% if form.email.errors %}
+                        <div class="help-block text-danger">
+                            {{ form.email.errors[0] }}
+                        </div>
+                    {% endif %}
+                    {% if form_type == 'delete' %}
+                        <div class="form-group row">
+                            {{ form.email.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-9">
+                                {{ form.email(class='form-control', id='email-input', disabled='disabled') }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group row">
+                            {{ form.email.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-6">
+                                {{ form.email(class='form-control', id='email-input', disabled='disabled') }}
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" id="email-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('email')">修改
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# Advisor #}
+                    {% if form.type.data == 'advisor' %}
+
+                        {# Advisor.dept error #}
+                        {% if form.dept.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.dept.errors[0] }}
+                            </div>
+                        {% endif %}
+                        {# Advisor.dept #}
+                        <div class="form-group row">
+                            {{ form.dept.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-6">
+                                {{ form.dept(class='form-control', id='dept-input', disabled='disabled') }}
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('dept')">修改
+                                </button>
+                            </div>
+                        </div>
+                        {# Advisor.rank error #}
+                        {% if form.rank.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.rank.errors[0] }}
+                            </div>
+                        {% endif %}
+                        {# Advisor.rank #}
+                        <div class="form-group row">
+                            {{ form.rank.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-6">
+                                {{ form.rank(class='form-control', id='rank-input', disabled='disabled') }}
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" id="rank-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('rank')">修改
+                                </button>
+                            </div>
+                        </div>
+                        {# Advisor.office_addr error #}
+                        {% if form.office_addr.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.office_addr.errors[0] }}
+                            </div>
+                        {% endif %}
+                        {# Advisor.office_addr #}
+                        <div class="form-group row">
+                            {{ form.office_addr.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-6">
+                                {{ form.office_addr(class='form-control', id='office_addr-input', disabled='disabled') }}
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" id="office_addr-edit-btn"
+                                        class="btn btn-primary btn-block"
+                                        onclick="showEditField('office_addr')">修改
+                                </button>
+                            </div>
+                        </div>
+                        {# Advisor.office_tel error #}
+                        {% if form.office_tel.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.office_tel.errors[0] }}
+                            </div>
+                        {% endif %}
+                        {# Advisor.office_tel #}
+                        <div class="form-group row">
+                            {{ form.office_tel.label(class='col-sm-3 col-form-label') }}
+                            <div class="col-sm-6">
+                                {{ form.office_tel(class='form-control', id='office_tel-input', disabled='disabled') }}
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" id="office_tel-edit-btn" class="btn btn-primary btn-block"
+                                        onclick="showEditField('office_tel')">修改
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# Student #}
+                    {% if form.type.data == 'student' %}
+                        {# Student.dept #}
+                        {# Student.dept error #}
+                        {% if form.dept.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.dept.errors[0] }}
+                            </div>
+                        {% endif %}
+                        {% if form_type == 'user' %}
+                            <div class="form-group row">
+                                {{ form.dept.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-6">
+                                    {{ form.dept(class='form-control', id='dept-input', disabled='disabled') }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('dept')">修改
+                                    </button>
+                                </div>
+                            </div>
+                        {% elif form_type == 'personal' or 'delete' %}
+                            <div class="form-group row">
+                                {{ form.dept.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-9">
+                                    {{ form.dept(class='form-control', id='dept-input', disabled='disabled') }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {# Student.enroll_year #}
+                        {# Student.enroll_year error #}
+                        {% if form.enroll_year.errors %}
+                            <div class="help-block text-danger">
+                                {{ form.enroll_year.errors[0] }}
+                            </div>
+                        {% endif %}
+                        {% if form_type == 'user' %}
+                            <div class="form-group row">
+                                {{ form.enroll_year.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-6">
+                                    {{ form.enroll_year(class='form-control', id='enroll_year-input', disabled='disabled') }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" id="enroll_year-edit-btn"
+                                            class="btn btn-primary btn-block"
+                                            onclick="showEditField('enroll_year')">修改
+                                    </button>
+                                </div>
+                            </div>
+                        {% elif form_type == 'personal' or 'delete' %}
+                            <div class="form-group row">
+                                {{ form.enroll_year.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-9">
+                                    {{ form.enroll_year(class='form-control', id='enroll_year-input', disabled='disabled') }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {# Student.sex #}
+                        {% if form_type == 'user' %}
+                            <div class="form-group row">
+                                {{ form.sex.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-6">
+                                    {{ form.sex(class='form-control', disabled='disabled', id='sex-input') }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" id="sex-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('sex')">修改
+                                    </button>
+                                </div>
+                            </div>
+                        {% elif form_type == 'personal' or 'delete' %}
+                            <div class="form-group row">
+                                {{ form.sex.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-9">
+                                    {{ form.sex(class='form-control', disabled='disabled') }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {# Student.home_addr #}
+                        {% if form_type == 'delete' %}
+                            <div class="form-group row">
+                                {{ form.home_addr.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-9">
+                                    {{ form.home_addr(class='form-control', id='home_addr-input', disabled='disabled') }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group row">
+                                {{ form.home_addr.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-6">
+                                    {{ form.home_addr(class='form-control', id='home_addr-input', disabled='disabled') }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" id="home_addr-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('home_addr')">修改
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {# Student.home_tel #}
+                        {% if form_type == 'delete' %}
+                            <div class="form-group row">
+                                {{ form.home_tel.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-9">
+                                    {{ form.home_tel(class='form-control', id='home_tel-input', disabled='disabled') }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group row">
+                                {{ form.home_tel.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-6">
+                                    {{ form.home_tel(class='form-control', id='home_tel-input', disabled='disabled') }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" id="home_tel-edit-btn" class="btn btn-primary btn-block"
+                                            onclick="showEditField('home_tel')">修改
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {# Student.contact_name #}
+                        {% if form_type == 'delete' %}
+                            <div class="form-group row">
+                                {{ form.contact_name.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-9">
+                                    {{ form.contact_name(class='form-control', id='contact_name-input', disabled='disabled') }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group row">
+                                {{ form.contact_name.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-6">
+                                    {{ form.contact_name(class='form-control', id='contact_name-input', disabled='disabled') }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" id="contact_name-edit-btn"
+                                            class="btn btn-primary btn-block"
+                                            onclick="showEditField('contact_name')">修改
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {# Student.contact_tel #}
+                        {% if form_type == 'delete' %}
+                            <div class="form-group row">
+                                {{ form.contact_tel.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-9">
+                                    {{ form.contact_tel(class='form-control', id='contact_tel-input', disabled='disabled') }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group row">
+                                {{ form.contact_tel.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-6">
+                                    {{ form.contact_tel(class='form-control', id='contact_tel-input', disabled='disabled') }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" id="contact_tel-edit-btn"
+                                            class="btn btn-primary btn-block"
+                                            onclick="showEditField('contact_tel')">修改
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {# Student.advisor_id #}
+                        {% if form_type == 'user' %}
+                            <div class="form-group row">
+                                {{ form.advisor_id.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-6">
+                                    {{ form.advisor_id(class='form-control', id='advisor_id-input', disabled='disabled') }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" id="advisor_id-edit-btn"
+                                            class="btn btn-primary btn-block"
+                                            onclick="showEditField('advisor_id')">修改
+                                    </button>
+                                </div>
+                            </div>
+                        {% elif form_type == 'personal' or 'delete' %}
+                            <div class="form-group row">
+                                {{ form.advisor_id.label(class='col-sm-3 col-form-label') }}
+                                <div class="col-sm-9">
+                                    {{ form.advisor_id(class='form-control', id='advisor_id-input', disabled='disabled') }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="form-group row mt-4">
+                        <div class="col-sm-12 text-center">
+                            {{ form.submit(class='btn btn-success btn-block') }}
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endmacro %}

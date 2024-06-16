@@ -7,314 +7,9 @@
         <span class="h3 mb-0 text-gray-800 font-weight-bold">修改使用者資料</span>
     </div>
 {% endblock heading %}
-
 {% block content %}
-
-    {# flash message #}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="mt-5 mb-0">
-                    <div class="row justify-content-center">
-                        <div class="col-6 text-center">
-                            <h3 class="alert alert-{{ category }} text-center">{{ message }}</h3>
-                            {% if category == 'warning' %}
-                                <a href="{{ url_for('search_user_information.update_search_form') }}"
-                                   class="btn btn-primary text-center mb-3">返回</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
-    {% if updateForm %}
-        <div class="container mt-5">
-            <h2 class="text-center">修改使用者資料</h2>
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <form id="user-form" method="POST"
-                          action="{{ url_for('update_user_information.update_form', user_id=updateForm.id.data) }}">
-                        {{ updateForm.hidden_tag() }}
-
-                        {# User #}
-                        {# User.id error #}
-                        {% if updateForm.id.errors %}
-                            <div class="help-block text-danger">
-                                {{ updateForm.id.errors[0] }}
-                            </div>
-                        {% endif %}
-                        {# User.id #}
-                        <div class="form-group row">
-                            {{ updateForm.id.label(class='col-sm-3 col-form-label') }}
-                            <div class="col-sm-9">
-                                {{ updateForm.id(class='form-control', disabled='disabled') }}
-                            </div>
-                        </div>
-
-                        {# User.name error #}
-                        {% if updateForm.name.errors %}
-                            <div class="help-block text-danger">
-                                {{ updateForm.name.errors[0] }}
-                            </div>
-                        {% endif %}
-                        {# User.name #}
-                        <div class="form-group row">
-                            {{ updateForm.name.label(class='col-sm-3 col-form-label') }}
-                            <div class="col-sm-6">
-                                {{ updateForm.name(class='form-control', id='name-input', disabled='disabled') }}
-                            </div>
-                            <div class="col-sm-3">
-                                <button type="button" id="name-edit-btn" class="btn btn-primary btn-block"
-                                        onclick="showEditField('name')">修改
-                                </button>
-                            </div>
-                        </div>
-
-                        {# User.passwd error #}
-                        {% if updateForm.passwd.errors %}
-                            <div class="help-block text-danger">
-                                {{ updateForm.passwd.errors[0] }}
-                            </div>
-                        {% endif %}
-                        {# User.passwd #}
-                        <div class="form-group row">
-                            {{ updateForm.passwd.label(class='col-sm-3 col-form-label') }}
-                            <div class="col-sm-6">
-                                {{ updateForm.passwd(class='form-control', id='passwd-input', value='passwd', disabled='disabled') }}
-                            </div>
-                            <div class="col-sm-3">
-                                <button type="button" id="passwd-reset-btn" class="btn btn-success btn-block"
-                                        onclick="resetPassword()">重置
-                                </button>
-                            </div>
-                        </div>
-
-                        {# User.tel error #}
-                        {% if updateForm.tel.errors %}
-                            <div class="help-block text-danger">
-                                {{ updateForm.tel.errors[0] }}
-                            </div>
-                        {% endif %}
-                        {# User.tel #}
-                        <div class="form-group row">
-                            {{ updateForm.tel.label(class='col-sm-3 col-form-label') }}
-                            <div class="col-sm-6">
-                                {{ updateForm.tel(class='form-control', id='tel-input', disabled='disabled') }}
-                            </div>
-                            <div class="col-sm-3">
-                                <button type="button" id="tel-edit-btn" class="btn btn-primary btn-block"
-                                        onclick="showEditField('tel')">修改
-                                </button>
-                            </div>
-                        </div>
-
-                        {# User.email error #}
-                        {% if updateForm.email.errors %}
-                            <div class="help-block text-danger">
-                                {{ updateForm.email.errors[0] }}
-                            </div>
-                        {% endif %}
-                        {# User.email #}
-                        <div class="form-group row">
-                            {{ updateForm.email.label(class='col-sm-3 col-form-label') }}
-                            <div class="col-sm-6">
-                                {{ updateForm.email(class='form-control', id='email-input', disabled='disabled') }}
-                            </div>
-                            <div class="col-sm-3">
-                                <button type="button" id="email-edit-btn" class="btn btn-primary btn-block"
-                                        onclick="showEditField('email')">修改
-                                </button>
-                            </div>
-                        </div>
-
-                        {# Advisor #}
-                        {% if updateForm.type.data == 'advisor' %}
-
-                            {# Advisor.dept error #}
-                            {% if updateForm.dept.errors %}
-                                <div class="help-block text-danger">
-                                    {{ updateForm.dept.errors[0] }}
-                                </div>
-                            {% endif %}
-                            {# Advisor.dept #}
-                            <div class="form-group row">
-                                {{ updateForm.dept.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.dept(class='form-control', id='dept-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('dept')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            {# Advisor.rank error #}
-                            {% if updateForm.rank.errors %}
-                                <div class="help-block text-danger">
-                                    {{ updateForm.rank.errors[0] }}
-                                </div>
-                            {% endif %}
-                            {# Advisor.rank #}
-                            <div class="form-group row">
-                                {{ updateForm.rank.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.rank(class='form-control', id='rank-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="rank-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('rank')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            {# Advisor.office_addr error #}
-                            {% if updateForm.office_addr.errors %}
-                                <div class="help-block text-danger">
-                                    {{ updateForm.office_addr.errors[0] }}
-                                </div>
-                            {% endif %}
-                            {# Advisor.office_addr #}
-                            <div class="form-group row">
-                                {{ updateForm.office_addr.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.office_addr(class='form-control', id='office_addr-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="office_addr-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('office_addr')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            {# Advisor.office_tel error #}
-                            {% if updateForm.office_tel.errors %}
-                                <div class="help-block text-danger">
-                                    {{ updateForm.office_tel.errors[0] }}
-                                </div>
-                            {% endif %}
-                            {# Advisor.office_tel #}
-                            <div class="form-group row">
-                                {{ updateForm.office_tel.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.office_tel(class='form-control', id='office_tel-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="office_tel-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('office_tel')">修改
-                                    </button>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        {# Student #}
-                        {% if updateForm.type.data == 'student' %}
-                            {# Student.dept error #}
-                            {% if updateForm.dept.errors %}
-                                <div class="help-block text-danger">
-                                    {{ updateForm.dept.errors[0] }}
-                                </div>
-                            {% endif %}
-                            {# Student.dept #}
-                            <div class="form-group row">
-                                {{ updateForm.dept.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.dept(class='form-control', id='dept-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('dept')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            {# Student.enroll_year error #}
-                            {% if updateForm.enroll_year.errors %}
-                                <div class="help-block text-danger">
-                                    {{ updateForm.enroll_year.errors[0] }}
-                                </div>
-                            {% endif %}
-                            {# Student.enroll_year #}
-                            <div class="form-group row">
-                                {{ updateForm.enroll_year.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.enroll_year(class='form-control', id='enroll_year-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="enroll_year-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('enroll_year')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                {{ updateForm.sex.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.sex(class='form-control', disabled='disabled', id='sex-input') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="sex-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('sex')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            {# Student.home_addr #}
-                            <div class="form-group row">
-                                {{ updateForm.home_addr.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.home_addr(class='form-control', id='home_addr-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="home_addr-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('home_addr')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            {# Student.home_tel #}
-                            <div class="form-group row">
-                                {{ updateForm.home_tel.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.home_tel(class='form-control', id='home_tel-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="home_tel-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('home_tel')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            {# Student.contact_name #}
-                            <div class="form-group row">
-                                {{ updateForm.contact_name.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.contact_name(class='form-control', id='contact_name-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="contact_name-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('contact_name')">修改
-                                    </button>
-                                </div>
-                            </div>
-                            {# Student.contact_tel #}
-                            <div class="form-group row">
-                                {{ updateForm.contact_tel.label(class='col-sm-3 col-form-label') }}
-                                <div class="col-sm-6">
-                                    {{ updateForm.contact_tel(class='form-control', id='contact_tel-input', disabled='disabled') }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" id="contact_tel-edit-btn" class="btn btn-primary btn-block"
-                                            onclick="showEditField('contact_tel')">修改
-                                    </button>
-                                </div>
-                            </div>
-                        {% endif %}
-                        <div class="form-group row mt-4">
-                            <div class="col-sm-12 text-center">
-                                {{ updateForm.submit(class='btn btn-success btn-block') }}
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-
+    {% from "AIMS/macro_update_information.html" import update_information %}
+    {{ update_information(updateForm, 'user', 'update_user_information.update_form', back='search_user_information.update_search_form') }}
 {% endblock %}
 
 {% block script %}
@@ -349,3 +44,307 @@
         }
     </script>
 {% endblock %}
+
+{# flash message #}
+{#    {% with messages = get_flashed_messages(with_categories=true) %}#}
+{#        {% if messages %}#}
+{#            {% for category, message in messages %}#}
+{#                <div class="mt-5 mb-0">#}
+{#                    <div class="row justify-content-center">#}
+{#                        <div class="col-6 text-center">#}
+{#                            <h3 class="alert alert-{{ category }} text-center">{{ message }}</h3>#}
+{#                            <a href="{{ url_for('search_user_information.update_search_form') }}"#}
+{#                               class="btn btn-primary text-center mb-3">返回</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{#    {% endwith %}#}
+{##}
+{#    {% if updateForm %}#}
+{#        <div class="container mt-5">#}
+{#            <h2 class="text-center">修改使用者資料</h2>#}
+{#            <div class="row">#}
+{#                <div class="col-md-8 offset-md-2">#}
+{#                    <form id="user-form" method="POST"#}
+{#                          action="{{ url_for('update_user_information.update_form', user_id=updateForm.id.data) }}">#}
+{#                        {{ updateForm.hidden_tag() }}#}
+{##}
+{# User #}
+{# User.id error #}
+{#                        {% if updateForm.id.errors %}#}
+{#                            <div class="help-block text-danger">#}
+{#                                {{ updateForm.id.errors[0] }}#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{# User.id #}
+{#                        <div class="form-group row">#}
+{#                            {{ updateForm.id.label(class='col-sm-3 col-form-label') }}#}
+{#                            <div class="col-sm-9">#}
+{#                                {{ updateForm.id(class='form-control', disabled='disabled') }}#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{# User.name error #}
+{#                        {% if updateForm.name.errors %}#}
+{#                            <div class="help-block text-danger">#}
+{#                                {{ updateForm.name.errors[0] }}#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{# User.name #}
+{#                        <div class="form-group row">#}
+{#                            {{ updateForm.name.label(class='col-sm-3 col-form-label') }}#}
+{#                            <div class="col-sm-6">#}
+{#                                {{ updateForm.name(class='form-control', id='name-input', disabled='disabled') }}#}
+{#                            </div>#}
+{#                            <div class="col-sm-3">#}
+{#                                <button type="button" id="name-edit-btn" class="btn btn-primary btn-block"#}
+{#                                        onclick="showEditField('name')">修改#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{# User.passwd error #}
+{#                        {% if updateForm.passwd.errors %}#}
+{#                            <div class="help-block text-danger">#}
+{#                                {{ updateForm.passwd.errors[0] }}#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{# User.passwd #}
+{#                        <div class="form-group row">#}
+{#                            {{ updateForm.passwd.label(class='col-sm-3 col-form-label') }}#}
+{#                            <div class="col-sm-6">#}
+{#                                {{ updateForm.passwd(class='form-control', id='passwd-input', value='passwd', disabled='disabled') }}#}
+{#                            </div>#}
+{#                            <div class="col-sm-3">#}
+{#                                <button type="button" id="passwd-reset-btn" class="btn btn-success btn-block"#}
+{#                                        onclick="resetPassword()">重置#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{# User.tel error #}
+{#                        {% if updateForm.tel.errors %}#}
+{#                            <div class="help-block text-danger">#}
+{#                                {{ updateForm.tel.errors[0] }}#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{# User.tel #}
+{#                        <div class="form-group row">#}
+{#                            {{ updateForm.tel.label(class='col-sm-3 col-form-label') }}#}
+{#                            <div class="col-sm-6">#}
+{#                                {{ updateForm.tel(class='form-control', id='tel-input', disabled='disabled') }}#}
+{#                            </div>#}
+{#                            <div class="col-sm-3">#}
+{#                                <button type="button" id="tel-edit-btn" class="btn btn-primary btn-block"#}
+{#                                        onclick="showEditField('tel')">修改#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{# User.email error #}
+{#                        {% if updateForm.email.errors %}#}
+{#                            <div class="help-block text-danger">#}
+{#                                {{ updateForm.email.errors[0] }}#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{# User.email #}
+{#                        <div class="form-group row">#}
+{#                            {{ updateForm.email.label(class='col-sm-3 col-form-label') }}#}
+{#                            <div class="col-sm-6">#}
+{#                                {{ updateForm.email(class='form-control', id='email-input', disabled='disabled') }}#}
+{#                            </div>#}
+{#                            <div class="col-sm-3">#}
+{#                                <button type="button" id="email-edit-btn" class="btn btn-primary btn-block"#}
+{#                                        onclick="showEditField('email')">修改#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{# Advisor #}
+{#                        {% if updateForm.type.data == 'advisor' %}#}
+{##}
+{# Advisor.dept error #}
+{#                            {% if updateForm.dept.errors %}#}
+{#                                <div class="help-block text-danger">#}
+{#                                    {{ updateForm.dept.errors[0] }}#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{# Advisor.dept #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.dept.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.dept(class='form-control', id='dept-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('dept')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{# Advisor.rank error #}
+{#                            {% if updateForm.rank.errors %}#}
+{#                                <div class="help-block text-danger">#}
+{#                                    {{ updateForm.rank.errors[0] }}#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{# Advisor.rank #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.rank.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.rank(class='form-control', id='rank-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="rank-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('rank')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{# Advisor.office_addr error #}
+{#                            {% if updateForm.office_addr.errors %}#}
+{#                                <div class="help-block text-danger">#}
+{#                                    {{ updateForm.office_addr.errors[0] }}#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{# Advisor.office_addr #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.office_addr.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.office_addr(class='form-control', id='office_addr-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="office_addr-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('office_addr')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{# Advisor.office_tel error #}
+{#                            {% if updateForm.office_tel.errors %}#}
+{#                                <div class="help-block text-danger">#}
+{#                                    {{ updateForm.office_tel.errors[0] }}#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{# Advisor.office_tel #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.office_tel.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.office_tel(class='form-control', id='office_tel-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="office_tel-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('office_tel')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{##}
+{# Student #}
+{#                        {% if updateForm.type.data == 'student' %}#}
+{# Student.dept error #}
+{#                            {% if updateForm.dept.errors %}#}
+{#                                <div class="help-block text-danger">#}
+{#                                    {{ updateForm.dept.errors[0] }}#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{# Student.dept #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.dept.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.dept(class='form-control', id='dept-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="dept-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('dept')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{# Student.enroll_year error #}
+{#                            {% if updateForm.enroll_year.errors %}#}
+{#                                <div class="help-block text-danger">#}
+{#                                    {{ updateForm.enroll_year.errors[0] }}#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{# Student.enroll_year #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.enroll_year.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.enroll_year(class='form-control', id='enroll_year-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="enroll_year-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('enroll_year')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.sex.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.sex(class='form-control', disabled='disabled', id='sex-input') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="sex-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('sex')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{# Student.home_addr #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.home_addr.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.home_addr(class='form-control', id='home_addr-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="home_addr-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('home_addr')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{# Student.home_tel #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.home_tel.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.home_tel(class='form-control', id='home_tel-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="home_tel-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('home_tel')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{# Student.contact_name #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.contact_name.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.contact_name(class='form-control', id='contact_name-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="contact_name-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('contact_name')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{# Student.contact_tel #}
+{#                            <div class="form-group row">#}
+{#                                {{ updateForm.contact_tel.label(class='col-sm-3 col-form-label') }}#}
+{#                                <div class="col-sm-6">#}
+{#                                    {{ updateForm.contact_tel(class='form-control', id='contact_tel-input', disabled='disabled') }}#}
+{#                                </div>#}
+{#                                <div class="col-sm-3">#}
+{#                                    <button type="button" id="contact_tel-edit-btn" class="btn btn-primary btn-block"#}
+{#                                            onclick="showEditField('contact_tel')">修改#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{#                        <div class="form-group row mt-4">#}
+{#                            <div class="col-sm-12 text-center">#}
+{#                                {{ updateForm.submit(class='btn btn-success btn-block') }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endif %}#}
+

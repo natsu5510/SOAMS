@@ -43,13 +43,13 @@ def update_form():
         form = LandlordUpdateForm(obj=user)
     else:
         flash('使用者身分錯誤', 'danger')
-        return redirect(url_for('AIMS/update_personal_information.html', updateForm=None))
+        return render_template('AIMS/update_personal_information.html')
 
     if form.validate_on_submit():
         form.populate_obj(user)
         db.session.commit()
         flash('個人資料已更新', 'success')
-        return redirect(url_for('update_personal_information.update_form'))
+        return render_template('AIMS/update_personal_information.html')
 
     return render_template('AIMS/update_personal_information.html', updateForm=form)
 

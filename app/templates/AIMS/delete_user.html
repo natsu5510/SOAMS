@@ -9,4 +9,6 @@
 {% endblock heading %}
 
 {% block content %}
+    {% from "AIMS/macro_update_information.html" import update_information %}
+    {{ update_information(deleteForm, 'delete', 'delete_user.delete_form', back='search_user_information.delete_search_form') }}
 {% endblock content %}

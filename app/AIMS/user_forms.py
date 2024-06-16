@@ -34,7 +34,7 @@ class StudentForm(UserForm):
     home_tel = StringField('家裡電話')
     contact_name = StringField('聯絡人姓名')
     contact_tel = StringField('聯絡人電話')
-    advisor_id = SelectField('導師ID', validators=[DataRequired(message='* 此欄位不可為空')])
+    advisor_id = SelectField('導師', validators=[DataRequired(message='* 此欄位不可為空')])
 
 
 class LandlordForm(UserForm):

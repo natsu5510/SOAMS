@@ -43,7 +43,7 @@ def update_form(user_id):
         form.populate_obj(user)
         db.session.commit()
         flash('使用者資料已更新', 'success')
-        return redirect(url_for('update_user_information.update_form', user_id=user_id))
+        return render_template('AIMS/update_user_information.html', user_id=user_id)
     elif form.is_submitted():
         flash('修改失敗，請檢查您的輸入', 'danger')
         return render_template('AIMS/update_user_information.html', updateForm=form)
