@@ -1,88 +1,151 @@
 {% extends "home.html" %}
 
-{% block title %} ¶ñ¼g¦í±J¸ê®Æ {% endblock title%}
+{% block title %} å¡«å¯«ä½å®¿è³‡æ–™ {% endblock title%}
 
 {% block heading %}
 <div class="d-sm-flex align-items-center justify-content-between">
-    <span class="h3 mb-0 text-gray-800 font-weight-bold">¶ñ¼g¦í±J¸ê®Æ</span>
+    <span class="h3 mb-0 text-gray-800 font-weight-bold">å¡«å¯«ä½å®¿è³‡æ–™</span>
 </div>
 {% endblock heading %}
 
-{% block content%}
+{% block content %}
+<style>
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-<!-- ºŞ²z­û -->
+    .card {
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+</style>
+
+<!-- ç®¡ç†å“¡ -->
 {% if current_user.type == 'administrator' %}
     {% for item in data %}
-        <form action="{{url_for('accommodation_management.update')}}" method="post">
-            <label for="id">¾Ç¸¹:</label>
-            <input type="text" id="id" name="id" value="{{item.id}}" required>
-            <label for="semester">¾Ç¦~/¾Ç´Á:</label>
-            <input type="text" id="semester" name="semester" value="{{item.semester}}" placeholder="XXX/X" required>
-            <label for="where_to_live">¦í±J¦a:</label>
-            <select id="where_to_live" name="where_to_live" required>
-                <option value="0" {% if item.where_to_live == 0 %} selected {% endif %}>¦í®a¸Ì</option>
-                <option value="1" {% if item.where_to_live == 1 %} selected {% endif %}>±H©~¿Ë¤Í®a</option>
-                <option value="2" {% if item.where_to_live == 2 %} selected {% endif %}>¦í®Õ</option>
-                <option value="3" {% if item.where_to_live == 3 %} selected {% endif %}>¦b¥~¯²«Î</option>
-            </select>
-            <label for="addr">¦í±J¦a§}:</label>
-            <input type="text" id="addr" name="addr" value="{{item.addr}}" required>
-            <label for="landlord_name">©ĞªF©m¦W:</label>
-            <input type="text" id="landlord_name" name="landlord_name" value="{{item.landlord_name}}" required>
-            <label for="landlord_tel">©ĞªF¹q¸Ü:</label>
-            <input type="text" id="landlord_tel" name="landlord_tel" value="{{item.landlord_tel}}" required>
-            <label for="rent">¯²ª÷:</label>
-            <input type="text" id="rent" name="rent" value="{{item.rent}}" required>
-            <label for="roommate_id">¦P¦í«Ç¤Í¾Ç¸¹:</label>
-            <input type="text" id="roommate_id" name="roommate_id" value="{{item.roommate_id}}" required>
-            <input type="submit" value="°e¥X">
+        <form action="{{url_for('accommodation_management.update')}}" method="post" class="mb-4">
+            <div class="form-group">
+                <label for="id">å­¸è™Ÿ:</label>
+                <input type="text" class="form-control" id="id" name="id" value="{{item.id}}" required>
+            </div>
+            <div class="form-group">
+                <label for="semester">å­¸å¹´/å­¸æœŸ:</label>
+                <input type="text" class="form-control" id="semester" name="semester" value="{{item.semester}}" placeholder="XXX/X" required>
+            </div>
+            <div class="form-group">
+                <label for="where_to_live">ä½å®¿åœ°:</label>
+                <select class="form-control" id="where_to_live" name="where_to_live" required>
+                    <option value="0" {% if item.where_to_live == 0 %} selected {% endif %}>ä½å®¶è£¡</option>
+                    <option value="1" {% if item.where_to_live == 1 %} selected {% endif %}>å¯„å±…è¦ªå‹å®¶</option>
+                    <option value="2" {% if item.where_to_live == 2 %} selected {% endif %}>ä½æ ¡</option>
+                    <option value="3" {% if item.where_to_live == 3 %} selected {% endif %}>åœ¨å¤–ç§Ÿå±‹</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="addr">ä½å®¿åœ°å€:</label>
+                <input type="text" class="form-control" id="addr" name="addr" value="{{item.addr}}" required>
+            </div>
+            <div class="form-group">
+                <label for="landlord_name">æˆ¿æ±å§“å:</label>
+                <input type="text" class="form-control" id="landlord_name" name="landlord_name" value="{{item.landlord_name}}" required>
+            </div>
+            <div class="form-group">
+                <label for="landlord_tel">æˆ¿æ±é›»è©±:</label>
+                <input type="text" class="form-control" id="landlord_tel" name="landlord_tel" value="{{item.landlord_tel}}" required>
+            </div>
+            <div class="form-group">
+                <label for="rent">ç§Ÿé‡‘:</label>
+                <input type="text" class="form-control" id="rent" name="rent" value="{{item.rent}}" required>
+            </div>
+            <div class="form-group">
+                <label for="roommate_id">åŒä½å®¤å‹å­¸è™Ÿ:</label>
+                <input type="text" class="form-control" id="roommate_id" name="roommate_id" value="{{item.roommate_id}}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">é€å‡º</button>
         </form>
         <hr>
     {% endfor %}
 {% endif %}
 
-<!-- ¦Ñ®v -->
+<!-- è€å¸« -->
 {% if current_user.type == 'advisor' %}
     {% for item in data %}
-        <div>
-            <p>¾Ç¸¹: {{item.id}}</p>
-            <p>¾Ç¦~/¾Ç´Á: {{item.semester}}</p>
-            <p>¦í±J¦a: {% if item.where_to_live == 0 %} ¦í®a¸Ì {% elif item.where_to_live == 1 %} ±H©~¿Ë¤Í®a {% elif item.where_to_live == 2 %} ¦í®Õ {% elif item.where_to_live == 3 %} ¦b¥~¯²«Î {% endif %}</p>
-            <p>¦í±J¦a§}: {{item.addr}}</p>
-            <p>©ĞªF©m¦W: {{item.landlord_name}}</p>
-            <p>©ĞªF¹q¸Ü: {{item.landlord_tel}}</p>
-            <p>¯²ª÷: {{item.rent}}</p>
-            <p>¦P¦í«Ç¤Í¾Ç¸¹: {{item.roommate_id}}</p>
+        <div class="card">
+            <div class="card-body">
+                <p><strong>å­¸è™Ÿ:</strong> {{item.id}}</p>
+                <p><strong>å­¸å¹´/å­¸æœŸ:</strong> {{item.semester}}</p>
+                <p><strong>ä½å®¿åœ°:</strong> {% if item.where_to_live == 0 %} ä½å®¶è£¡ {% elif item.where_to_live == 1 %} å¯„å±…è¦ªå‹å®¶ {% elif item.where_to_live == 2 %} ä½æ ¡ {% elif item.where_to_live == 3 %} åœ¨å¤–ç§Ÿå±‹ {% endif %}</p>
+                <p><strong>ä½å®¿åœ°å€:</strong> {{item.addr}}</p>
+                <p><strong>æˆ¿æ±å§“å:</strong> {{item.landlord_name}}</p>
+                <p><strong>æˆ¿æ±é›»è©±:</strong> {{item.landlord_tel}}</p>
+                <p><strong>ç§Ÿé‡‘:</strong> {{item.rent}}</p>
+                <p><strong>åŒä½å®¤å‹å­¸è™Ÿ:</strong> {{item.roommate_id}}</p>
+            </div>
         </div>
-        <hr>
     {% endfor %}
 {% endif %}
 
-<!-- ¾Ç¥Í -->
+<!-- å­¸ç”Ÿ -->
 {% if current_user.type == 'student' %}
-    <form action="{{url_for('accommodation_management.update')}}" method="post">
-        <label for="id">¾Ç¸¹:</label>
-        <input type="text" id="id" name="id" value="{{data.id}}" required>
-        <label for="semester">¾Ç¦~/¾Ç´Á:</label>
-        <input type="text" id="semester" name="semester" value="{{data.semester}}" placeholder="XXX/X">
-        <label for="where_to_live">¦í±J¦a:</label>
-        <select id="where_to_live" name="where_to_live" required>
-            <option value="0" {% if data.where_to_live == 0 %} selected {% endif %}>¦í®a¸Ì</option>
-            <option value="1" {% if data.where_to_live == 1 %} selected {% endif %}>±H©~¿Ë¤Í®a</option>
-            <option value="2" {% if data.where_to_live == 2 %} selected {% endif %}>¦í®Õ</option>
-            <option value="3" {% if data.where_to_live == 3 %} selected {% endif %}>¦b¥~¯²«Î</option>
-        </select>
-        <label for="addr">¦í±J¦a§}:</label>
-        <input type="text" id="addr" name="addr" value="{{data.addr}}">
-        <label for="landlord_name">©ĞªF©m¦W:</label>
-        <input type="text" id="landlord_name" name="landlord_name" value="{{data.landlord_name}}">
-        <label for="landlord_tel">©ĞªF¹q¸Ü:</label>
-        <input type="text" id="landlord_tel" name="landlord_tel" value="{{data.landlord_tel}}">
-        <label for="rent">¯²ª÷:</label>
-        <input type="text" id="rent" name="rent" value="{{data.rent}}">
-        <label for="roommate_id">¦P¦í«Ç¤Í¾Ç¸¹:</label>
-        <input type="text" id="roommate_id" name="roommate_id" value="{{data.roommate_id}}">
-        <input type="submit" value="°e¥X">
+    <form action="{{url_for('accommodation_management.update')}}" method="post" class="mb-4">
+        <div class="form-group">
+            <label for="id">å­¸è™Ÿ:</label>
+            <input type="text" class="form-control" id="id" name="id" value="{{data.id}}" required>
+        </div>
+        <div class="form-group">
+            <label for="semester">å­¸å¹´/å­¸æœŸ:</label>
+            <input type="text" class="form-control" id="semester" name="semester" value="{{data.semester}}" placeholder="XXX/X">
+        </div>
+        <div class="form-group">
+            <label for="where_to_live">ä½å®¿åœ°:</label>
+            <select class="form-control" id="where_to_live" name="where_to_live" required>
+                <option value="0" {% if data.where_to_live == 0 %} selected {% endif %}>ä½å®¶è£¡</option>
+                <option value="1" {% if data.where_to_live == 1 %} selected {% endif %}>å¯„å±…è¦ªå‹å®¶</option>
+                <option value="2" {% if data.where_to_live == 2 %} selected {% endif %}>ä½æ ¡</option>
+                <option value="3" {% if data.where_to_live == 3 %} selected {% endif %}>åœ¨å¤–ç§Ÿå±‹</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="addr">ä½å®¿åœ°å€:</label>
+            <input type="text" class="form-control" id="addr" name="addr" value="{{data.addr}}">
+        </div>
+        <div class="form-group">
+            <label for="landlord_name">æˆ¿æ±å§“å:</label>
+            <input type="text" class="form-control" id="landlord_name" name="landlord_name" value="{{data.landlord_name}}">
+        </div>
+        <div class="form-group">
+            <label for="landlord_tel">æˆ¿æ±é›»è©±:</label>
+            <input type="text" class="form-control" id="landlord_tel" name="landlord_tel" value="{{data.landlord_tel}}">
+        </div>
+        <div class="form-group">
+            <label for="rent">ç§Ÿé‡‘:</label>
+            <input type="text" class="form-control" id="rent" name="rent" value="{{data.rent}}">
+        </div>
+        <div class="form-group">
+            <label for="roommate_id">åŒä½å®¤å‹å­¸è™Ÿ:</label>
+            <input type="text" class="form-control" id="roommate_id" name="roommate_id" value="{{data.roommate_id}}">
+        </div>
+        <button type="submit" class="btn btn-primary">é€å‡º</button>
     </form>
 {% endif %}
-{% endblock content%}
+{% endblock content %}

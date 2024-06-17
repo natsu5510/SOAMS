@@ -105,6 +105,7 @@
                         {% endif %}
                         {% if current_user.type == 'advisor' %}
                         <a class="collapse-item" href="{{ url_for('accommodation_management.index') }}">查看學生住宿資料</a>
+                        <a class="collapse-item" href="{{ url_for('visitation_management.index') }}">查看訪視資料</a>
                         <a class="collapse-item" href="{{ url_for('visitation_management.index') }}">填寫訪視資料</a>
                         {% endif %}
                         {% if current_user.type == 'student' %}

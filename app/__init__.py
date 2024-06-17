@@ -21,8 +21,12 @@ def create_app():
     app.register_blueprint(update_personal_information)
     from app.AIVS.accommodation_management import accommodation_management
     app.register_blueprint(accommodation_management, url_prefix='/accommodation_management')
-    from app.AIVS.visitation_management import visitation_management
-    app.register_blueprint(visitation_management, url_prefix='/visitation_management')
+    # from app.AIVS.visitation_management import visitation_management
+    # app.register_blueprint(visitation_management, url_prefix='/visitation_management')
+    from app.AIVS.advisor_view import advisor_view
+    app.register_blueprint(advisor_view, url_prefix='/advisor_view')
+    from app.AIVS.visit_form import visit_form
+    app.register_blueprint(visit_form, url_prefix='/visit_form')
     from app.RIMS.rental_advertisement import rental_advertisement
     app.register_blueprint(rental_advertisement, url_prefix='/rental_advertisement')
 

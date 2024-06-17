@@ -1,0 +1,102 @@
+{% extends "home.html" %}
+
+{% block title %} 校外賃居訪視資料 {% endblock %}
+
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between">
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">校外賃居訪視資料</span>
+    </div>
+{% endblock %}
+
+{% block content %}
+<style>
+    .visitation-form {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f7f7f7;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .visitation-form h2 {
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group input[type="radio"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-group input[type="radio"] {
+        width: auto;
+    }
+
+    .form-group div {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .form-group .btn-primary {
+        background: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .form-group .btn-primary:hover {
+        background: #0056b3;
+    }
+</style>
+
+{% if current_user.type == 'administrator' or current_user.type == 'advisor' %}
+    {% for item in data %}
+        <h2>{{ student_name[data.index(item)] }}</h2>
+        <div class="visitation-record">
+            <h3>校外賃居資料</h3>
+            <p><strong>學號:</strong> {{ item.id }}</p>
+            <p><strong>學年/學期:</strong> {{ item.semester }}</p>
+            <p><strong>訪視日期:</strong> {{ item.visit_date_time.strftime('%Y-%m-%d') }}</p>
+            <p><strong>房東姓名:</strong> {{ item.landlord_name }}</p>
+            <p><strong>房東電話:</strong> {{ item.landlord_tel }}</p>
+            <p><strong>租賃地址:</strong> {{ item.addr }}</p>
+            <p><strong>租屋型態:</strong> 
+                {% if item.building_type == '獨棟透天' %} 獨棟透天
+                {% elif item.building_type == '公寓（五樓以下）' %} 公寓（五樓以下）
+                {% elif item.building_type == '大樓（六樓以下）' %} 大樓（六樓以下）
+                {% elif item.building_type == '大型學舍（為學生建設的宿舍）' %} 大型學舍（為學生建設的宿舍）
+                {% endif %}
+            </p>
+            <p><strong>房間類型:</strong>
+                {% if item.room_type == '套房' %} 套房
+                {% elif item.room_type == '雅房' %} 雅房
+                {% endif %}
+            </p>
+            <p><strong>每月租金:</strong> {{ item.rent }}</p>
+            <p><strong>押金:</strong> {{ item.deposit }}</p>
+            <p><strong>是否值得推薦其他同學租賃:</strong> {% if item.recommand %} 是 {% else %} 否 {% endif %}</p>
+            <h3>賃居安全自主管理檢視資料</h3>
+            {% for i in range(1, 14) %}
+                <p><strong>{{ safe_manage_labels[i-1] }}:</strong> {% if attribute(item, 'safe_manage' ~ i) %} 是 {% else %} 否 {% endif %}</p>
+            {% endfor %}
+            <hr>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

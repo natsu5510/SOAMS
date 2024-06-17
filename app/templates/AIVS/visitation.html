@@ -1,0 +1,136 @@
+{% extends "home.html" %}
+
+{% block title %} 校外賃居訪視資料 {% endblock %}
+
+{% block heading %}
+    <div class="d-sm-flex align-items-center justify-content-between">
+        <span class="h3 mb-0 text-gray-800 font-weight-bold">校外賃居訪視資料</span>
+    </div>
+{% endblock %}
+
+{% block content %}
+<style>
+    .visitation-form {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f7f7f7;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .visitation-form h2 {
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group input[type="radio"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-group input[type="radio"] {
+        width: auto;
+    }
+
+    .form-group div {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .form-group .btn-primary {
+        background: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .form-group .btn-primary:hover {
+        background: #0056b3;
+    }
+</style>
+
+
+<!-- 老師 -->
+{% if current_user.type == 'advisor' %}
+<!-- 教師填報 -->
+<form action="{{url_for('visitation_management.update')}}" method="post">
+<input type="hidden" name="id" value="{{item.id}}">
+<h3>環境作息及評估</h3>
+<label for="deposit_demand">押金要求:</label>
+<input type="radio" id="deposit_demand" name="deposit_demand" value="1" {% if item.deposit_demand %} checked {% endif %} required>合理
+<input type="radio" id="deposit_demand" name="deposit_demand" value="0" {% if not item.deposit_demand %} checked {% endif %} required>不合理
+<br>
+<label for="water_electric_bill_demand">水電費要求:</label>
+<input type="radio" id="water_electric_bill_demand" name="water_electric_bill_demand" value="1" {% if item.water_electric_bill_demand %} checked {% endif %} required>合理
+<input type="radio" id="water_electric_bill_demand" name="water_electric_bill_demand" value="0" {% if not item.water_electric_bill_demand %} checked {% endif %} required>不合理
+<br>
+<label for="environment">居家環境:</label>
+<input type="radio" id="environment" name="environment" value="0" {% if item.environment == 0 %} checked {% endif %} required>佳
+<input type="radio" id="environment" name="environment" value="1" {% if item.environment == 1 %} checked {% endif %} required>適中
+<input type="radio" id="environment" name="environment" value="2" {% if item.environment == 2 %} checked {% endif %} required>欠佳，說明:
+<input type="text" id="environment_description" name="environment_description" value="{{item.environment_description}}">
+<br>
+<label for="facility">生活設施:</label>
+<input type="radio" id="facility" name="facility" value="0" {% if item.facility == 0 %} checked {% endif %} required>佳
+<input type="radio" id="facility" name="facility" value="1" {% if item.facility == 1 %} checked {% endif %} required>適中
+<input type="radio" id="facility" name="facility" value="2" {% if item.facility == 2 %} checked {% endif %} required>欠佳，說明:
+<input type="text" id="faclity_description" name="faclity_description" value="{{item.faclity_description}}">
+<br>
+<label for="situation">訪視現況:</label>
+<input type="radio" id="situation" name="situation" value="0" {% if item.situation == 0 %} checked {% endif %} required>生活規律
+<input type="radio" id="situation" name="situation" value="1" {% if item.situation == 1 %} checked {% endif %} required>適中
+<input type="radio" id="situation" name="situation" value="2" {% if item.situation == 2 %} checked {% endif %} required>待加強，說明:
+<input type="text" id="situation_description" name="situation_description" value="{{item.situation_description}}">
+<br>
+<label for="is_get_along_with">主客相處:</label>
+<input type="radio" id="is_get_along_with" name="is_get_along_with" value="1" {% if item.is_get_along_with %} checked {% endif %} required>和睦
+<input type="radio" id="is_get_along_with" name="is_get_along_with" value="0" {% if not item.is_get_along_with %} checked {% endif %} required>欠佳，說明:
+<input type="text" id="is_get_along_with_description" name="is_get_along_with_description" value="{{item.is_get_along_with_description}}">
+<br>
+<h3>訪視結果</h3>
+<label for="result">訪視結果:</label>
+<input type="radio" id="result" name="result" value="0" {% if item.result == 0 %} checked {% endif %} required>整體賃居狀況良好
+<input type="radio" id="result" name="result" value="1" {% if item.result == 1 %} checked {% endif %} required>聯繫家長關注
+<input type="radio" id="result" name="result" value="2" {% if item.result == 2 %} checked {% endif %} required>安全堪慮請協助
+<input type="radio" id="result" name="result" value="3" {% if item.result == 3 %} checked {% endif %} required>其他，說明:
+<input type="text" id="result_description" name="result_description" value="{{item.result_description}}">
+<br>
+<label for="others1">其他紀載或建議事項:</label>
+<input type="text" id="others1" name="others1" value="{{item.others1}}">
+<br>
+<h3>關懷宣導項目（懇請導師賃居訪視時多予關懷叮嚀）</h3>
+<input type="checkbox" id="traffic_safty" name="traffic_safty" value="1" {% if item.traffic_safty %} checked {% endif %}>
+<label for="traffic_safty">交通安全</label>
+<br>
+<input type="checkbox" id="smoke" name="smoke" value="1" {% if item.smoke %} checked {% endif %}>
+<label for="smoke">拒絕菸害</label>
+<br>
+<input type="checkbox" id="drug" name="drug" value="1" {% if item.drug %} checked {% endif %}>
+<label for="drug">拒絕毒品</label>
+<br>
+<input type="checkbox" id="dengue" name="dengue" value="1" {% if item.dengue %} checked {% endif %}>
+<label for="dengue">登革熱防治</label>
+<br>
+<label for="others2">其他說明:</label>
+<input type="text" id="others2" name="others2" value="{{item.others2}}">
+<br>
+<input type="submit" value="送出">
+</form>
+<hr>
+{% endif %}
