@@ -35,9 +35,23 @@ def edit():
 @login_required
 def update():
     data = AccommodationInfo.query.filter_by(id=request.form.get('id')).first()
-    tmpdata = AccommodationInfo(id=request.form.get('id'), semester=request.form.get('semester'), where_to_live=request.form.get('where_to_live'),
-                        addr=request.form.get('addr'), landlord_name=request.form.get('landlord_name'),
-                        landlord_tel=request.form.get('landlord_tel'), rent=request.form.get('rent'), roommate_id=request.form.get('roommate_id'))
+    # tmpdata = AccommodationInfo(id=request.form.get('id'), semester=request.form.get('semester'), where_to_live=request.form.get('where_to_live'),
+    #                     addr=request.form.get('addr'), landlord_name=request.form.get('landlord_name'),
+    #                     landlord_tel=request.form.get('landlord_tel'), rent=request.form.get('rent'), roommate_id=request.form.get('roommate_id'))
+    tmpdata = AccommodationInfo()
+    tmpdata.id = current_user.id
+    tmpdata.semester = request.form.get('semester')
+    tmpdata.where_to_live = where_to_live=request.form.get('where_to_live')
+    tmpdata.addr=request.form.get('addr')
+    tmpdata.landlord_name=request.form.get('landlord_name')
+    tmpdata.landlord_tel=request.form.get('landlord_tel')
+    tmpdata.rent=request.form.get('rent')
+    if request.form.get('roommate_id') != None  or request.form.get('roommate_id') != '':
+        tmpdata.roommate_id=request.form.get('roommate_id')
+    else:
+        data.roommate_id = None
+
+    
     if(data == None):
         db.session.add(tmpdata)
     else:
@@ -47,7 +61,10 @@ def update():
         data.landlord_name = request.form.get('landlord_name')
         data.landlord_tel = request.form.get('landlord_tel')
         data.rent = request.form.get('rent')
-        data.roommate_id = request.form.get('roommate_id')
+        if request.form.get('roommate_id') != None or request.form.get('roommate_id') != '':
+            data.roommate_id = request.form.get('roommate_id')
+        else:
+            data.roommate_id = None
     db.session.commit()
     if current_user.type == 'student':
         return redirect(url_for('accommodation_management.edit'))

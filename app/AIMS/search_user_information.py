@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, redirect
 from flask_login import login_required
+from app.AIMS.login_management import role_required
 from flask_wtf import FlaskForm
 from wtforms.fields.simple import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -14,6 +15,7 @@ class UserSearchForm(FlaskForm):
 
 @search_user_information.route('/update/search_user_information', methods=['GET', 'POST'])
 @login_required
+@role_required('administrators')
 def update_search_form():
     form = UserSearchForm()
     if form.validate_on_submit():
