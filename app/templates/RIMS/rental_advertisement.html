@@ -63,9 +63,9 @@
             {% endif %}
         {% endwith %}
         
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mb-2">
             <!-- 篩選表單 -->
-            <form class="d-inline-flex mb-2" method="GET" action="{{ url_for('rental_advertisement.index', page=1) }}">
+            <!-- <form class="d-inline-flex mb-2" method="GET" action="{{ url_for('rental_advertisement.index', page=1) }}">
                 <div class="form-row">
                     <div class="col-md-3 mb-2">
                         <label class="mb-0" for="rentFilter">租金</label>
@@ -102,7 +102,8 @@
                         <button type="submit" class="btn btn-primary">篩選</button>
                     </div>
                 </div>
-            </form>
+            </form> -->
+            <div></div>
             <!-- 更換版面配置按鈕 -->
             <div id="layout-btn">
                 <button id="grid-button" class="btn btn-warning mr-2" onclick="toggleLayout('grid')"><i class="fa fa-table"></i></button>
