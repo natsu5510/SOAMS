@@ -15,7 +15,7 @@ class UserSearchForm(FlaskForm):
 
 @search_user_information.route('/update/search_user_information', methods=['GET', 'POST'])
 @login_required
-@role_required('administrators')
+@role_required('administrator')
 def update_search_form():
     form = UserSearchForm()
     if form.validate_on_submit():
@@ -27,6 +27,7 @@ def update_search_form():
 
 @search_user_information.route('/delete/search_user_information', methods=['GET', 'POST'])
 @login_required
+@role_required('administrator')
 def delete_search_form():
     form = UserSearchForm()
     if form.validate_on_submit():

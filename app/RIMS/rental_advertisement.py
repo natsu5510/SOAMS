@@ -24,7 +24,7 @@ UPLOAD_FOLDER = os.path.join(SRC_PATH,  'static', 'uploads')
 @rental_advertisement.route('/<int:page>')
 @login_required
 def index(page):
-    advertisements = Advertisement.query.filter_by(status=1).order_by(desc(Advertisement.timestamp)).paginate(page=page, per_page=10, error_out=False)
+    advertisements = Advertisement.query.filter_by(status=1).order_by(desc(Advertisement.update_date)).paginate(page=page, per_page=10, error_out=False)
     return render_template('/RIMS/rental_advertisement.html', ads=advertisements)
 
 # 瀏覽廣告詳細頁面
@@ -128,6 +128,7 @@ def advertise():
         new_ad.others_fee = request.form.get('others_fee')
         new_ad.description=request.form.get('description')
         new_ad.timestamp=datetime.now()
+        new_ad.update_date=datetime.now()
         new_ad.status=0 # 待審核
         new_ad.landlord_id=current_user._get_current_object().id
 
@@ -302,7 +303,7 @@ def edit_advertisement_detail(adid):
         
         ad.image_urls=image_urls
 
-        ad.update_time=datetime.now()
+        ad.update_date=datetime.now()
 
 
         db.session.add(ad)
@@ -338,6 +339,9 @@ def review_advertisement_detail(adid):
             advertisement.status = 1
         elif request.form.get('action') == '駁回':
             advertisement.status = 2
+        
+        
+        advertisement.update_date=datetime.now()
         
         advertisement.pulish_date = datetime.now()
         db.session.add(advertisement)

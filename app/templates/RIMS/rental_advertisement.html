@@ -142,7 +142,8 @@
                                     {% endif %}
                                 </span> 元 / 月
                             </div>
-                            <div>更新時間：{{ ad.update_time }}</div>
+                            <div>更新時間：{{ ad.update_date }}</div>
+                            <div>刊登日期：{{ ad.pulish_date.strftime("%Y-%m-%d") }}</div>
                         </div>
                     </div>
                 </div>
